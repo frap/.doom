@@ -1,11 +1,10 @@
-;;; ~/.enfer.d/+org.el -*- lexical-binding: t; -*-
+;;; ~/DOOMDIR/+org.el -*- lexical-binding: t; -*-
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq
   org-directory "~/Sync/Dropbox/org/gtd"
   org-use-property-inheritance t              ; it's convenient to have properties inherited
-  org-log-done 'time                          ; having the time a item is done sounds convininet
   org-list-allow-alphabetical t               ; have a. A. a) A) list bullets
   org-export-in-background t                  ; run export processes in external emacs process
   org-catch-invisible-edits 'smart            ; try not to accidently do weird stuff in invisible regions
@@ -61,6 +60,31 @@
   )
 (use-package! doct
   :commands (doct))
+
+;;Enable logging of done tasks, and log stuff into the LOGBOOK drawer by default
+
+(after! org
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t))
+
+;; Use the special C-a, C-e and C-k definitions for Org, which enable some special behavior in headings.
+(after! org
+  (setq org-special-ctrl-a/e t)
+  (setq org-special-ctrl-k t))
+
+;;Enable Speed Keys, which allows quick single-key commands when the cursor is placed on a heading.
+(after! org
+  (setq org-use-speed-commands
+        (lambda ()
+          (and (looking-at org-outline-regexp)
+            (looking-back "^\**")))))
+
+;; Enable variable and visual line mode in Org mode by default.
+;;
+(add-hook! org-mode :append
+           #'visual-line-mode
+  #'variable-pitch-mode)
+
 
 (after! org-capture
   (defun org-capture-select-template-prettier (&optional keys)
@@ -623,6 +647,15 @@ is selected, only the bare key is returned."
                        (org-tags-match-list-sublevels nil))))))))
     )
 
+  (after! org-agenda
+  (setq org-agenda-prefix-format
+        '((agenda . " %i %-12:c%?-12t% s")
+          ;; Indent todo items by level to show nesting
+          (todo . " %i %-12:c%l")
+          (tags . " %i %-12:c")
+          (search . " %i %-12:c")))
+  (setq org-agenda-include-diary t))
+
 
   (setq  gas/keep-clock-running nil)
 
@@ -758,65 +791,98 @@ is selected, only the bare key is returned."
 
   );; end of after! org
 
-(after! org
-  (appendq! +ligatures-extra-symbols
-            `(:checkbox      "☐"
-              :pending       "◼"
-              :checkedbox    "☑"
-              :list_property "∷"
-              :results       "🠶"
-              :property      "☸"
-              :properties    "⚙"
-              :end           "∎"
-              :options       "⌥"
-              :title         "𝙏"
-              :subtitle      "𝙩"
-              :author        "𝘼"
-              :date          "𝘿"
-              :latex_header  "⇥"
-              :latex_class   "🄲"
-              :beamer_header "↠"
-              :begin_quote   "❮"
-              :end_quote     "❯"
-              :begin_export  "⯮"
-              :end_export    "⯬"
-              :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
-              :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
-              :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
-              :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
-              :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)
-              :em_dash       "—"))
+;; (after! org
+;;   (appendq! +ligatures-extra-symbols
+;;             `(:checkbox      "☐"
+;;               :pending       "◼"
+;;               :checkedbox    "☑"
+;;               :list_property "∷"
+;;               :results       "🠶"
+;;               :property      "☸"
+;;               :properties    "⚙"
+;;               :end           "∎"
+;;               :options       "⌥"
+;;               :title         "𝙏"
+;;               :subtitle      "𝙩"
+;;               :author        "𝘼"
+;;               :date          "𝘿"
+;;               :latex_header  "⇥"
+;;               :latex_class   "🄲"
+;;               :beamer_header "↠"
+;;               :begin_quote   "❮"
+;;               :end_quote     "❯"
+;;               :begin_export  "⯮"
+;;               :end_export    "⯬"
+;;               :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
+;;               :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
+;;               :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
+;;               :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
+;;               :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)
+;;               :em_dash       "—"))
 
-        (set-ligatures! 'org-mode
-          :merge t
-          :checkbox      "[ ]"
-          :pending       "[-]"
-          :checkedbox    "[X]"
-          :list_property "::"
-          :results       "#+results:"
-          :property      "#+property:"
-          :property      ":PROPERTIES:"
-          :end           ":END:"
-          :options       "#+options:"
-          :title         "#+title:"
-          :subtitle      "#+subtitle:"
-          :author        "#+author:"
-          :date          "#+date:"
-          :latex_class   "#+latex_class:"
-          :latex_header  "#+latex_header:"
-          :beamer_header "#+beamer_header:"
-          :begin_quote   "#+begin_quote"
-          :end_quote     "#+end_quote"
-          :begin_export  "#+begin_export"
-          :end_export    "#+end_export"
-          :priority_a    "[#A]"
-          :priority_b    "[#B]"
-          :priority_c    "[#C]"
-          :priority_d    "[#D]"
-          :priority_e    "[#E]"
-          :em_dash       "---")
-        (plist-put +ligatures-extra-symbols :name "⁍")      ; or › could be good?
-)
+;;         (set-ligatures! 'org-mode
+;;           :merge t
+;;           :checkbox      "[ ]"
+;;           :pending       "[-]"
+;;           :checkedbox    "[X]"
+;;           :list_property "::"
+;;           :results       "#+results:"
+;;           :property      "#+property:"
+;;           :property      ":PROPERTIES:"
+;;           :end           ":END:"
+;;           :options       "#+options:"
+;;           :title         "#+title:"
+;;           :subtitle      "#+subtitle:"
+;;           :author        "#+author:"
+;;           :date          "#+date:"
+;;           :latex_class   "#+latex_class:"
+;;           :latex_header  "#+latex_header:"
+;;           :beamer_header "#+beamer_header:"
+;;           :begin_quote   "#+begin_quote"
+;;           :end_quote     "#+end_quote"
+;;           :begin_export  "#+begin_export"
+;;           :end_export    "#+end_export"
+;;           :priority_a    "[#A]"
+;;           :priority_b    "[#B]"
+;;           :priority_c    "[#C]"
+;;           :priority_d    "[#D]"
+;;           :priority_e    "[#E]"
+;;           :em_dash       "---")
+;;         (plist-put +ligatures-extra-symbols :name "⁍")      ; or › could be good?
+;; )
+(defun zz/org-download-paste-clipboard (&optional use-default-filename)
+  (interactive "P")
+  (require 'org-download)
+  (let ((file
+         (if (not use-default-filename)
+             (read-string (format "Filename [%s]: "
+                                  org-download-screenshot-basename)
+                          nil nil org-download-screenshot-basename)
+           nil)))
+    (org-download-clipboard file)))
+
+(after! org
+  (setq org-download-method 'directory)
+  (setq org-download-image-dir "images")
+  (setq org-download-heading-lvl nil)
+  (setq org-download-timestamp "%Y%m%d-%H%M%S_")
+  (setq org-image-actual-width 300)
+  (map! :map org-mode-map
+        "C-c l a y" #'zz/org-download-paste-clipboard
+    "C-M-y" #'zz/org-download-paste-clipboard))
+
+
+(when IS-MAC
+  (use-package! org-mac-link
+    :after org
+    :config
+    (setq org-mac-grab-Acrobat-app-p nil) ; Disable grabbing from Adobe Acrobat
+    (setq org-mac-grab-devonthink-app-p nil) ; Disable grabbinb from DevonThink
+    (map! :map org-mode-map
+      "C-c g"  #'org-mac-grab-link)))
+
+
+(add-hook! org-mode (electric-indent-local-mode -1))
 
 (provide '+org)
 ;;; +org ends here

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: depsedn
+# key: depedn
+# --
+{:deps {$0}
+ :paths ["src" "resources"]}

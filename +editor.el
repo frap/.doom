@@ -1,4 +1,11 @@
-;;; ~/.doom.d/+editor.el -*- lexical-binding: t; -*-
+;;; ~/DOOMDIR/+editor.el -*- lexical-binding: t; -*-
+
+(setq ispell-dictionary "en")
+
+(setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
+      auto-save-default t                         ; Nobody likes to loose work, I certainly don't
+      truncate-string-ellipsis "…")               ; Unicode ellispis are nicer than "...", and also save /precious/ space
+
 
 ;;It’s nice to see ANSI colour codes displayed
 (after! text-mode
@@ -14,5 +21,10 @@
 
 (modify-coding-system-alist 'file "" 'utf-8-unix)
 
-;; yasnipeet enabel nested snippets
+;; yasnippet enable nested snippets
 (setq yas-triggers-in-field t)
+
+
+;; Disable trailing whitespaces in the minibuffer
+(add-hook! '(minibuffer-setup-hook doom-popup-mode-hook)
+  (setq-local show-trailing-whitespace nil))

@@ -23,46 +23,41 @@
        (company +childframe) ; the ultimate code completion backend
        (company +tng))       ; tng is tab completion
        ;helm              ; the *other* search engine for love and life
-         (:if IS-MAC
-         (ivy +prescient +icons +childframe)
-         (ivy +prescient +icons))               ; a search engine for love and life
+       ;  (:if IS-MAC
+       ;  (ivy +prescient +icons -childframe -fuzzy)
+       ;  (ivy +prescient +icons))               ; a search engine for love and life
+       ido
 
        :ui
        ;;deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
        doom-quit         ; DOOM quit-message prompts when you quit Emacs
-       ;(emoji +ascii +github +unicode)
+       (emoji +ascii +github +unicode)
        ;;fill-column       ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        hydra
        ;;indent-guides     ; highlighted indent columns
-       ; ligatures                    ; ligatures and symbols to make your code pretty again
+       (ligatures +extra)  ; ligatures and symbols to make your code pretty again
        ;;minimap          ;; show a map of the code on the side
        modeline           ; snazzy, Atom-inspired modeline, plus API
        nav-flash          ; blink cursor line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
-       (:if IS-MAC
-         (popup
-           +all          ; catch all popups that start with an asterix
-         ;  +defaults
-                      ))   ; tame sudden yet inevitable temporary windows
+       (popup +defaults)   ; tame sudden yet inevitable temporary windows
        ;;tabs              ; an tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        ;vc-gutter         ; vcs diff in the fringe
-       ;vi-tilde-fringe   ; fringe tildes to mark beyond EOB
-       (window-select
-                +numbers
-                     )     ; visually switch windows
-       ;;workspaces        ; tab emulation, persistence & separate workspaces
-       zen               ; distraction-free coding or writing
+       vi-tilde-fringe    ; fringe tildes to mark beyond EOB
+       window-select      ; visually switch windows
+       workspaces         ; tab emulation, persistence & separate workspaces
+       zen                ; distraction-free coding or writing
 
        :editor
        ;;(evil +everywhere); come to the dark side, we have cookies
        file-templates      ; auto-snippets for empty files
-       fold                ; (nigh) universal code folding
+       ;fold                ; (nigh) universal code folding
        (format +onsave)    ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
@@ -74,14 +69,11 @@
        ;word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       (dired +icons)             ; making dired pretty [functional]
-       electric          ; smarter, keyword-based electric-indent
+       (dired +icons)      ; making dired pretty [functional]
+       electric            ; smarter, keyword-based electric-indent
        (ibuffer +icons)         ; interactive buffer management
-       (undo
-             +tree
-                    )    ; persistent, smarter undo for your inevitable mistakes
-       ;;mistakes
-       vc                ; version-control and Emacs, sitting in a tree
+       undo                ; persistent, smarter undo for your inevitable mistakes
+       vc                  ; version-control and Emacs, sitting in a tree
 
        :term
        eshell            ; the elisp shell that works everywhere
@@ -90,7 +82,7 @@
        ;;vterm             ; the best terminal emulation in Emacs
 
        :checkers
-       syntax              ; tasing you for every semicolon you forget
+       (syntax +childframe)      ; tasing you for every semicolon you forget
        (spell +aspell)             ; tasing you for misspelling mispelling
        ;;grammar           ; tasing grammar mistake every you make
 
@@ -101,16 +93,16 @@
        docker
        editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
-       ;; (eval +overlay)     ; run code, run (also, repls)
+       (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
-       (lookup              ; navigate your code and its documentation
-         +dictionary       ; dictionary/thesauraus is nice
-         +docsets)                 ; -- or in dash docsets locally
+       lookup              ; navigate your code and its documentation
+       ;;  +dictionary       ; dictionary/thesauraus is nice
+       ;;  +docsets)                 ; -- or in dash docsets locally
       ;;lsp
        (magit               ; a git porcelain for Emacs
         +forge)
        make                ; run make tasks from Emacs
-       ;;pass              ; password manager for nerds
+       pass              ; password manager for nerds
        ;;pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
        rgb               ; creating color strings
@@ -120,8 +112,7 @@
        upload            ; map local to remote projects via ssh/ftp
 
        :os
-       (:if IS-MAC
-         (macos))          ; MacOS-specific commands
+       (:if IS-MAC macos)          ; MacOS-specific commands
 
        :lang
        ;;agda              ; types of types of types of types...
@@ -142,7 +133,9 @@
        ;;fsharp           ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
-       ;;(go +lsp)         ; the hipster dialect
+       ;;(
+       go
+       ;;+lsp)         ; the hipster dialect
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ;
@@ -166,7 +159,7 @@
        ;;Ocaml             ; An objective camel
        (org               ; organize your plain life in plain text
          +pretty                     ; yessss my pretties! (nice unicode symbols)
-         +dragndrop
+         -dragndrop
          +roam
          +pandoc
          +journal
