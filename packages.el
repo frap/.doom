@@ -32,3 +32,4 @@
 (package! windmove)
 (package! kaocha-runner)
 (package! clojure-snippets)
+(package! fennel-mode)
