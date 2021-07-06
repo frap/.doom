@@ -12,7 +12,7 @@
   org-ellipsis " ▼ "
 
  ;; org-archive-location (concat org-directory ".archive/%s::")
-  org-roam-directory "~/Sync/Dropbox/org/roam"
+  org-roam-directory "~/Sync/org/roam"
  )
 
 
@@ -193,8 +193,8 @@ is selected, only the bare key is returned."
                     (t (error "No entry available")))))))
           (when buffer (kill-buffer buffer))))))
   (advice-add 'org-mks :override #'org-mks-pretty)
-  (setq +org-capture-uni-units (split-string (f-read-text "~/org/.study-units")))
-  (setq +org-capture-recipies  "~/org/recipies.org")
+  (setq +org-capture-uni-units (split-string (f-read-text "~/Sync/org/.study-units")))
+  (setq +org-capture-recipies  "~/Sync/org/recipies.org")
 
   (defun +doct-icon-declaration-to-icon (declaration)
     "Convert :icon declaration to icon"
@@ -382,7 +382,7 @@ is selected, only the bare key is returned."
 (after! org
   (require 'find-lisp)
 ;; set org file directory
-  (setq gas/org-agenda-directory "~/org/gtd/")
+  (setq gas/org-agenda-directory "~/Sync/org/")
  ; (defconst gas-org-agenda-file (concat gas/org-agenda-directory "inbox.org"))
 ;  (setq +org-capture-todo-file gas-org-agenda-file)
 ;  (defconst gas-org-work-file (concat gas/org-agenda-directory "atea.org"))
@@ -669,14 +669,14 @@ is selected, only the bare key is returned."
 ;;          ;;("ateasystems.com_0ie21uc26j0a41g60b8f99mh1k@group.calendar.google.com" . "~/org/gtd/calendars/changecontrol-cal.org")
  ;;         )))
  ;;
-;;   (use-package! org-roam
-;;     :commands (org-roam-insert org-roam-find-file org-roam-switch-to-buffer org-roam)
+   (use-package! org-roam
+     :commands (org-roam-insert org-roam-find-file org-roam-switch-to-buffer org-roam)
 ;;     :hook
 ;;     (after-init . org-roam-mode)
 ;;     :custom-face
 ;;   ;;  (org-roam-link ((t (:inherit org-link :foreground "#005200"))))
-;;     :init
-;;       (setq org-roam-directory "~/org/roam/"
+     :init
+       (setq org-roam-directory "~/Sync/org/roam"
 ;;       org-roam-db-location "~/org/roam/org-roam.db"
 ;;       org-roam-db-gc-threshold most-positive-fixnum
 ;;       org-roam-graph-exclude-matcher "private"
@@ -713,7 +713,8 @@ is selected, only the bare key is returned."
 ;; #+roam_tags: website
 ;; #+title: ${title}
 ;; - source :: ${ref}"
-;;             :unnarrowed t))))
+;;             :unnarrowed t)))
+             )
 
 ;;   (use-package! org-roam-protocol
 ;;   :after org-protocol)
@@ -733,8 +734,6 @@ is selected, only the bare key is returned."
 ;;     (map! :map winner-mode-map
 ;;       "<M-right>" #'winner-redo
 ;;       "<M-left>" #'winner-undo))
-
-  (setq org-roam-directory "~/org/roam")
 
   (use-package! org-fc
     :commands org-fc-hydra/body
@@ -765,7 +764,7 @@ is selected, only the bare key is returned."
      (setq
   ;;     ;;org-journal-date-prefix "#+TITLE: "
        org-journal-file-format "%Y-%m-%d.org"
-       org-journal-dir "~/org/roam/"
+       org-journal-dir "~/Sync/org/roam"
   ;;     org-journal-skip-carryover-drawers (list "LOGBOOK")
   ;;     ;;org-journal-carryover-items nil
        org-journal-date-format "%A, %d %B %Y")
