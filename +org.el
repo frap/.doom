@@ -3,7 +3,7 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq
-  org-directory "~/Sync/Dropbox/org/gtd"
+  org-directory "~/Sync/org"
   org-use-property-inheritance t              ; it's convenient to have properties inherited
   org-list-allow-alphabetical t               ; have a. A. a) A) list bullets
   org-export-in-background t                  ; run export processes in external emacs process
