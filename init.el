@@ -20,12 +20,12 @@
 
        :completion
        (:if IS-MAC
-       (company +childframe) ; the ultimate code completion backend
+       (company +auto +childframe) ; the ultimate code completion backend
        (company +tng))       ; tng is tab completion
        ;helm              ; the *other* search engine for love and life
-       ;  (:if IS-MAC
-       ;  (ivy +prescient +icons -childframe -fuzzy)
-       ;  (ivy +prescient +icons))               ; a search engine for love and life
+       (:if IS-MAC
+         (ivy +prescient +icons -childframe -fuzzy)
+         (ivy +prescient +icons))               ; a search engine for love and life
        ido
 
        :ui
@@ -201,3 +201,25 @@
        :config
        ;;literate
        (default +bindings +smartparens))
+
+;; Basic Config
+;;(setq backup-directory-alist `(("." . "~/.emacs-tmp/")))
+;;(setq auto-save-file-name-transforms `((".*" "~/.emacs-tmp/" t)))
+
+;; Spaces over tabs
+(setq c-basic-indent 2)
+(setq c-default-style "linux")
+(setq tab-width 2)
+(setq-default indent-tabs-mode nil)
+
+(setq exec-path
+      (list (concat (getenv "XDG_CONFIG_DIR") "/local/bin")
+            "/usr/local/bin/"
+            "/usr/bin/"
+            "/bin/"
+            "/usr/sbin/"
+            "/sbin/"
+            (concat (getenv "XDG_CONFIG_DIR") "/emacs/bin")
+            ))
+
+(setenv "PATH" (string-join exec-path ":"))
