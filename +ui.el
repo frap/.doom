@@ -22,6 +22,7 @@
     +doom-dashboard-banner-padding '(0 . 1)
     ;; screen size
    ;; default-frame-alist '((left . 0) (width . 100) (fullscreen . fullheight)))
+   default-frame-alist '(fullscreen . maximized)
   ))
 
 (when (or IS-LINUX  (equal (window-system) nil))
