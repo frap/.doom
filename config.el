@@ -1,16 +1,16 @@
-
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
+(when (string-match "810989" (getenv "USER")) (defconst IS-WORK t))
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 (if IS-MAC
   (setq
     user-full-name "Andrés Gasson"
-    user-mail-address "agasson@red-elvis.net"
-    github-account-name "frap")
+    user-mail-address "gas@tuatara.red"
+    github-account-name "frap"))
+(if IS-WORK
   (setq
-    user-full-name "atearoot"
-    user-mail-address "support@ateasystems.com"))
+    user-full-name "Gas 810989"
+    user-mail-address "gas_gasson@bnz.co.nz"))
 
 
 ;(setq-default
@@ -48,7 +48,7 @@
 (load! "+editor")
 
 ;;gas org customisations
-;(load! "+org")
+;;(load! "+org")
 ;; disable org-mode's auto wrap
 ;(remove-hook 'org-mode-hook 'auto-fill-mode)
 ;; mu4e setup

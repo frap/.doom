@@ -33,3 +33,4 @@
 (package! kaocha-runner)
 (package! clojure-snippets)
 (package! fennel-mode)
+(package! groovy-mode)
