@@ -3,7 +3,7 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq
-  org-directory "~/Sync/Dropbox/org/gtd"
+  org-directory "~/Sync/org/"
   org-use-property-inheritance t              ; it's convenient to have properties inherited
   org-list-allow-alphabetical t               ; have a. A. a) A) list bullets
   org-export-in-background t                  ; run export processes in external emacs process
@@ -12,9 +12,8 @@
   org-ellipsis " ▼ "
 
  ;; org-archive-location (concat org-directory ".archive/%s::")
-  org-roam-directory "~/Sync/Dropbox/org/roam"
+  org-roam-directory "~/Sync/org/"
  )
-
 
 ;; like the comments header-argument
 ; (setq org-babel-default-header-args
@@ -49,7 +48,6 @@
        ("j" . "src javascript")
        ("r" . "src rust"))))
 
-;(add-to-list 'org-structure-template-alist '("r" . "src rust"))
 ;; My Spelling is atrocious
 ;;(after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
 

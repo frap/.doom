@@ -25,7 +25,7 @@
   )
 
 ;;Map C-c C-g to magit-status - I have too ingrained muscle memory for this keybinding.
-(map! :after magit "C-c C-g" #'magit-status)
+;;(map! :after magit "C-c C-g" #'magit-status)
 
 ;;visual-regexp-steroids provides sane regular expressions and visual incremental search.
 (use-package! visual-regexp-steroids

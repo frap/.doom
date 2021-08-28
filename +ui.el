@@ -10,7 +10,7 @@
 ;; Font ans Screen setup
 (if IS-MAC
   (setq
-    doom-font (font-spec :family "Iosevka Nerd Font Mono" :size 14)
+    doom-font (font-spec :family "FuraCode Nerd Font Mono" :size 14)
     doom-variable-pitch-font (font-spec :family "Sathu" :size 13)
     doom-unicode-font (font-spec :family "Fira Code" :size 12)
     doom-big-font (font-spec :family "Hack" :size 24)
