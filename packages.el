@@ -34,3 +34,5 @@
 (package! clojure-snippets)
 (package! fennel-mode)
 (package! groovy-mode)
+(package! janet-mode)
+(package! inf-janet)
