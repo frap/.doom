@@ -26,7 +26,7 @@
 
 ;; default is in .emacs.d and can be deleted -- used for gpg
 (setq!
-  auth-sources '("~/.authinfo.gpg")
+  auth-sources '("~/.local/state/authinfo.gpg")
   auth-source-cache-expiry nil) ; default is 7200 (2h)
 
 
@@ -48,7 +48,7 @@
 (load! "+editor")
 
 ;;gas org customisations
-;;(load! "+org")
+(load! "+org")
 ;; disable org-mode's auto wrap
 ;(remove-hook 'org-mode-hook 'auto-fill-mode)
 ;; mu4e setup
