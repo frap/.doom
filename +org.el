@@ -563,83 +563,83 @@
 
   (defvar gas/organisation-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
 
-  (use-package! org-superstar
-    :config
-    (setq  org-superstar-todo-bullet-alist
-        '(("TODO" . 9744)
-          ("[ ]"  . 9744)
-          ("FINI" . 9745)
-           ("[X]"  . 9745))))
+  ;; (use-package! org-superstar
+  ;;   :config
+  ;;   (setq  org-superstar-todo-bullet-alist
+  ;;       '(("TODO" . 9744)
+  ;;         ("[ ]"  . 9744)
+  ;;         ("FINI" . 9745)
+  ;;          ("[X]"  . 9745))))
 
   (use-package! org-agenda
-    :init
-    (map! "<f1>" #'gas/switch-to-agenda)
+                :init
+                (map! "<f1>" #'gas/switch-to-agenda)
 ;  (setq org-agenda-block-separator nil
 ;        org-agenda-start-with-log-mode t)
-    (defun gas/switch-to-agenda ()
-      (interactive)
-      (org-agenda nil " "))
-    :config
+                (defun gas/switch-to-agenda ()
+                  (interactive)
+                  (org-agenda nil " "))
+                :config
 ;  (setq org-columns-default-format "%40ITEM(Task) %Effort(EE){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)" )
-    (setq org-agenda-custom-commands
-      (quote (
-               ("N" "Notes" tags "NOTE"
-                 ((org-agenda-overriding-header "Notes")
-                   (org-tags-match-list-sublevels t)))
-               ("h" "Habitudes" tags-todo "STYLE=\"habit\""
-                 ((org-agenda-overriding-header "Habitudes")
-                   (org-agenda-sorting-strategy
-                     '(todo-state-down priority-down category-keep))))
-               ("e" "Eisenhower Matrix"
-                 ((agenda ""
-                    ((org-agenda-overriding-header "Calendrier Eisenhower:")
-                      (org-agenda-show-log t)
-                      (org-agenda-log-mode-items '(clock state))
-                      (org-agenda-category-filter-preset '("-Habitudes"))
-                      (org-agenda-span 5)
-                      (org-agenda-start-on-weekday t)
-                            ;;            (org-agenda-ndays 5)
-                            ;;            (org-agenda-start-day "-2d")
-                      (org-deadline-warning-days 30)))
-                   (tags-todo  "+important+urgent\!FINI"
-                     ((org-agenda-overriding-header "Tâches importantes et urgentes")
-                       (org-tags-match-list-sublevels nil)))
-                   (tags-todo  "+important-urgent"
-                     ((org-agenda-overriding-header "Tâches importantes mais non urgentes")
-                       (org-tags-match-list-sublevels nil)))
-                   (tags-todo "-important+urgent"
-                     ((org-agenda-overriding-header "Tâches urgentes mais sans importance")
-                       (org-tags-match-list-sublevels nil)))
-                   (tags-todo "-important-urgent/!TODO"
-                     ((org-agenda-overriding-header "Tâches non importantes ni urgentes")
-                       (org-agenda-category-filter-preset '("-Habitudes"))
-                            (org-tags-match-list-sublevels nil)))
-                   (tags-todo "VALUE"
-                     ((org-agenda-overriding-header "Valeurs")
-                       (org-tags-match-list-sublevels nil)))
-                   ))
-               (" " "Agenda"
-                 ((agenda ""
-                    ((org-agenda-overriding-header "Calendrier d'aujourd'hui:")
-                      (org-agenda-show-log t)
-                      (org-agenda-log-mode-items '(clock state))
-                            ;;   (org-agenda-span 'day)
-                            ;;   (org-agenda-ndays 3)
-                      (org-agenda-start-on-weekday nil)
-                      (org-agenda-start-day "-d")
-                      (org-agenda-todo-ignore-deadlines nil)))
-                   (tags-todo "+important"
-                     ((org-agenda-overriding-header "Tâches Importantes à Venir")
-                       (org-tags-match-list-sublevels nil)))
-                   (tags-todo "-important"
-                     ((org-agenda-overriding-header "Tâches de Travail")
-                       (org-agenda-category-filter-preset '("-Habitudes"))
-                       (org-agenda-sorting-strategy
-                         '(todo-state-down priority-down))))
-                   (tags "REFILE"
-                     ((org-agenda-overriding-header "Tâches à la Représenter")
-                       (org-tags-match-list-sublevels nil))))))))
-    )
+                (setq org-agenda-custom-commands
+                      (quote (
+                              ("N" "Notes" tags "NOTE"
+                               ((org-agenda-overriding-header "Notes")
+                                (org-tags-match-list-sublevels t)))
+                              ("h" "Habitudes" tags-todo "STYLE=\"habit\""
+                               ((org-agenda-overriding-header "Habitudes")
+                                (org-agenda-sorting-strategy
+                                 '(todo-state-down priority-down category-keep))))
+                              ("e" "Eisenhower Matrix"
+                               ((agenda ""
+                                        ((org-agenda-overriding-header "Calendrier Eisenhower:")
+                                         (org-agenda-show-log t)
+                                         (org-agenda-log-mode-items '(clock state))
+                                         (org-agenda-category-filter-preset '("-Habitudes"))
+                                         (org-agenda-span 5)
+                                         (org-agenda-start-on-weekday t)
+                                         ;;            (org-agenda-ndays 5)
+                                         ;;            (org-agenda-start-day "-2d")
+                                         (org-deadline-warning-days 30)))
+                                (tags-todo  "+important+urgent\!FINI"
+                                            ((org-agenda-overriding-header "Tâches importantes et urgentes")
+                                             (org-tags-match-list-sublevels nil)))
+                                (tags-todo  "+important-urgent"
+                                            ((org-agenda-overriding-header "Tâches importantes mais non urgentes")
+                                             (org-tags-match-list-sublevels nil)))
+                                (tags-todo "-important+urgent"
+                                           ((org-agenda-overriding-header "Tâches urgentes mais sans importance")
+                                            (org-tags-match-list-sublevels nil)))
+                                (tags-todo "-important-urgent/!TODO"
+                                           ((org-agenda-overriding-header "Tâches non importantes ni urgentes")
+                                            (org-agenda-category-filter-preset '("-Habitudes"))
+                                            (org-tags-match-list-sublevels nil)))
+                                (tags-todo "VALUE"
+                                           ((org-agenda-overriding-header "Valeurs")
+                                            (org-tags-match-list-sublevels nil)))
+                                ))
+                              (" " "Agenda"
+                               ((agenda ""
+                                        ((org-agenda-overriding-header "Calendrier d'aujourd'hui:")
+                                         (org-agenda-show-log t)
+                                         (org-agenda-log-mode-items '(clock state))
+                                         ;;   (org-agenda-span 'day)
+                                         ;;   (org-agenda-ndays 3)
+                                         (org-agenda-start-on-weekday nil)
+                                         (org-agenda-start-day "-d")
+                                         (org-agenda-todo-ignore-deadlines nil)))
+                                (tags-todo "+important"
+                                           ((org-agenda-overriding-header "Tâches Importantes à Venir")
+                                            (org-tags-match-list-sublevels nil)))
+                                (tags-todo "-important"
+                                           ((org-agenda-overriding-header "Tâches de Travail")
+                                            (org-agenda-category-filter-preset '("-Habitudes"))
+                                            (org-agenda-sorting-strategy
+                                             '(todo-state-down priority-down))))
+                                (tags "REFILE"
+                                      ((org-agenda-overriding-header "Tâches à la Représenter")
+                                       (org-tags-match-list-sublevels nil))))))))
+                )
 
   (after! org-agenda
   (setq org-agenda-prefix-format
@@ -785,33 +785,33 @@
   );; end of after! org
 
  (after! org
-         ;;   (appendq! +ligatures-extra-symbols
-         ;;             `(:checkbox      "☐"
-         ;;               :pending       "◼"
-         ;;               :checkedbox    "☑"
-         ;;               :list_property "∷"
-         ;;               :results       "🠶"
-         ;;               :property      "☸"
-         ;;               :properties    "⚙"
-         ;;               :end           "∎"
-         ;;               :options       "⌥"
-         ;;               :title         "𝙏"
-         ;;               :subtitle      "𝙩"
-         ;;               :author        "𝘼"
-         ;;               :date          "𝘿"
-         ;;               :latex_header  "⇥"
-         ;;               :latex_class   "🄲"
-         ;;               :beamer_header "↠"
-         ;;               :begin_quote   "❮"
-         ;;               :end_quote     "❯"
-         ;;               :begin_export  "⯮"
-         ;;               :end_export    "⯬"
-         ;;               :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
-         ;;               :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
-         ;;               :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
-         ;;               :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
-         ;;               :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)
-         ;;               :em_dash       "—"))
+   (appendq! +ligatures-extra-symbols
+             `(:checkbox      "☐"
+               :pending       "◼"
+               :checkedbox    "☑"
+               :list_property "∷"
+               :results       "🠶"
+               :property      "☸"
+               :properties    "⚙"
+               :end           "∎"
+               :options       "⌥"
+               :title         "𝙏"
+               :subtitle      "𝙩"
+               :author        "𝘼"
+               :date          "𝘿"
+               :latex_header  "⇥"
+               :latex_class   "🄲"
+               :beamer_header "↠"
+               :begin_quote   "❮"
+               :end_quote     "❯"
+               :begin_export  "⯮"
+               :end_export    "⯬"
+               :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
+               :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
+               :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
+               :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
+               :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)
+               :em_dash       "—"))
 
          (set-ligatures! 'org-mode
            :merge t
