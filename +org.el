@@ -57,8 +57,9 @@
         (setq org-babel-clojure-backend 'cider)
         (require 'cider)
         )
+;; what is doct?
 (use-package! doct
-  :commands (doct))
+              :commands (doct))
 
 ;;Enable logging of done tasks, and log stuff into the LOGBOOK drawer by default
 
@@ -380,25 +381,25 @@
 ;; ORG config
 (after! org
   (require 'find-lisp)
-;; set org file directory
+  ;; set org file directory
   (setq gas/org-agenda-directory "~/org/")
- ; (defconst gas-org-agenda-file (concat gas/org-agenda-directory "inbox.org"))
-;  (setq +org-capture-todo-file gas-org-agenda-file)
-;  (defconst gas-org-work-file (concat gas/org-agenda-directory "atea.org"))
-  ;;(defconst gas-org-journal-file (concat org-directory "journal.org"))
-;  ''(defconst gas-org-refile-file (concat org-directory "refile.org"))
+  ;; (defconst gas-org-agenda-file (concat gas/org-agenda-directory "inbox.org"))
+  ;; (setq +org-capture-todo-file gas-org-agenda-file)
+  ;; (defconst gas-org-work-file (concat gas/org-agenda-directory "atea.org"))
+  ;; (defconst gas-org-journal-file (concat org-directory "journal.org"))
+                                        ;  ''(defconst gas-org-refile-file (concat org-directory "refile.org"))
   ;; set agenda files
   ;;(setq org-agenda-files (list gas/org-agenda-directory))
   (setq org-agenda-files
-    (find-lisp-find-files gas/org-agenda-directory "\.org$"))
+        (find-lisp-find-files gas/org-agenda-directory "\.org$"))
 
   (setf (alist-get 'height +org-capture-frame-parameters) 15)
-;; (alist-get 'name +org-capture-frame-parameters) "❖ Capture") ;; ATM hardcoded in other places, so changing breaks stuff
-(setq +org-capture-fn
-      (lambda ()
-        (interactive)
-        (set-window-parameter nil 'mode-line-format 'none)
-        (org-capture)))
+  ;; (alist-get 'name +org-capture-frame-parameters) "❖ Capture") ;; ATM hardcoded in other places, so changing breaks stuff
+  (setq +org-capture-fn
+        (lambda ()
+          (interactive)
+          (set-window-parameter nil 'mode-line-format 'none)
+          (org-capture)))
 
   (setq org-todo-keywords
     '((sequence
@@ -459,94 +460,94 @@
                                       ("french"    . ?f)
                                       ("spanish"   . ?s))))
 
- ; (setq  org-highest-priority ?A
- ;   org-default-priority ?C
- ;   org-lowest-priority  ?D)
+  ;; (setq  org-highest-priority ?A
+  ;;   org-default-priority ?C
+  ;;   org-lowest-priority  ?D)
 
-;  (setq org-fast-tag-selection-single-key nil)
+  ;;  (setq org-fast-tag-selection-single-key nil)
 
-;; (defvar gas/org-agenda-bulk-process-key ?f
-;;   "Default key for bulk processing inbox items.")
+  ;; (defvar gas/org-agenda-bulk-process-key ?f
+  ;;   "Default key for bulk processing inbox items.")
 
-;; (defun gas/org-process-inbox ()
-;;   "Called in org-agenda-mode, processes all inbox items."
-;;   (interactive)
-;;   (org-agenda-bulk-mark-regexp "inbox:")
-;;   (gas/bulk-process-entries))
+  ;; (defun gas/org-process-inbox ()
+  ;;   "Called in org-agenda-mode, processes all inbox items."
+  ;;   (interactive)
+  ;;   (org-agenda-bulk-mark-regexp "inbox:")
+  ;;   (gas/bulk-process-entries))
 
-;; (defvar gas/org-current-effort "1:00"
-;;   "Current effort for agenda items.")
+  ;; (defvar gas/org-current-effort "1:00"
+  ;;   "Current effort for agenda items.")
 
-;; (defun gas/my-org-agenda-set-effort (effort)
-;;   "Set the effort property for the current headline."
-;;   (interactive
-;;    (list (read-string (format "Effort [%s]: " gas/org-current-effort) nil nil gas/org-current-effort)))
-;;   (setq gas/org-current-effort effort)
-;;   (org-agenda-check-no-diary)
-;;   (let* ((hdmarker (or (org-get-at-bol 'org-hd-marker)
-;;                        (org-agenda-error)))
-;;          (buffer (marker-buffer hdmarker))
-;;          (pos (marker-position hdmarker))
-;;          (inhibit-read-only t)
-;;          newhead)
-;;     (org-with-remote-undo buffer
-;;       (with-current-buffer buffer
-;;         (widen)
-;;         (goto-char pos)
-;;         (org-show-context 'agenda)
-;;         (funcall-interactively 'org-set-effort nil gas/org-current-effort)
-;;         (end-of-line 1)
-;;         (setq newhead (org-get-heading)))
-;;       (org-agenda-change-all-lines newhead hdmarker))))
+  ;; (defun gas/my-org-agenda-set-effort (effort)
+  ;;   "Set the effort property for the current headline."
+  ;;   (interactive
+  ;;    (list (read-string (format "Effort [%s]: " gas/org-current-effort) nil nil gas/org-current-effort)))
+  ;;   (setq gas/org-current-effort effort)
+  ;;   (org-agenda-check-no-diary)
+  ;;   (let* ((hdmarker (or (org-get-at-bol 'org-hd-marker)
+  ;;                        (org-agenda-error)))
+  ;;          (buffer (marker-buffer hdmarker))
+  ;;          (pos (marker-position hdmarker))
+  ;;          (inhibit-read-only t)
+  ;;          newhead)
+  ;;     (org-with-remote-undo buffer
+  ;;       (with-current-buffer buffer
+  ;;         (widen)
+  ;;         (goto-char pos)
+  ;;         (org-show-context 'agenda)
+  ;;         (funcall-interactively 'org-set-effort nil gas/org-current-effort)
+  ;;         (end-of-line 1)
+  ;;         (setq newhead (org-get-heading)))
+  ;;       (org-agenda-change-all-lines newhead hdmarker))))
 
-;; (defun gas/org-agenda-process-inbox-item ()
-;;   "Process a single item in the org-agenda."
-;;   (org-with-wide-buffer
-;;    (org-agenda-set-tags)
-;;    (org-agenda-priority)
-;;    (call-interactively 'gas/my-org-agenda-set-effort)
-;;    (org-agenda-refile nil nil t)))
+  ;; (defun gas/org-agenda-process-inbox-item ()
+  ;;   "Process a single item in the org-agenda."
+  ;;   (org-with-wide-buffer
+  ;;    (org-agenda-set-tags)
+  ;;    (org-agenda-priority)
+  ;;    (call-interactively 'gas/my-org-agenda-set-effort)
+  ;;    (org-agenda-refile nil nil t)))
 
-;; (defun gas/bulk-process-entries ()
-;;   (if (not (null org-agenda-bulk-marked-entries))
-;;       (let ((entries (reverse org-agenda-bulk-marked-entries))
-;;             (processed 0)
-;;             (skipped 0))
-;;         (dolist (e entries)
-;;           (let ((pos (text-property-any (point-min) (point-max) 'org-hd-marker e)))
-;;             (if (not pos)
-;;                 (progn (message "Skipping removed entry at %s" e)
-;;                        (cl-incf skipped))
-;;               (goto-char pos)
-;;               (let (org-loop-over-headlines-in-active-region) (funcall 'gas/org-agenda-process-inbox-item))
-;;               ;; `post-command-hook' is not run yet.  We make sure any
-;;               ;; pending log note is processed.
-;;               (when (or (memq 'org-add-log-note (default-value 'post-command-hook))
-;;                         (memq 'org-add-log-note post-command-hook))
-;;                 (org-add-log-note))
-;;               (cl-incf processed))))
-;;         (org-agenda-redo)
-;;         (unless org-agenda-persistent-marks (org-agenda-bulk-unmark-all))
-;;         (message "Acted on %d entries%s%s"
-;;                  processed
-;;                  (if (= skipped 0)
-;;                      ""
-;;                    (format ", skipped %d (disappeared before their turn)"
-;;                            skipped))
-;;                  (if (not org-agenda-persistent-marks) "" " (kept marked)")))))
+  ;; (defun gas/bulk-process-entries ()
+  ;;   (if (not (null org-agenda-bulk-marked-entries))
+  ;;       (let ((entries (reverse org-agenda-bulk-marked-entries))
+  ;;             (processed 0)
+  ;;             (skipped 0))
+  ;;         (dolist (e entries)
+  ;;           (let ((pos (text-property-any (point-min) (point-max) 'org-hd-marker e)))
+  ;;             (if (not pos)
+  ;;                 (progn (message "Skipping removed entry at %s" e)
+  ;;                        (cl-incf skipped))
+  ;;               (goto-char pos)
+  ;;               (let (org-loop-over-headlines-in-active-region) (funcall 'gas/org-agenda-process-inbox-item))
+  ;;               ;; `post-command-hook' is not run yet.  We make sure any
+  ;;               ;; pending log note is processed.
+  ;;               (when (or (memq 'org-add-log-note (default-value 'post-command-hook))
+  ;;                         (memq 'org-add-log-note post-command-hook))
+  ;;                 (org-add-log-note))
+  ;;               (cl-incf processed))))
+  ;;         (org-agenda-redo)
+  ;;         (unless org-agenda-persistent-marks (org-agenda-bulk-unmark-all))
+  ;;         (message "Acted on %d entries%s%s"
+  ;;                  processed
+  ;;                  (if (= skipped 0)
+  ;;                      ""
+  ;;                    (format ", skipped %d (disappeared before their turn)"
+  ;;                            skipped))
+  ;;                  (if (not org-agenda-persistent-marks) "" " (kept marked)")))))
 
-;(defun gas/org-inbox-capture ()
-;  (interactive)
-;  "Capture a task in agenda mode."
-;  (org-capture nil "i"))
+                                        ;(defun gas/org-inbox-capture ()
+                                        ;  (interactive)
+                                        ;  "Capture a task in agenda mode."
+                                        ;  (org-capture nil "i"))
 
-;(setq org-agenda-bulk-custom-functions `((,gas/org-agenda-bulk-process-key gas/org-agenda-process-inbox-item)))
+                                        ;(setq org-agenda-bulk-custom-functions `((,gas/org-agenda-bulk-process-key gas/org-agenda-process-inbox-item)))
 
-;(map! :map org-agenda-mode-map
-;      "i" #'org-agenda-clock-in
-;      "r" #'gas/org-process-inbox
-;      "R" #'org-agenda-refile
-;      "c" #'gas/org-inbox-capture)
+                                        ;(map! :map org-agenda-mode-map
+                                        ;      "i" #'org-agenda-clock-in
+                                        ;      "r" #'gas/org-process-inbox
+                                        ;      "R" #'org-agenda-refile
+                                        ;      "c" #'gas/org-inbox-capture)
 
   (defun gas/set-todo-state-next ()
     "Visit each parent task and change NEXT states to TODO"
@@ -561,7 +562,7 @@
               ("o" . org-clock-convenience-fill-gap)
           ("e" . org-clock-convenience-fill-gap-both)))
 
-  (defvar gas/organisation-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
+  ;;(defvar gas/organisation-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
 
   ;; (use-package! org-superstar
   ;;   :config
@@ -642,13 +643,13 @@
                 )
 
   (after! org-agenda
-  (setq org-agenda-prefix-format
-        '((agenda . " %i %-12:c%?-12t% s")
-          ;; Indent todo items by level to show nesting
-          (todo . " %i %-12:c%l")
-          (tags . " %i %-12:c")
-          (search . " %i %-12:c")))
-  (setq org-agenda-include-diary t))
+          (setq org-agenda-prefix-format
+                '((agenda . " %i %-12:c%?-12t% s")
+                  ;; Indent todo items by level to show nesting
+                  (todo . " %i %-12:c%l")
+                  (tags . " %i %-12:c")
+                  (search . " %i %-12:c")))
+          (setq org-agenda-include-diary t))
 
 
   (setq  gas/keep-clock-running nil)
@@ -843,16 +844,16 @@
            :em_dash       "---")
          ;;         (plist-put +ligatures-extra-symbols :name "⁍")      ; or › could be good?
          )
-   (defun zz/org-download-paste-clipboard (&optional use-default-filename)
-     (interactive "P")
-     (require 'org-download)
-     (let ((file
-            (if (not use-default-filename)
-                (read-string (format "Filename [%s]: "
-                                     org-download-screenshot-basename)
-                             nil nil org-download-screenshot-basename)
-              nil)))
-       (org-download-clipboard file)))
+ (defun zz/org-download-paste-clipboard (&optional use-default-filename)
+   (interactive "P")
+   (require 'org-download)
+   (let ((file
+          (if (not use-default-filename)
+              (read-string (format "Filename [%s]: "
+                                   org-download-screenshot-basename)
+                           nil nil org-download-screenshot-basename)
+            nil)))
+     (org-download-clipboard file)))
 
 (after! org
   (setq org-download-method 'directory)
