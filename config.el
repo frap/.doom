@@ -1,5 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-(when (string-match "810989" (getenv "USER")) (defconst IS-WORK t))
+ (defconst IS-WORK (string-match "810989" (getenv "USER")))
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 (if IS-MAC
