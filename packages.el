@@ -35,4 +35,5 @@
 (package! fennel-mode)
 (package! groovy-mode)
 (package! janet-mode)
-(package! inf-janet)
+(package! inf-janet
+  :recipe (:host github :repo "velkyel/inf-janet"))
