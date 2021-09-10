@@ -57,8 +57,9 @@
         (setq org-babel-clojure-backend 'cider)
         (require 'cider)
         )
+;; what is doct?
 (use-package! doct
-  :commands (doct))
+              :commands (doct))
 
 ;;Enable logging of done tasks, and log stuff into the LOGBOOK drawer by default
 
@@ -380,25 +381,25 @@
 ;; ORG config
 (after! org
   (require 'find-lisp)
-;; set org file directory
+  ;; set org file directory
   (setq gas/org-agenda-directory "~/org/")
- ; (defconst gas-org-agenda-file (concat gas/org-agenda-directory "inbox.org"))
-;  (setq +org-capture-todo-file gas-org-agenda-file)
-;  (defconst gas-org-work-file (concat gas/org-agenda-directory "atea.org"))
-  ;;(defconst gas-org-journal-file (concat org-directory "journal.org"))
-;  ''(defconst gas-org-refile-file (concat org-directory "refile.org"))
+  ;; (defconst gas-org-agenda-file (concat gas/org-agenda-directory "inbox.org"))
+  ;; (setq +org-capture-todo-file gas-org-agenda-file)
+  ;; (defconst gas-org-work-file (concat gas/org-agenda-directory "atea.org"))
+  ;; (defconst gas-org-journal-file (concat org-directory "journal.org"))
+                                        ;  ''(defconst gas-org-refile-file (concat org-directory "refile.org"))
   ;; set agenda files
   ;;(setq org-agenda-files (list gas/org-agenda-directory))
   (setq org-agenda-files
-    (find-lisp-find-files gas/org-agenda-directory "\.org$"))
+        (find-lisp-find-files gas/org-agenda-directory "\.org$"))
 
   (setf (alist-get 'height +org-capture-frame-parameters) 15)
-;; (alist-get 'name +org-capture-frame-parameters) "❖ Capture") ;; ATM hardcoded in other places, so changing breaks stuff
-(setq +org-capture-fn
-      (lambda ()
-        (interactive)
-        (set-window-parameter nil 'mode-line-format 'none)
-        (org-capture)))
+  ;; (alist-get 'name +org-capture-frame-parameters) "❖ Capture") ;; ATM hardcoded in other places, so changing breaks stuff
+  (setq +org-capture-fn
+        (lambda ()
+          (interactive)
+          (set-window-parameter nil 'mode-line-format 'none)
+          (org-capture)))
 
   (setq org-todo-keywords
     '((sequence
@@ -459,11 +460,11 @@
                                     ("french"    . ?f)
                                     ("spanish"   . ?s))))
 
- ; (setq  org-highest-priority ?A
- ;   org-default-priority ?C
- ;   org-lowest-priority  ?D)
+;; (setq  org-highest-priority ?A
+;;   org-default-priority ?C
+;;   org-lowest-priority  ?D)
 
-;  (setq org-fast-tag-selection-single-key nil)
+;;  (setq org-fast-tag-selection-single-key nil)
 
 ;; (defvar gas/org-agenda-bulk-process-key ?f
 ;;   "Default key for bulk processing inbox items.")
@@ -535,18 +536,18 @@
 ;;                            skipped))
 ;;                  (if (not org-agenda-persistent-marks) "" " (kept marked)")))))
 
-;(defun gas/org-inbox-capture ()
-;  (interactive)
-;  "Capture a task in agenda mode."
-;  (org-capture nil "i"))
+;;(defun gas/org-inbox-capture ()
+;;  (interactive)
+;;  "Capture a task in agenda mode."
+;;  (org-capture nil "i"))
 
-;(setq org-agenda-bulk-custom-functions `((,gas/org-agenda-bulk-process-key gas/org-agenda-process-inbox-item)))
-
-;(map! :map org-agenda-mode-map
-;      "i" #'org-agenda-clock-in
-;      "r" #'gas/org-process-inbox
-;      "R" #'org-agenda-refile
-;      "c" #'gas/org-inbox-capture)
+;;(setq org-agenda-bulk-custom-functions `((,gas/org-agenda-bulk-process-key gas/org-agenda-process-inbox-item)))
+;;
+;;(map! :map org-agenda-mode-map
+;;      "i" #'org-agenda-clock-in
+;;      "r" #'gas/org-process-inbox
+;;      "R" #'org-agenda-refile
+;;      "c" #'gas/org-inbox-capture)
 (defvar gas/organisation-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
 (defun gas/set-todo-state-next ()
   "Visit each parent task and change NEXT states to TODO"
@@ -640,7 +641,7 @@
                               (tags "REFILE"
                                     ((org-agenda-overriding-header "Tâches à la Représenter")
                                      (org-tags-match-list-sublevels nil))))))))
-              )
+)
 
 (after! org-agenda
         (setq org-agenda-prefix-format
@@ -649,10 +650,9 @@
                 (todo . " %i %-12:c%l")
                 (tags . " %i %-12:c")
                 (search . " %i %-12:c")))
-        (setq org-agenda-include-diary t))
+        (setq org-agenda-include-diary t)
+        (setq  gas/keep-clock-running nil))
 
-
-(setq  gas/keep-clock-running nil)
 
 ;;(use-package! org-gcal
 ;;  :after '(auth-source-pass password-store)
@@ -662,8 +662,8 @@
 ;;        org-gcal-file-alist
 ;;        '(("agasson@ateasystems.com" . "~/org/gtd/calendars/atea-cal.org")
 ;;          ;;("ateasystems.com_0ie21uc26j0a41g60b8f99mh1k@group.calendar.google.com" . "~/org/gtd/calendars/changecontrol-cal.org")
- ;;         )))
- ;;
+;;         )))
+;;
 (use-package! org-roam
               :commands (org-roam-insert org-roam-find-file org-roam-switch-to-buffer org-roam)
               ;;     :hook
@@ -710,7 +710,7 @@
                     ;; - source :: ${ref}"
                     ;;             :unnarrowed t)))
                     )
- )
+              )
 
 ;;   (use-package! org-roam-protocol
 ;;   :after org-protocol)
@@ -742,129 +742,129 @@
                            '(french-cards . (:filter (tag "french")))))
 
 
-(use-package! org-journal
-              ;; :bind
-              ;; ("C-c n j" . org-journal-new-entry)
-              ;; ("C-c n t" . org-journal-today)
-              :config
-              ;; (defun org-journal-file-header-func (time)
-              ;; "Custom function to create journal header."
-              ;; (concat
-              ;;   (pcase org-journal-file-type
-              ;;     (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
-              ;;     (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
-              ;;     (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
-              ;;     (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded"))))
+   (use-package! org-journal
+  ;; :bind
+  ;; ("C-c n j" . org-journal-new-entry)
+  ;; ("C-c n t" . org-journal-today)
+   :config
+  ;; (defun org-journal-file-header-func (time)
+  ;; "Custom function to create journal header."
+  ;; (concat
+  ;;   (pcase org-journal-file-type
+  ;;     (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
+  ;;     (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
+  ;;     (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
+  ;;     (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded"))))
 
-              ;;   (setq org-journal-file-header 'org-journal-file-header-func)
-              (setq
-               ;;     ;;org-journal-date-prefix "#+TITLE: "
-               org-journal-file-format "%Y-%m-%d.org"
-               org-journal-dir "~/Sync/org/roam"
-               ;;     org-journal-skip-carryover-drawers (list "LOGBOOK")
-               ;;     ;;org-journal-carryover-items nil
-               org-journal-date-format "%A, %d %B %Y")
-              (setq org-journal-enable-agenda-integration t)
-              )
+  ;;   (setq org-journal-file-header 'org-journal-file-header-func)
+     (setq
+  ;;     ;;org-journal-date-prefix "#+TITLE: "
+       org-journal-file-format "%Y-%m-%d.org"
+       org-journal-dir "~/Sync/org/roam"
+  ;;     org-journal-skip-carryover-drawers (list "LOGBOOK")
+  ;;     ;;org-journal-carryover-items nil
+       org-journal-date-format "%A, %d %B %Y")
+     (setq org-journal-enable-agenda-integration t)
+     )
 
 
-(use-package! obtt
-              :init
-              (setq! obtt-templates-dir
-                     (concat
-                      (if (boundp 'doom-private-dir)
-                          doom-private-dir
-                        user-emacs-directory)
-                      "obtt")
-                     obtt-seed-name ".obtt")
-              :config
-              (setq! obtt-project-directory (concat (getenv "HOME") "/Dev/clj" ))
+  (use-package! obtt
+    :init
+    (setq! obtt-templates-dir
+      (concat
+        (if (boundp 'doom-private-dir)
+          doom-private-dir
+          user-emacs-directory)
+        "obtt")
+      obtt-seed-name ".obtt")
+    :config
+    (setq! obtt-project-directory (concat (getenv "HOME") "/Dev/clj" )))
 
-              (when (not (file-directory-p obtt-templates-dir))
-                (make-directory obtt-templates-dir)))
-              ;;   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+  (when (not (file-directory-p obtt-templates-dir))
+    (make-directory obtt-templates-dir))
+     ;;   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
 
-;; )                                         ;; end of after! org
+  );; end of after! org
+
+ (after! org
+   (appendq! +ligatures-extra-symbols
+             `(:checkbox      "☐"
+               :pending       "◼"
+               :checkedbox    "☑"
+               :list_property "∷"
+               :results       "🠶"
+               :property      "☸"
+               :properties    "⚙"
+               :end           "∎"
+               :options       "⌥"
+               :title         "𝙏"
+               :subtitle      "𝙩"
+               :author        "𝘼"
+               :date          "𝘿"
+               :latex_header  "⇥"
+               :latex_class   "🄲"
+               :beamer_header "↠"
+               :begin_quote   "❮"
+               :end_quote     "❯"
+               :begin_export  "⯮"
+               :end_export    "⯬"
+               :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
+               :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
+               :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
+               :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
+               :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)
+               :em_dash       "—"))
+
+         (set-ligatures! 'org-mode
+           :merge t
+           :checkbox      "[ ]"
+           :pending       "[-]"
+           :checkedbox    "[X]"
+           :list_property "::"
+           :results       "#+results:"
+           :property      "#+property:"
+           :property      ":PROPERTIES:"
+           :end           ":END:"
+           :options       "#+options:"
+           :title         "#+title:"
+           :subtitle      "#+subtitle:"
+           :author        "#+author:"
+           :date          "#+date:"
+           :latex_class   "#+latex_class:"
+           :latex_header  "#+latex_header:"
+           :beamer_header "#+beamer_header:"
+           :begin_quote   "#+begin_quote"
+           :end_quote     "#+end_quote"
+           :begin_export  "#+begin_export"
+           :end_export    "#+end_export"
+           :priority_a    "[#A]"
+           :priority_b    "[#B]"
+           :priority_c    "[#C]"
+           :priority_d    "[#D]"
+           :priority_e    "[#E]"
+           :em_dash       "---")
+         ;;         (plist-put +ligatures-extra-symbols :name "⁍")      ; or › could be good?
+         )
+ (defun zz/org-download-paste-clipboard (&optional use-default-filename)
+   (interactive "P")
+   (require 'org-download)
+   (let ((file
+          (if (not use-default-filename)
+              (read-string (format "Filename [%s]: "
+                                   org-download-screenshot-basename)
+                           nil nil org-download-screenshot-basename)
+            nil)))
+     (org-download-clipboard file)))
 
 (after! org
-        (appendq! +ligatures-extra-symbols
-                  `(:checkbox      "☐"
-                    :pending       "◼"
-                    :checkedbox    "☑"
-                    :list_property "∷"
-                    :results       "🠶"
-                    :property      "☸"
-                    :properties    "⚙"
-                    :end           "∎"
-                    :options       "⌥"
-                    :title         "𝙏"
-                    :subtitle      "𝙩"
-                    :author        "𝘼"
-                    :date          "𝘿"
-                    :latex_header  "⇥"
-                    :latex_class   "🄲"
-                    :beamer_header "↠"
-                    :begin_quote   "❮"
-                    :end_quote     "❯"
-                    :begin_export  "⯮"
-                    :end_export    "⯬"
-                    :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
-                    :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
-                    :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
-                    :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
-                    :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)
-                    :em_dash       "—"))
-
-        (set-ligatures! 'org-mode
-          :merge t
-          :checkbox      "[ ]"
-          :pending       "[-]"
-          :checkedbox    "[X]"
-          :list_property "::"
-          :results       "#+results:"
-          :property      "#+property:"
-          :property      ":PROPERTIES:"
-          :end           ":END:"
-          :options       "#+options:"
-          :title         "#+title:"
-          :subtitle      "#+subtitle:"
-          :author        "#+author:"
-          :date          "#+date:"
-          :latex_class   "#+latex_class:"
-          :latex_header  "#+latex_header:"
-          :beamer_header "#+beamer_header:"
-          :begin_quote   "#+begin_quote"
-          :end_quote     "#+end_quote"
-          :begin_export  "#+begin_export"
-          :end_export    "#+end_export"
-          :priority_a    "[#A]"
-          :priority_b    "[#B]"
-          :priority_c    "[#C]"
-          :priority_d    "[#D]"
-          :priority_e    "[#E]"
-          :em_dash       "---")
-;;         (plist-put +ligatures-extra-symbols :name "⁍")      ; or › could be good?
-        )
-   (defun zz/org-download-paste-clipboard (&optional use-default-filename)
-     (interactive "P")
-     (require 'org-download)
-     (let ((file
-            (if (not use-default-filename)
-                (read-string (format "Filename [%s]: "
-                                     org-download-screenshot-basename)
-                             nil nil org-download-screenshot-basename)
-              nil)))
-       (org-download-clipboard file)))
-
-(after! org
-  (setq org-download-method 'directory)
-  (setq org-download-image-dir "images")
-  (setq org-download-heading-lvl nil)
-  (setq org-download-timestamp "%Y%m%d-%H%M%S_")
-  (setq org-image-actual-width 300)
-  (map! :map org-mode-map
-        "C-c l a y" #'zz/org-download-paste-clipboard
-    "C-M-y" #'zz/org-download-paste-clipboard))
+        (setq org-download-method 'directory)
+        (setq org-download-image-dir "images")
+        (setq org-download-heading-lvl nil)
+        (setq org-download-timestamp "%Y%m%d-%H%M%S_")
+        (setq org-image-actual-width 300)
+        (map! :map org-mode-map
+              "C-c l a y" #'zz/org-download-paste-clipboard
+              "C-M-y" #'zz/org-download-paste-clipboard))
 
 
 (when IS-MAC
