@@ -444,20 +444,20 @@
 ;           ))
 
 
-  (setq-default org-tag-alist (quote (("@errand"     . ?e)
-                                      ("@bureau"    . ?o)
-                                      ("@maison"    . ?h)
-                                      ("important"  . ?i)
-                                      ("urgent"     . ?u)
+(setq-default org-tag-alist (quote (("@errand"     . ?e)
+                                    ("@bureau"    . ?o)
+                                    ("@maison"    . ?h)
+                                    ("important"  . ?i)
+                                    ("urgent"     . ?u)
 
-                                      (:newline)
-                                      ("ATTENDRE"  . ?w)
-                                      ("SUSPENDUÉ" . ?h)
-                                      ("ANNULÉ"    . ?c)
-                                      ("RÉUNION"   . ?m)
-                                      ("TÉLÉPHONE" . ?p)
-                                      ("french"    . ?f)
-                                      ("spanish"   . ?s))))
+                                    (:newline)
+                                    ("ATTENDRE"  . ?w)
+                                    ("SUSPENDUÉ" . ?h)
+                                    ("ANNULÉ"    . ?c)
+                                    ("RÉUNION"   . ?m)
+                                    ("TÉLÉPHONE" . ?p)
+                                    ("french"    . ?f)
+                                    ("spanish"   . ?s))))
 
  ; (setq  org-highest-priority ?A
  ;   org-default-priority ?C
@@ -547,111 +547,112 @@
 ;      "r" #'gas/org-process-inbox
 ;      "R" #'org-agenda-refile
 ;      "c" #'gas/org-inbox-capture)
+(defvar gas/organisation-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
+(defun gas/set-todo-state-next ()
+  "Visit each parent task and change NEXT states to TODO"
+  (org-todo "SUIV"))
 
-  (defun gas/set-todo-state-next ()
-    "Visit each parent task and change NEXT states to TODO"
-    (org-todo "SUIV"))
+) ;; end of after! org
+(add-hook 'org-clock-in-hook 'gas/set-todo-state-next 'append)
 
-  (add-hook 'org-clock-in-hook 'gas/set-todo-state-next 'append)
-
-  (use-package! org-clock-convenience
-  :bind (:map org-agenda-mode-map
-              ("<S-up>" . org-clock-convenience-timestamp-up)
-              ("<S-down>" . org-clock-convenience-timestamp-down)
-              ("o" . org-clock-convenience-fill-gap)
-          ("e" . org-clock-convenience-fill-gap-both)))
-
-  (defvar gas/organisation-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
-
-  ;; (use-package! org-superstar
-  ;;   :config
-  ;;   (setq  org-superstar-todo-bullet-alist
-  ;;       '(("TODO" . 9744)
-  ;;         ("[ ]"  . 9744)
-  ;;         ("FINI" . 9745)
-  ;;          ("[X]"  . 9745))))
-
-  (use-package! org-agenda
-                :init
-                (map! "<f1>" #'gas/switch-to-agenda)
-;  (setq org-agenda-block-separator nil
-;        org-agenda-start-with-log-mode t)
-                (defun gas/switch-to-agenda ()
-                  (interactive)
-                  (org-agenda nil " "))
-                :config
-;  (setq org-columns-default-format "%40ITEM(Task) %Effort(EE){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)" )
-                (setq org-agenda-custom-commands
-                      (quote (
-                              ("N" "Notes" tags "NOTE"
-                               ((org-agenda-overriding-header "Notes")
-                                (org-tags-match-list-sublevels t)))
-                              ("h" "Habitudes" tags-todo "STYLE=\"habit\""
-                               ((org-agenda-overriding-header "Habitudes")
-                                (org-agenda-sorting-strategy
-                                 '(todo-state-down priority-down category-keep))))
-                              ("e" "Eisenhower Matrix"
-                               ((agenda ""
-                                        ((org-agenda-overriding-header "Calendrier Eisenhower:")
-                                         (org-agenda-show-log t)
-                                         (org-agenda-log-mode-items '(clock state))
-                                         (org-agenda-category-filter-preset '("-Habitudes"))
-                                         (org-agenda-span 5)
-                                         (org-agenda-start-on-weekday t)
-                                         ;;            (org-agenda-ndays 5)
-                                         ;;            (org-agenda-start-day "-2d")
-                                         (org-deadline-warning-days 30)))
-                                (tags-todo  "+important+urgent\!FINI"
-                                            ((org-agenda-overriding-header "Tâches importantes et urgentes")
-                                             (org-tags-match-list-sublevels nil)))
-                                (tags-todo  "+important-urgent"
-                                            ((org-agenda-overriding-header "Tâches importantes mais non urgentes")
-                                             (org-tags-match-list-sublevels nil)))
-                                (tags-todo "-important+urgent"
-                                           ((org-agenda-overriding-header "Tâches urgentes mais sans importance")
-                                            (org-tags-match-list-sublevels nil)))
-                                (tags-todo "-important-urgent/!TODO"
-                                           ((org-agenda-overriding-header "Tâches non importantes ni urgentes")
-                                            (org-agenda-category-filter-preset '("-Habitudes"))
-                                            (org-tags-match-list-sublevels nil)))
-                                (tags-todo "VALUE"
-                                           ((org-agenda-overriding-header "Valeurs")
-                                            (org-tags-match-list-sublevels nil)))
-                                ))
-                              (" " "Agenda"
-                               ((agenda ""
-                                        ((org-agenda-overriding-header "Calendrier d'aujourd'hui:")
-                                         (org-agenda-show-log t)
-                                         (org-agenda-log-mode-items '(clock state))
-                                         ;;   (org-agenda-span 'day)
-                                         ;;   (org-agenda-ndays 3)
-                                         (org-agenda-start-on-weekday nil)
-                                         (org-agenda-start-day "-d")
-                                         (org-agenda-todo-ignore-deadlines nil)))
-                                (tags-todo "+important"
-                                           ((org-agenda-overriding-header "Tâches Importantes à Venir")
-                                            (org-tags-match-list-sublevels nil)))
-                                (tags-todo "-important"
-                                           ((org-agenda-overriding-header "Tâches de Travail")
-                                            (org-agenda-category-filter-preset '("-Habitudes"))
-                                            (org-agenda-sorting-strategy
-                                             '(todo-state-down priority-down))))
-                                (tags "REFILE"
-                                      ((org-agenda-overriding-header "Tâches à la Représenter")
-                                       (org-tags-match-list-sublevels nil))))))))
-                )
-
-  (after! org-agenda
-  (setq org-agenda-prefix-format
-        '((agenda . " %i %-12:c%?-12t% s")
-          ;; Indent todo items by level to show nesting
-          (todo . " %i %-12:c%l")
-          (tags . " %i %-12:c")
-          (search . " %i %-12:c")))
-  (setq org-agenda-include-diary t))
+(use-package! org-clock-convenience
+              :bind (:map org-agenda-mode-map
+                     ("<S-up>" . org-clock-convenience-timestamp-up)
+                     ("<S-down>" . org-clock-convenience-timestamp-down)
+                     ("o" . org-clock-convenience-fill-gap)
+                     ("e" . org-clock-convenience-fill-gap-both)))
 
 
-  (setq  gas/keep-clock-running nil)
+
+;; (use-package! org-superstar
+;;   :config
+;;   (setq  org-superstar-todo-bullet-alist
+;;       '(("TODO" . 9744)
+;;         ("[ ]"  . 9744)
+;;         ("FINI" . 9745)
+;;          ("[X]"  . 9745))))
+
+(use-package! org-agenda
+              :init
+              (map! "<f1>" #'gas/switch-to-agenda)
+                                        ;  (setq org-agenda-block-separator nil
+                                        ;        org-agenda-start-with-log-mode t)
+              (defun gas/switch-to-agenda ()
+                (interactive)
+                (org-agenda nil " "))
+              :config
+                                        ;  (setq org-columns-default-format "%40ITEM(Task) %Effort(EE){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)" )
+              (setq org-agenda-custom-commands
+                    (quote (
+                            ("N" "Notes" tags "NOTE"
+                             ((org-agenda-overriding-header "Notes")
+                              (org-tags-match-list-sublevels t)))
+                            ("h" "Habitudes" tags-todo "STYLE=\"habit\""
+                             ((org-agenda-overriding-header "Habitudes")
+                              (org-agenda-sorting-strategy
+                               '(todo-state-down priority-down category-keep))))
+                            ("e" "Eisenhower Matrix"
+                             ((agenda ""
+                                      ((org-agenda-overriding-header "Calendrier Eisenhower:")
+                                       (org-agenda-show-log t)
+                                       (org-agenda-log-mode-items '(clock state))
+                                       (org-agenda-category-filter-preset '("-Habitudes"))
+                                       (org-agenda-span 5)
+                                       (org-agenda-start-on-weekday t)
+                                       ;;            (org-agenda-ndays 5)
+                                       ;;            (org-agenda-start-day "-2d")
+                                       (org-deadline-warning-days 30)))
+                              (tags-todo  "+important+urgent\!FINI"
+                                          ((org-agenda-overriding-header "Tâches importantes et urgentes")
+                                           (org-tags-match-list-sublevels nil)))
+                              (tags-todo  "+important-urgent"
+                                          ((org-agenda-overriding-header "Tâches importantes mais non urgentes")
+                                           (org-tags-match-list-sublevels nil)))
+                              (tags-todo "-important+urgent"
+                                         ((org-agenda-overriding-header "Tâches urgentes mais sans importance")
+                                          (org-tags-match-list-sublevels nil)))
+                              (tags-todo "-important-urgent/!TODO"
+                                         ((org-agenda-overriding-header "Tâches non importantes ni urgentes")
+                                          (org-agenda-category-filter-preset '("-Habitudes"))
+                                          (org-tags-match-list-sublevels nil)))
+                              (tags-todo "VALUE"
+                                         ((org-agenda-overriding-header "Valeurs")
+                                          (org-tags-match-list-sublevels nil)))
+                              ))
+                            (" " "Agenda"
+                             ((agenda ""
+                                      ((org-agenda-overriding-header "Calendrier d'aujourd'hui:")
+                                       (org-agenda-show-log t)
+                                       (org-agenda-log-mode-items '(clock state))
+                                       ;;   (org-agenda-span 'day)
+                                       ;;   (org-agenda-ndays 3)
+                                       (org-agenda-start-on-weekday nil)
+                                       (org-agenda-start-day "-d")
+                                       (org-agenda-todo-ignore-deadlines nil)))
+                              (tags-todo "+important"
+                                         ((org-agenda-overriding-header "Tâches Importantes à Venir")
+                                          (org-tags-match-list-sublevels nil)))
+                              (tags-todo "-important"
+                                         ((org-agenda-overriding-header "Tâches de Travail")
+                                          (org-agenda-category-filter-preset '("-Habitudes"))
+                                          (org-agenda-sorting-strategy
+                                           '(todo-state-down priority-down))))
+                              (tags "REFILE"
+                                    ((org-agenda-overriding-header "Tâches à la Représenter")
+                                     (org-tags-match-list-sublevels nil))))))))
+              )
+
+(after! org-agenda
+        (setq org-agenda-prefix-format
+              '((agenda . " %i %-12:c%?-12t% s")
+                ;; Indent todo items by level to show nesting
+                (todo . " %i %-12:c%l")
+                (tags . " %i %-12:c")
+                (search . " %i %-12:c")))
+        (setq org-agenda-include-diary t))
+
+
+(setq  gas/keep-clock-running nil)
 
 ;;(use-package! org-gcal
 ;;  :after '(auth-source-pass password-store)
@@ -663,57 +664,58 @@
 ;;          ;;("ateasystems.com_0ie21uc26j0a41g60b8f99mh1k@group.calendar.google.com" . "~/org/gtd/calendars/changecontrol-cal.org")
  ;;         )))
  ;;
-   (use-package! org-roam
-     :commands (org-roam-insert org-roam-find-file org-roam-switch-to-buffer org-roam)
-;;     :hook
-;;     (after-init . org-roam-mode)
-;;     :custom-face
-;;   ;;  (org-roam-link ((t (:inherit org-link :foreground "#005200"))))
-     :init
-       (setq org-roam-directory "~/Sync/org/roam"
-;;       org-roam-db-location "~/org/roam/org-roam.db"
-;;       org-roam-db-gc-threshold most-positive-fixnum
-;;       org-roam-graph-exclude-matcher "private"
-;;       org-roam-tag-sources '(prop last-directory)
-;;       org-id-link-to-org-use-id t)
-;;     :config
-;;     (setq org-roam-capture-templates
-;;       '(("l" "lit" plain (function org-roam--capture-get-point)
-;;           "%?"
-;;           :file-name "lit/${slug}"
-;;           :head "#+setupfile:./hugo_setup.org
-;; #+hugo_slug: ${slug}
-;; #+title: ${title}\n"
-;;           :unnarrowed t)
-;;          ("c" "concept" plain (function org-roam--capture-get-point)
-;;            "%?"
-;;            :file-name "concepts/${slug}"
-;;            :head "#+setupfile:./hugo_setup.org
-;; #+hugo_slug: ${slug}
-;; #+title: ${title}\n"
-;;            :unnarrowed t)
-;;           ("p" "private" plain (function org-roam-capture--get-point)
-;;            "%?"
-;;            :file-name "private/${slug}"
-;;            :head "#+title: ${title}\n"
-;;            :unnarrowed t)))
-;;   (setq org-roam-capture-ref-templates
-;;         '(("r" "ref" plain (function org-roam-capture--get-point)
-;;            "%?"
-;;            :file-name "lit/${slug}"
-;;            :head "#+setupfile:./hugo_setup.org
-;; #+roam_key: ${ref}
-;; #+hugo_slug: ${slug}
-;; #+roam_tags: website
-;; #+title: ${title}
-;; - source :: ${ref}"
-;;             :unnarrowed t)))
-             )
+(use-package! org-roam
+              :commands (org-roam-insert org-roam-find-file org-roam-switch-to-buffer org-roam)
+              ;;     :hook
+              ;;     (after-init . org-roam-mode)
+              ;;     :custom-face
+              ;;   ;;  (org-roam-link ((t (:inherit org-link :foreground "#005200"))))
+              :init
+              (setq org-roam-directory "~/org/roam"
+                    ;;       org-roam-db-location "~/org/roam/org-roam.db"
+                    ;;       org-roam-db-gc-threshold most-positive-fixnum
+                    ;;       org-roam-graph-exclude-matcher "private"
+                    ;;       org-roam-tag-sources '(prop last-directory)
+                    ;;       org-id-link-to-org-use-id t)
+                    ;;     :config
+                    ;;     (setq org-roam-capture-templates
+                    ;;       '(("l" "lit" plain (function org-roam--capture-get-point)
+                    ;;           "%?"
+                    ;;           :file-name "lit/${slug}"
+                    ;;           :head "#+setupfile:./hugo_setup.org
+                    ;; #+hugo_slug: ${slug}
+                    ;; #+title: ${title}\n"
+                    ;;           :unnarrowed t)
+                    ;;          ("c" "concept" plain (function org-roam--capture-get-point)
+                    ;;            "%?"
+                    ;;            :file-name "concepts/${slug}"
+                    ;;            :head "#+setupfile:./hugo_setup.org
+                    ;; #+hugo_slug: ${slug}
+                    ;; #+title: ${title}\n"
+                    ;;            :unnarrowed t)
+                    ;;           ("p" "private" plain (function org-roam-capture--get-point)
+                    ;;            "%?"
+                    ;;            :file-name "private/${slug}"
+                    ;;            :head "#+title: ${title}\n"
+                    ;;            :unnarrowed t)))
+                    ;;   (setq org-roam-capture-ref-templates
+                    ;;         '(("r" "ref" plain (function org-roam-capture--get-point)
+                    ;;            "%?"
+                    ;;            :file-name "lit/${slug}"
+                    ;;            :head "#+setupfile:./hugo_setup.org
+                    ;; #+roam_key: ${ref}
+                    ;; #+hugo_slug: ${slug}
+                    ;; #+roam_tags: website
+                    ;; #+title: ${title}
+                    ;; - source :: ${ref}"
+                    ;;             :unnarrowed t)))
+                    )
+ )
 
 ;;   (use-package! org-roam-protocol
 ;;   :after org-protocol)
-;(require 'org-roam-protocol)
-;(setq org-protocol-default-template-key "d")
+                                        ;(require 'org-roam-protocol)
+                                        ;(setq org-protocol-default-template-key "d")
 ;; (use-package! company-posframe
 ;;   :hook (company-mode . company-posframe-mode))
 
@@ -729,120 +731,120 @@
 ;;       "<M-right>" #'winner-redo
 ;;       "<M-left>" #'winner-undo))
 
-  (use-package! org-fc
-    :commands org-fc-hydra/body
-    :bind ("C-c n r p" . org-fc-hydra/body)
-    :defer t
-    :config
-    (require 'org-fc-hydra)
-    (org-fc-directories '("~/org/spaced-repetition/"))
-    (add-to-list 'org-fc-custom-contexts
-      '(french-cards . (:filter (tag "french")))))
+(use-package! org-fc
+              :commands org-fc-hydra/body
+              :bind ("C-c n r p" . org-fc-hydra/body)
+              :defer t
+              :config
+              (require 'org-fc-hydra)
+              (org-fc-directories '("~/org/spaced-repetition/"))
+              (add-to-list 'org-fc-custom-contexts
+                           '(french-cards . (:filter (tag "french")))))
 
 
-   (use-package! org-journal
-  ;; :bind
-  ;; ("C-c n j" . org-journal-new-entry)
-  ;; ("C-c n t" . org-journal-today)
-   :config
-  ;; (defun org-journal-file-header-func (time)
-  ;; "Custom function to create journal header."
-  ;; (concat
-  ;;   (pcase org-journal-file-type
-  ;;     (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
-  ;;     (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
-  ;;     (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
-  ;;     (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded"))))
+(use-package! org-journal
+              ;; :bind
+              ;; ("C-c n j" . org-journal-new-entry)
+              ;; ("C-c n t" . org-journal-today)
+              :config
+              ;; (defun org-journal-file-header-func (time)
+              ;; "Custom function to create journal header."
+              ;; (concat
+              ;;   (pcase org-journal-file-type
+              ;;     (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
+              ;;     (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
+              ;;     (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
+              ;;     (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded"))))
 
-  ;;   (setq org-journal-file-header 'org-journal-file-header-func)
-     (setq
-  ;;     ;;org-journal-date-prefix "#+TITLE: "
-       org-journal-file-format "%Y-%m-%d.org"
-       org-journal-dir "~/Sync/org/roam"
-  ;;     org-journal-skip-carryover-drawers (list "LOGBOOK")
-  ;;     ;;org-journal-carryover-items nil
-       org-journal-date-format "%A, %d %B %Y")
-     (setq org-journal-enable-agenda-integration t)
-     )
+              ;;   (setq org-journal-file-header 'org-journal-file-header-func)
+              (setq
+               ;;     ;;org-journal-date-prefix "#+TITLE: "
+               org-journal-file-format "%Y-%m-%d.org"
+               org-journal-dir "~/Sync/org/roam"
+               ;;     org-journal-skip-carryover-drawers (list "LOGBOOK")
+               ;;     ;;org-journal-carryover-items nil
+               org-journal-date-format "%A, %d %B %Y")
+              (setq org-journal-enable-agenda-integration t)
+              )
 
 
-  (use-package! obtt
-    :init
-    (setq! obtt-templates-dir
-      (concat
-        (if (boundp 'doom-private-dir)
-          doom-private-dir
-          user-emacs-directory)
-        "obtt")
-      obtt-seed-name ".obtt")
-    :config
-    (setq! obtt-project-directory (concat (getenv "HOME") "/Dev/clj" )))
+(use-package! obtt
+              :init
+              (setq! obtt-templates-dir
+                     (concat
+                      (if (boundp 'doom-private-dir)
+                          doom-private-dir
+                        user-emacs-directory)
+                      "obtt")
+                     obtt-seed-name ".obtt")
+              :config
+              (setq! obtt-project-directory (concat (getenv "HOME") "/Dev/clj" ))
 
-  (when (not (file-directory-p obtt-templates-dir))
-    (make-directory obtt-templates-dir))
-     ;;   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+              (when (not (file-directory-p obtt-templates-dir))
+                (make-directory obtt-templates-dir)))
+              ;;   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
 
-  );; end of after! org
+;; )                                         ;; end of after! org
 
- (after! org
-   (appendq! +ligatures-extra-symbols
-             `(:checkbox      "☐"
-               :pending       "◼"
-               :checkedbox    "☑"
-               :list_property "∷"
-               :results       "🠶"
-               :property      "☸"
-               :properties    "⚙"
-               :end           "∎"
-               :options       "⌥"
-               :title         "𝙏"
-               :subtitle      "𝙩"
-               :author        "𝘼"
-               :date          "𝘿"
-               :latex_header  "⇥"
-               :latex_class   "🄲"
-               :beamer_header "↠"
-               :begin_quote   "❮"
-               :end_quote     "❯"
-               :begin_export  "⯮"
-               :end_export    "⯬"
-               :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
-               :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
-               :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
-               :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
-               :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)
-               :em_dash       "—"))
+(after! org
+        (appendq! +ligatures-extra-symbols
+                  `(:checkbox      "☐"
+                    :pending       "◼"
+                    :checkedbox    "☑"
+                    :list_property "∷"
+                    :results       "🠶"
+                    :property      "☸"
+                    :properties    "⚙"
+                    :end           "∎"
+                    :options       "⌥"
+                    :title         "𝙏"
+                    :subtitle      "𝙩"
+                    :author        "𝘼"
+                    :date          "𝘿"
+                    :latex_header  "⇥"
+                    :latex_class   "🄲"
+                    :beamer_header "↠"
+                    :begin_quote   "❮"
+                    :end_quote     "❯"
+                    :begin_export  "⯮"
+                    :end_export    "⯬"
+                    :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
+                    :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
+                    :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
+                    :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
+                    :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)
+                    :em_dash       "—"))
 
-         (set-ligatures! 'org-mode
-           :merge t
-           :checkbox      "[ ]"
-           :pending       "[-]"
-           :checkedbox    "[X]"
-           :list_property "::"
-           :results       "#+results:"
-           :property      "#+property:"
-           :property      ":PROPERTIES:"
-           :end           ":END:"
-           :options       "#+options:"
-           :title         "#+title:"
-           :subtitle      "#+subtitle:"
-           :author        "#+author:"
-           :date          "#+date:"
-           :latex_class   "#+latex_class:"
-           :latex_header  "#+latex_header:"
-           :beamer_header "#+beamer_header:"
-           :begin_quote   "#+begin_quote"
-           :end_quote     "#+end_quote"
-           :begin_export  "#+begin_export"
-           :end_export    "#+end_export"
-           :priority_a    "[#A]"
-           :priority_b    "[#B]"
-           :priority_c    "[#C]"
-           :priority_d    "[#D]"
-           :priority_e    "[#E]"
-           :em_dash       "---")
-         ;;         (plist-put +ligatures-extra-symbols :name "⁍")      ; or › could be good?
-         )
+        (set-ligatures! 'org-mode
+          :merge t
+          :checkbox      "[ ]"
+          :pending       "[-]"
+          :checkedbox    "[X]"
+          :list_property "::"
+          :results       "#+results:"
+          :property      "#+property:"
+          :property      ":PROPERTIES:"
+          :end           ":END:"
+          :options       "#+options:"
+          :title         "#+title:"
+          :subtitle      "#+subtitle:"
+          :author        "#+author:"
+          :date          "#+date:"
+          :latex_class   "#+latex_class:"
+          :latex_header  "#+latex_header:"
+          :beamer_header "#+beamer_header:"
+          :begin_quote   "#+begin_quote"
+          :end_quote     "#+end_quote"
+          :begin_export  "#+begin_export"
+          :end_export    "#+end_export"
+          :priority_a    "[#A]"
+          :priority_b    "[#B]"
+          :priority_c    "[#C]"
+          :priority_d    "[#D]"
+          :priority_e    "[#E]"
+          :em_dash       "---")
+;;         (plist-put +ligatures-extra-symbols :name "⁍")      ; or › could be good?
+        )
    (defun zz/org-download-paste-clipboard (&optional use-default-filename)
      (interactive "P")
      (require 'org-download)
