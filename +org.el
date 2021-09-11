@@ -553,7 +553,6 @@
   "Visit each parent task and change NEXT states to TODO"
   (org-todo "SUIV"))
 
-) ;; end of after! org
 (add-hook 'org-clock-in-hook 'gas/set-todo-state-next 'append)
 
 (use-package! org-clock-convenience
@@ -565,13 +564,13 @@
 
 
 
-;; (use-package! org-superstar
-;;   :config
-;;   (setq  org-superstar-todo-bullet-alist
-;;       '(("TODO" . 9744)
-;;         ("[ ]"  . 9744)
-;;         ("FINI" . 9745)
-;;          ("[X]"  . 9745))))
+(use-package! org-superstar
+   :config
+   (setq  org-superstar-todo-bullet-alist
+       '(("TODO" . 9744)
+         ("[ ]"  . 9744)
+         ("FINI" . 9745)
+         ("[X]"  . 9745))))
 
 (use-package! org-agenda
               :init
@@ -741,11 +740,10 @@
               (add-to-list 'org-fc-custom-contexts
                            '(french-cards . (:filter (tag "french")))))
 
-
-   (use-package! org-journal
-  ;; :bind
-  ;; ("C-c n j" . org-journal-new-entry)
-  ;; ("C-c n t" . org-journal-today)
+(use-package! org-journal
+   :bind
+   ("C-c n j" . org-journal-new-entry)
+   ("C-c n t" . org-journal-today)
    :config
   ;; (defun org-journal-file-header-func (time)
   ;; "Custom function to create journal header."
@@ -784,9 +782,9 @@
     (make-directory obtt-templates-dir))
      ;;   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
 
-  );; end of after! org
+);; end of after! org
 
- (after! org
+(after! org
    (appendq! +ligatures-extra-symbols
              `(:checkbox      "☐"
                :pending       "◼"

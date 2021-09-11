@@ -105,7 +105,7 @@
   (add-to-list 'cljr-project-clean-functions 'cleanup-buffer))
 
 (use-package! clojure-snippets
-  )
+   )
 
 (use-package! kaocha-runner
   )
@@ -118,3 +118,7 @@
   (setq tramp-shell-prompt-pattern "\\(?:^\\|\\)[^]#$%>\n]*#?[]#$%>] *\\(�\\[[0-9;]*[a-zA-Z] *\\)*")
   ) ;; default + 
 
+
+(after! python
+  (setq conda-anaconda-home "/usr/local/Caskroom/miniforge/base"
+        conda-env-home-directory "/usr/local/Caskroom/miniforge/base"))

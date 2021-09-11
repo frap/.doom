@@ -37,3 +37,4 @@
 (package! janet-mode)
 (package! inf-janet
   :recipe (:host github :repo "velkyel/inf-janet"))
+(package! magit-section)
