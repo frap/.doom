@@ -216,15 +216,15 @@
 (setq tab-width 2)
 (setq-default indent-tabs-mode nil)
 
-(setq exec-path
-      (list (concat (getenv "XDG_CONFIG_DIR") "/local/bin")
-            "/usr/local/Caskroom/miniforge/base/bin"          ;; conda python
-            "/usr/local/bin/"
-            "/usr/bin/"
-            "/bin/"
-            "/usr/sbin/"
-            "/sbin/"
-            (concat (getenv "XDG_CONFIG_DIR") "/emacs/bin")
-            ))
+;; (setq exec-path
+;;       (list (concat (getenv "XDG_CONFIG_DIR") "/local/bin")
+;;             "/usr/local/Caskroom/miniforge/base/bin"          ;; conda python
+;;             "/usr/local/bin/"
+;;             "/usr/bin/"
+;;             "/bin/"
+;;             "/usr/sbin/"
+;;             "/sbin/"
+;;             (concat (getenv "XDG_CONFIG_DIR") "/emacs/bin")
+;;             ))
 
-(setenv "PATH" (string-join exec-path ":"))
+;; (setenv "PATH" (string-join exec-path ":"))

@@ -21,7 +21,6 @@
 ;;                        (dotimes (i (or n 2))
 ;;                          (end-of-defun))
 ;;                        (point))))
-
 ;; smartparens-strict-mode to enforce parenthesis to match. I map M-( to enclose the next expression as in paredit using a custom function.
 ;; Prefix argument can be used to indicate how many expressions to enclose instead of just 1. E.g. C-u 3 M-( will enclose the next 3 sexps.
 (defun zz/sp-enclose-next-sexp (num)
@@ -119,6 +118,8 @@
   ) ;; default + 
 
 
+(defconst IS-MAC-M1 (string-match-p "arch64" system-configuration))
 (after! python
-  (setq conda-anaconda-home "/usr/local/Caskroom/miniforge/base"
-        conda-env-home-directory "/usr/local/Caskroom/miniforge/base"))
+  (setq conda-anaconda-home (substitute-in-file-name "${HOMEBREW_PREFIX}/Caskroom/miniforge/base")
+        conda-env-home-directory
+        (substitute-in-file-name "${HOMEBREW_PREFIX}/Caskroom/miniforge/base")))
