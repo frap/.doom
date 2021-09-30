@@ -33,8 +33,8 @@
 ;(setq display-line-numbers-type 'relative)
 
 ;; I’d like some slightly nicer default buffer names
-;;(setq doom-fallback-buffer-name "► Doom"
-;;      +doom-dashboard-name "► Doom")
+(setq doom-fallback-buffer-name "► Doom"
+      +doom-dashboard-name "► Doom")
 
 ;; Load Personalised bindings
 (load! "+bindings")
@@ -60,29 +60,29 @@
 (setq which-key-idle-delay 0.5) ;; I need the help, I really do
 
 
-(setq search-highlight t
-      search-whitespace-regexp ".*?"
-      isearch-lax-whitespace t
-      isearch-regexp-lax-whitespace nil
-      isearch-lazy-highlight t
-      isearch-lazy-count t
-      lazy-count-prefix-format " (%s/%s) "
-      lazy-count-suffix-format nil
-      isearch-yank-on-move 'shift
-      isearch-allow-scroll 'unlimited)
+;;(setq search-highlight t
+;;      search-whitespace-regexp ".*?"
+;;      isearch-lax-whitespace t
+;;      isearch-regexp-lax-whitespace nil
+;;      isearch-lazy-highlight t
+;;      isearch-lazy-count t
+;;      lazy-count-prefix-format " (%s/%s) "
+;;      lazy-count-suffix-format nil
+;;      isearch-yank-on-move 'shift
+;;      isearch-allow-scroll 'unlimited)
 
 
-(after! dired
-  (setq dired-listing-switches "-aBhl  --group-directories-first"
-        dired-dwim-target t
-        dired-recursive-copies (quote always)
-        dired-recursive-deletes (quote top)))
+;;(after! dired
+ ;; (setq dired-listing-switches "-aBhl  --group-directories-first"
+ ;;       dired-dwim-target t
+ ;;       dired-recursive-copies (quote always)
+;;        dired-recursive-deletes (quote top)))
 
-(use-package! dired-narrow
-  :commands (dired-narrow-fuzzy)
-  :init
-  (map! :map dired-mode-map
-        :desc "narrow" "/" #'dired-narrow-fuzzy))
+;;(use-package! dired-narrow
+;;  :commands (dired-narrow-fuzzy)
+;;  :init
+;;  (map! :map dired-mode-map
+;;        :desc "narrow" "/" #'dired-narrow-fuzzy))
 
 ;; Reuse dired buffers
-(put 'dired-find-alternate-file 'disabled nil)
+;;(put 'dired-find-alternate-file 'disabled nil)

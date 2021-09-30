@@ -3,7 +3,7 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq
-  org-directory "~/Sync/org/"
+  org-directory "~/org/"
   org-use-property-inheritance t              ; it's convenient to have properties inherited
   org-list-allow-alphabetical t               ; have a. A. a) A) list bullets
   org-export-in-background t                  ; run export processes in external emacs process
@@ -12,7 +12,7 @@
   org-ellipsis " ▼ "
 
  ;; org-archive-location (concat org-directory ".archive/%s::")
-  org-roam-directory "~/Sync/org/roam/"
+  org-roam-directory "~/org/roam/"
 
  )
 
@@ -460,53 +460,53 @@
                                     ("french"    . ?f)
                                     ("spanish"   . ?s))))
 
-;; (setq  org-highest-priority ?A
-;;   org-default-priority ?C
-;;   org-lowest-priority  ?D)
+ (setq  org-highest-priority ?A
+   org-default-priority ?C
+   org-lowest-priority  ?D)
 
-;;  (setq org-fast-tag-selection-single-key nil)
+  (setq org-fast-tag-selection-single-key nil)
 
-;; (defvar gas/org-agenda-bulk-process-key ?f
-;;   "Default key for bulk processing inbox items.")
+ (defvar gas/org-agenda-bulk-process-key ?f
+   "Default key for bulk processing inbox items.")
 
-;; (defun gas/org-process-inbox ()
-;;   "Called in org-agenda-mode, processes all inbox items."
-;;   (interactive)
-;;   (org-agenda-bulk-mark-regexp "inbox:")
-;;   (gas/bulk-process-entries))
+ (defun gas/org-process-inbox ()
+   "Called in org-agenda-mode, processes all inbox items."
+   (interactive)
+   (org-agenda-bulk-mark-regexp "inbox:")
+   (gas/bulk-process-entries))
 
-;; (defvar gas/org-current-effort "1:00"
-;;   "Current effort for agenda items.")
+ (defvar gas/org-current-effort "1:00"
+   "Current effort for agenda items.")
 
-;; (defun gas/my-org-agenda-set-effort (effort)
-;;   "Set the effort property for the current headline."
-;;   (interactive
-;;    (list (read-string (format "Effort [%s]: " gas/org-current-effort) nil nil gas/org-current-effort)))
-;;   (setq gas/org-current-effort effort)
-;;   (org-agenda-check-no-diary)
-;;   (let* ((hdmarker (or (org-get-at-bol 'org-hd-marker)
-;;                        (org-agenda-error)))
-;;          (buffer (marker-buffer hdmarker))
-;;          (pos (marker-position hdmarker))
-;;          (inhibit-read-only t)
-;;          newhead)
-;;     (org-with-remote-undo buffer
-;;       (with-current-buffer buffer
-;;         (widen)
-;;         (goto-char pos)
-;;         (org-show-context 'agenda)
-;;         (funcall-interactively 'org-set-effort nil gas/org-current-effort)
-;;         (end-of-line 1)
-;;         (setq newhead (org-get-heading)))
-;;       (org-agenda-change-all-lines newhead hdmarker))))
+ (defun gas/my-org-agenda-set-effort (effort)
+   "Set the effort property for the current headline."
+   (interactive
+    (list (read-string (format "Effort [%s]: " gas/org-current-effort) nil nil gas/org-current-effort)))
+   (setq gas/org-current-effort effort)
+   (org-agenda-check-no-diary)
+   (let* ((hdmarker (or (org-get-at-bol 'org-hd-marker)
+                        (org-agenda-error)))
+          (buffer (marker-buffer hdmarker))
+          (pos (marker-position hdmarker))
+          (inhibit-read-only t)
+          newhead)
+     (org-with-remote-undo buffer
+       (with-current-buffer buffer
+         (widen)
+         (goto-char pos)
+         (org-show-context 'agenda)
+         (funcall-interactively 'org-set-effort nil gas/org-current-effort)
+         (end-of-line 1)
+         (setq newhead (org-get-heading)))
+       (org-agenda-change-all-lines newhead hdmarker))))
 
-;; (defun gas/org-agenda-process-inbox-item ()
-;;   "Process a single item in the org-agenda."
-;;   (org-with-wide-buffer
-;;    (org-agenda-set-tags)
-;;    (org-agenda-priority)
-;;    (call-interactively 'gas/my-org-agenda-set-effort)
-;;    (org-agenda-refile nil nil t)))
+ (defun gas/org-agenda-process-inbox-item ()
+   "Process a single item in the org-agenda."
+   (org-with-wide-buffer
+    (org-agenda-set-tags)
+    (org-agenda-priority)
+    (call-interactively 'gas/my-org-agenda-set-effort)
+    (org-agenda-refile nil nil t)))
 
 ;; (defun gas/bulk-process-entries ()
 ;;   (if (not (null org-agenda-bulk-marked-entries))
@@ -543,15 +543,16 @@
 
 ;;(setq org-agenda-bulk-custom-functions `((,gas/org-agenda-bulk-process-key gas/org-agenda-process-inbox-item)))
 ;;
-;;(map! :map org-agenda-mode-map
-;;      "i" #'org-agenda-clock-in
-;;      "r" #'gas/org-process-inbox
-;;      "R" #'org-agenda-refile
-;;      "c" #'gas/org-inbox-capture)
+(map! :map org-agenda-mode-map
+      "i" #'org-agenda-clock-in
+      "r" #'gas/org-process-inbox
+      "R" #'org-agenda-refile
+      "c" #'gas/org-inbox-capture)
 (defvar gas/organisation-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
 (defun gas/set-todo-state-next ()
   "Visit each parent task and change NEXT states to TODO"
   (org-todo "SUIV"))
+
 
 (add-hook 'org-clock-in-hook 'gas/set-todo-state-next 'append)
 
@@ -843,36 +844,26 @@
            :em_dash       "---")
          ;;         (plist-put +ligatures-extra-symbols :name "⁍")      ; or › could be good?
          )
- (defun zz/org-download-paste-clipboard (&optional use-default-filename)
-   (interactive "P")
-   (require 'org-download)
-   (let ((file
-          (if (not use-default-filename)
-              (read-string (format "Filename [%s]: "
-                                   org-download-screenshot-basename)
-                           nil nil org-download-screenshot-basename)
-            nil)))
-     (org-download-clipboard file)))
-
-(after! org
-        (setq org-download-method 'directory)
-        (setq org-download-image-dir "images")
-        (setq org-download-heading-lvl nil)
-        (setq org-download-timestamp "%Y%m%d-%H%M%S_")
-        (setq org-image-actual-width 300)
-        (map! :map org-mode-map
-              "C-c l a y" #'zz/org-download-paste-clipboard
-              "C-M-y" #'zz/org-download-paste-clipboard))
+ ;; (defun zz/org-download-paste-clipboard (&optional use-default-filename)
+ ;;   (interactive "P")
+ ;;   (require 'org-download)
+ ;;   (let ((file
+ ;;          (if (not use-default-filename)
+ ;;              (read-string (format "Filename [%s]: "
+ ;;                                   org-download-screenshot-basename)
+ ;;                           nil nil org-download-screenshot-basename)
+ ;;            nil)))
+ ;;     (org-download-clipboard file)))
 
 
-(when IS-MAC
-  (use-package! org-mac-link
-    :after org
-    :config
-    (setq org-mac-grab-Acrobat-app-p nil) ; Disable grabbing from Adobe Acrobat
-    (setq org-mac-grab-devonthink-app-p nil) ; Disable grabbinb from DevonThink
-    (map! :map org-mode-map
-      "C-c g"  #'org-mac-grab-link)))
+;; (when IS-MAC
+;;   (use-package! org-mac-link
+;;     :after org
+;;     :config
+;;     (setq org-mac-grab-Acrobat-app-p nil) ; Disable grabbing from Adobe Acrobat
+;;     (setq org-mac-grab-devonthink-app-p nil) ; Disable grabbinb from DevonThink
+;;     (map! :map org-mode-map
+;;       "C-c g"  #'org-mac-grab-link)))
 
 
 (add-hook! org-mode (electric-indent-local-mode -1))

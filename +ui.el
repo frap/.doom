@@ -10,7 +10,7 @@
 ;; Font ans Screen setup
 (if IS-MAC
   (setq
-   doom-font (font-spec :family "Hack Nerd Font" :size 13)
+   doom-font (font-spec :family "Jetbrains Mono" :size 13)
    doom-variable-pitch-font (font-spec :family "Sathu" :size 13)
     doom-unicode-font (font-spec :family "Fira Code" :size 12)
     doom-big-font (font-spec :family "Hack" :size 24)
@@ -21,10 +21,10 @@
     +doom-dashboard-banner-file "black-hole.png"
     +doom-dashboard-banner-padding '(0 . 1)
     ;; screen size
-   ;; default-frame-alist '((left . 0) (width . 100) (fullscreen . fullheight)))
-    initial-frame-alist '((fullscreen . maximized))
+    default-frame-alist '((left . 0) (width . 163) (fullscreen . fullheight))
+    ;;initial-frame-alist '((fullscreen . maximized))
     ;; subsequent frames arew fullheight but not fullwidth
-    default-frame-alist '((fullscreen . fullheight))
+    ;;default-frame-alist '((fullscreen . fullheight))
   ))
 
 (when (or IS-LINUX  (equal (window-system) nil))

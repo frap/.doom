@@ -38,3 +38,7 @@
 (package! inf-janet
   :recipe (:host github :repo "velkyel/inf-janet"))
 (package! magit-section)
+
+;; bugs
+(package! cider :pin "8b3dabe")
+(package! map :pin "896384b")
