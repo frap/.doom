@@ -9,6 +9,32 @@
              ))
 
 
+(global-set-key (kbd "M-p") (kbd "C-- C-x o"))
+(global-set-key (kbd "M-n") (kbd "C-x o"))
+(global-set-key (kbd "M-j") 'windmove-down)
+(global-set-key (kbd "M-k") 'windmove-up)
+(global-set-key (kbd "M-h") 'windmove-left)
+(global-set-key (kbd "M-l") 'windmove-right)
+
+(global-set-key (kbd "<f12>") 'next-buffer)
+(global-set-key (kbd "<f11>") 'previous-buffer)
+
+(global-set-key (kbd "s-v") 'clipboard-yank)
+(global-set-key (kbd "s-k") 'kill-current-buffer)
+(global-set-key (kbd "s-e") 'eval-region)
+(global-set-key (kbd "s-b") 'eval-buffer)
+(global-set-key (kbd "s-c") 'compile)
+(global-set-key (kbd "s-r") 'recompile)
+(global-set-key (kbd "s-,") 'previous-buffer)
+(global-set-key (kbd "s-.") 'next-buffer)
+(global-set-key (kbd "s-j") 'jump-to-register)
+
+(fset 'my/shrink (kbd "C-u 39 C-x {"))
+
+;;clipboard yank
+(global-set-key (kbd "M-v") 'clipboard-yank)
+
+
 (map! "C-x b"   #'counsel-buffer-or-recentf
       "C-x C-b" #'counsel-switch-buffer)
 
@@ -106,7 +132,48 @@
   (map! :map prog-mode-map
         :localleader
         :desc "Find function at point"
-    "g p" #'find-function-at-point))
+        "g p" #'find-function-at-point))
+
+(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c a") 'org-agenda)
+
+;;my-keys-minor-mode (not using)
+;;https://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs/5340797#5340797
+
+(defvar my-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-i") 'some-function)
+    map)
+  "my-keys-minor-mode keymap.")
+
+(define-minor-mode my-mode
+  "A minor mode so that my key settings override annoying major modes."
+  :init-value t
+  :lighter " my-keys")
+
+(my-mode 1)
+
+(defun my-minibuffer-setup-hook ()
+  (my-mode 0))
+
+(add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
+
+(define-key my-mode-map (kbd "C-c t") 'org-todo-list)
+
+(require 'bind-key)
+(bind-key* "C-c t" 'org-todo-list)
+
+;; (fset 'my-shrink (kbd "C-u 43 C-x {"))
+(defun my-shrink ()
+  (interactive)
+  (shrink-window-horizontally 43))
+(defun my-todo ()
+  (interactive)
+  (find-file "~/org/inbox.org")
+  (delete-other-windows)
+  (split-window-right)
+  (my-shrink)
+  )
 
 (provide '+bindings)
 ;;; +bindings.el ends here
