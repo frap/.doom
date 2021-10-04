@@ -4,11 +4,13 @@
              mac-right-command-modifier 'super
              mac-command-modifier 'super
              mac-option-modifier 'meta
-             mac-left-option-modifier 'meta
-             mac-right-option-modifier 'hyper
+             mac-right-option-modifier 'alt
+             mac-pass-control-to-system nil ;; what does this do?
              ))
 
+(setq kill-whole-line t)
 
+;; window management
 (global-set-key (kbd "M-p") (kbd "C-- C-x o"))
 (global-set-key (kbd "M-n") (kbd "C-x o"))
 (global-set-key (kbd "M-j") 'windmove-down)

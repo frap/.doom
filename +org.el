@@ -4,53 +4,15 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq
   org-directory "~/org/"
-  org-use-property-inheritance t              ; it's convenient to have properties inherited
-  org-list-allow-alphabetical t               ; have a. A. a) A) list bullets
-  org-export-in-background t                  ; run export processes in external emacs process
-  org-catch-invisible-edits 'smart            ; try not to accidently do weird stuff in invisible regions
-  org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"
+;;  org-use-property-inheritance t              ; it's convenient to have properties inherited
+;;  org-list-allow-alphabetical t               ; have a. A. a) A) list bullets
+;;org-export-in-background t                  ; run export processes in external emacs process
+;;  org-catch-invisible-edits 'smart            ; try not to accidently do weird stuff in invisible regions
+;;  org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"
   org-ellipsis " ▼ "
-
- ;; org-archive-location (concat org-directory ".archive/%s::")
-  org-roam-directory "~/org/roam/"
 
  )
 
-;; like the comments header-argument
-; (setq org-babel-default-header-args
-;      '((:session . "none")
-;        (:results . "replace")
-;        (:exports . "code")
-;        (:cache . "no")
-;        (:noweb . "no")
-;        (:hlines . "no")
-;        (:tangle . "no")
-;        (:comments . "link")))
-
-;; (use-package! org
-;;   :mode ("\\.obtt\\'" . org-mode)
-;;   :init
-;;   (setq
-;;     org-structure-template-alist
-;;     '(("a" . "export ascii")
-;;        ("c" . "center")
-;;        ("C" . "comment")
-;;        ("e" . "example")
-;;        ("E" . "export")
-;;        ("h" . "export html")
-;;        ("l" . "export latex")
-;;        ("q" . "quote")
-;;        ("s" . "src")
-;;        ("v" . "verse")
-;;        ("el" . "src emacs-lisp")
-;;        ("cl" . "src clojure")
-;;        ("d" . "definition")
-;;        ("t" . "theorem")
-;;        ("j" . "src javascript")
-;;        ("r" . "src rust"))))
-
-;; My Spelling is atrocious
-;;(after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
 
 (after! org
         (require 'ob-clojure)
@@ -58,19 +20,18 @@
         (require 'cider)
         )
 ;; what is doct?
-(use-package! doct
-              :commands (doct))
+;; (use-package! doct
+;;               :commands (doct))
 
 ;;Enable logging of done tasks, and log stuff into the LOGBOOK drawer by default
-
 (after! org
-  (setq org-log-done 'time)
-  (setq org-log-into-drawer t))
+   (setq org-log-done 'time)
+   (setq org-log-into-drawer t))
 
 ;; Use the special C-a, C-e and C-k definitions for Org, which enable some special behavior in headings.
 (after! org
-  (setq org-special-ctrl-a/e t)
-  (setq org-special-ctrl-k t))
+   (setq org-special-ctrl-a/e t)
+   (setq org-special-ctrl-k t))
 
 ;;Enable Speed Keys, which allows quick single-key commands when the cursor is placed on a heading.
 (after! org
@@ -79,12 +40,18 @@
           (and (looking-at org-outline-regexp)
             (looking-back "^\**")))))
 
+(add-hook! org-mode (electric-indent-local-mode -1))
+
+(defun zz/adjust-org-company-backends ()
+  (remove-hook 'after-change-major-mode-hook '+company-init-backends-h)
+  (setq-local company-backends nil))
+(add-hook! org-mode (zz/adjust-org-company-backends))
 ;; Enable variable and visual line mode in Org mode by default.
-;;
 (add-hook! org-mode :append
            #'visual-line-mode
-  #'variable-pitch-mode)
+           #'variable-pitch-mode)
 
+(add-hook! org-mode :append #'org-appear-mode)
 
 ;; (after! org-capture
 ;;   (defun org-capture-select-template-prettier (&optional keys)
@@ -377,12 +344,97 @@
 ;;                                :file +org-capture-central-project-changelog-file))
 ;;                     ))))))
 
+(after! org
+  (setq org-agenda-files
+        '("~/org/gtd" "~/work/work.org.gpg" "~/org/")))
+
+(defun zz/add-file-keybinding (key file &optional desc)
+  (let ((key key)
+        (file file)
+        (desc desc))
+    (map! :desc (or desc file)
+          key
+          (lambda () (interactive) (find-file file)))))
+
+(zz/add-file-keybinding "C-c z w" "~/work/work.org.gpg" "work.org")
+(zz/add-file-keybinding "C-c z i" "~/org/ideas.org" "ideas.org")
+(zz/add-file-keybinding "C-c z p" "~/org/projects.org" "projects.org")
+(zz/add-file-keybinding "C-c z d" "~/org/diary.org" "diary.org")
+
+;; downloads
+(setq org-attach-id-dir "attachments/")
+
+(defun zz/org-download-paste-clipboard (&optional use-default-filename)
+  (interactive "P")
+  (require 'org-download)
+  (let ((file
+         (if (not use-default-filename)
+             (read-string (format "Filename [%s]: "
+                                  org-download-screenshot-basename)
+                          nil nil org-download-screenshot-basename)
+           nil)))
+    (org-download-clipboard file)))
+
+(after! org
+  (setq org-download-method 'directory)
+  (setq org-download-image-dir "images")
+  (setq org-download-heading-lvl nil)
+  (setq org-download-timestamp "%Y%m%d-%H%M%S_")
+  (setq org-image-actual-width 300)
+  (map! :map org-mode-map
+        "C-c l a y" #'zz/org-download-paste-clipboard
+        "C-M-y" #'zz/org-download-paste-clipboard))
+
+(map! :after counsel :map org-mode-map
+      "C-c l l h" #'counsel-org-link)
+
+(after! counsel
+  (setq counsel-outline-display-style 'title))
+
+(after! org-id
+  ;; Do not create ID if a CUSTOM_ID exists
+  (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id))
+
+(defun zz/make-id-for-title (title)
+  "Return an ID based on TITLE."
+  (let* ((new-id (replace-regexp-in-string "[^[:alnum:]]" "-" (downcase title))))
+    new-id))
+
+(defun zz/org-custom-id-create ()
+  "Create and store CUSTOM_ID for current heading."
+  (let* ((title (or (nth 4 (org-heading-components)) ""))
+         (new-id (zz/make-id-for-title title)))
+    (org-entry-put nil "CUSTOM_ID" new-id)
+    (org-id-add-location new-id (buffer-file-name (buffer-base-buffer)))
+    new-id))
+
+(defun zz/org-custom-id-get-create (&optional where force)
+  "Get or create CUSTOM_ID for heading at WHERE.
+If FORCE is t, always recreate the property."
+  (org-with-point-at where
+    (let ((old-id (org-entry-get nil "CUSTOM_ID")))
+      ;; If CUSTOM_ID exists and FORCE is false, return it
+      (if (and (not force) old-id (stringp old-id))
+          old-id
+        ;; otherwise, create it
+        (zz/org-custom-id-create)))))
+
+;; Now override counsel-org-link-action
+(after! counsel
+  (defun counsel-org-link-action (x)
+    "Insert a link to X.
+X is expected to be a cons of the form (title . point), as passed
+by `counsel-org-link'.
+If X does not have a CUSTOM_ID, create it based on the headline
+title."
+    (let* ((id (zz/org-custom-id-get-create (cdr x))))
+      (org-insert-link nil (concat "#" id) (car x)))))
 
 ;; ORG config
 (after! org
-  (require 'find-lisp)
+  ;;(require 'find-lisp)
   ;; set org file directory
-  (setq gas/org-agenda-directory "~/org/")
+ ;; (setq gas/org-agenda-directory "~/org/")
   ;; (defconst gas-org-agenda-file (concat gas/org-agenda-directory "inbox.org"))
   ;; (setq +org-capture-todo-file gas-org-agenda-file)
   ;; (defconst gas-org-work-file (concat gas/org-agenda-directory "atea.org"))
@@ -390,8 +442,8 @@
                                         ;  ''(defconst gas-org-refile-file (concat org-directory "refile.org"))
   ;; set agenda files
   ;;(setq org-agenda-files (list gas/org-agenda-directory))
-  (setq org-agenda-files
-        (find-lisp-find-files gas/org-agenda-directory "\.org$"))
+ ;; (setq org-agenda-files
+  ;;      (find-lisp-find-files gas/org-agenda-directory "\.org$"))
 
   (setf (alist-get 'height +org-capture-frame-parameters) 15)
   ;; (alist-get 'name +org-capture-frame-parameters) "❖ Capture") ;; ATM hardcoded in other places, so changing breaks stuff
@@ -563,15 +615,79 @@
                      ("o" . org-clock-convenience-fill-gap)
                      ("e" . org-clock-convenience-fill-gap-both)))
 
+(use-package! org-super-agenda
+  :after org-agenda
+  :config
+  (setq org-super-agenda-groups '((:auto-dir-name t)))
+  (org-super-agenda-mode))
 
+(use-package! org-archive
+  :after org
+  :config
+  (setq org-archive-location "archive.org::datetree/"))
 
-(use-package! org-superstar
-   :config
-   (setq  org-superstar-todo-bullet-alist
-       '(("TODO" . 9744)
-         ("[ ]"  . 9744)
-         ("FINI" . 9745)
-         ("[X]"  . 9745))))
+(after! org-clock
+  (setq org-clock-persist t)
+  (org-clock-persistence-insinuate))
+
+(use-package! org-gtd
+  :after org
+  :config
+  ;; where org-gtd will put its files. This value is also the default one.
+  (setq org-gtd-directory "~/gtd/")
+  ;; package: https://github.com/Malabarba/org-agenda-property
+  ;; this is so you can see who an item was delegated to in the agenda
+  (setq org-agenda-property-list '("DELEGATED_TO"))
+  ;; I think this makes the agenda easier to read
+  (setq org-agenda-property-position 'next-line)
+  ;; package: https://www.nongnu.org/org-edna-el/
+  ;; org-edna is used to make sure that when a project task gets DONE,
+  ;; the next TODO is automatically changed to NEXT.
+  (setq org-edna-use-inheritance t)
+  (org-edna-load)
+  :bind
+  (("C-c d c" . org-gtd-capture) ;; add item to inbox
+   ("C-c d a" . org-agenda-list) ;; see what's on your plate today
+   ("C-c d p" . org-gtd-process-inbox) ;; process entire inbox
+   ("C-c d n" . org-gtd-show-all-next) ;; see all NEXT items
+   ;; see projects that don't have a NEXT item
+   ("C-c d s" . org-gtd-show-stuck-projects)
+   ;; the keybinding to hit when you're done editing an item in the
+   ;; processing phase
+   ("C-c d f" . org-gtd-clarify-finalize)))
+
+(after! (org-gtd org-capture)
+  (add-to-list 'org-capture-templates
+               '("i" "GTD item"
+                 entry
+                 (file (lambda () (org-gtd--path org-gtd-inbox-file-basename)))
+                 "* %?\n%U\n\n  %i"
+                 :kill-buffer t))
+  (add-to-list 'org-capture-templates
+               '("l" "GTD item with link to where you are in emacs now"
+                 entry
+                 (file (lambda () (org-gtd--path org-gtd-inbox-file-basename)))
+                 "* %?\n%U\n\n  %i\n  %a"
+                 :kill-buffer t))
+  (add-to-list 'org-capture-templates
+               '("m" "GTD item with link to current Outlook mail message"
+                 entry
+                 (file (lambda () (org-gtd--path org-gtd-inbox-file-basename)))
+                 "* %?\n%U\n\n  %i\n  %(org-mac-outlook-message-get-links)"
+                 :kill-buffer t)))
+
+(defadvice! +zz/load-org-gtd-before-capture (&optional goto keys)
+    :before #'org-capture
+    (require 'org-capture)
+    (require 'org-gtd))
+
+;; (use-package! org-superstar
+;;    :config
+;;    (setq  org-superstar-todo-bullet-alist
+;;        '(("TODO" . 9744)
+;;          ("[ ]"  . 9744)
+;;          ("FINI" . 9745)
+;;          ("[X]"  . 9745))))
 
 (use-package! org-agenda
               :init
@@ -644,16 +760,28 @@
 )
 
 (after! org-agenda
-        (setq org-agenda-prefix-format
-              '((agenda . " %i %-12:c%?-12t% s")
-                ;; Indent todo items by level to show nesting
-                (todo . " %i %-12:c%l")
-                (tags . " %i %-12:c")
-                (search . " %i %-12:c")))
+        ;; (setq org-agenda-prefix-format
+        ;;       '((agenda . " %i %-12:c%?-12t% s")
+        ;;         ;; Indent todo items by level to show nesting
+        ;;         (todo . " %i %-12:c%l")
+        ;;         (tags . " %i %-12:c")
+        ;;         (search . " %i %-12:c")))
         (setq org-agenda-include-diary t)
         (setq  gas/keep-clock-running nil))
 
+(use-package! holidays
+  :after org-agenda
+  :config
+  (require 'nz-holidays)
+   (setq holiday-general-holidays nil)
+   (setq holiday-christian-holidays nil)
+   (setq holiday-hebrew-holidays nil)
+   (setq holiday-islamic-holidays nil)
+   (setq holiday-bahai-holidays nil)
+   (setq holiday-oriental-holidays nil)
 
+   (setq calendar-holidays (append calendar-holidays holiday-nz-holidays))
+  )
 ;;(use-package! org-gcal
 ;;  :after '(auth-source-pass password-store)
 ;;  :config
@@ -665,71 +793,12 @@
 ;;         )))
 ;;
 (use-package! org-roam
-              :commands (org-roam-insert org-roam-find-file org-roam-switch-to-buffer org-roam)
-              ;;     :hook
-              ;;     (after-init . org-roam-mode)
-              ;;     :custom-face
-              ;;   ;;  (org-roam-link ((t (:inherit org-link :foreground "#005200"))))
+              ;;:commands (org-roam-insert org-roam-find-file org-roam-switch-to-buffer org-roam)
               :init
               (setq org-roam-directory "~/org/roam"
-                    ;;       org-roam-db-location "~/org/roam/org-roam.db"
-                    ;;       org-roam-db-gc-threshold most-positive-fixnum
-                    ;;       org-roam-graph-exclude-matcher "private"
-                    ;;       org-roam-tag-sources '(prop last-directory)
-                    ;;       org-id-link-to-org-use-id t)
-                    ;;     :config
-                    ;;     (setq org-roam-capture-templates
-                    ;;       '(("l" "lit" plain (function org-roam--capture-get-point)
-                    ;;           "%?"
-                    ;;           :file-name "lit/${slug}"
-                    ;;           :head "#+setupfile:./hugo_setup.org
-                    ;; #+hugo_slug: ${slug}
-                    ;; #+title: ${title}\n"
-                    ;;           :unnarrowed t)
-                    ;;          ("c" "concept" plain (function org-roam--capture-get-point)
-                    ;;            "%?"
-                    ;;            :file-name "concepts/${slug}"
-                    ;;            :head "#+setupfile:./hugo_setup.org
-                    ;; #+hugo_slug: ${slug}
-                    ;; #+title: ${title}\n"
-                    ;;            :unnarrowed t)
-                    ;;           ("p" "private" plain (function org-roam-capture--get-point)
-                    ;;            "%?"
-                    ;;            :file-name "private/${slug}"
-                    ;;            :head "#+title: ${title}\n"
-                    ;;            :unnarrowed t)))
-                    ;;   (setq org-roam-capture-ref-templates
-                    ;;         '(("r" "ref" plain (function org-roam-capture--get-point)
-                    ;;            "%?"
-                    ;;            :file-name "lit/${slug}"
-                    ;;            :head "#+setupfile:./hugo_setup.org
-                    ;; #+roam_key: ${ref}
-                    ;; #+hugo_slug: ${slug}
-                    ;; #+roam_tags: website
-                    ;; #+title: ${title}
-                    ;; - source :: ${ref}"
-                    ;;             :unnarrowed t)))
                     )
               )
 
-;;   (use-package! org-roam-protocol
-;;   :after org-protocol)
-                                        ;(require 'org-roam-protocol)
-                                        ;(setq org-protocol-default-template-key "d")
-;; (use-package! company-posframe
-;;   :hook (company-mode . company-posframe-mode))
-
-;; (use-package company-org-roam
-;;   :when (featurep! :completion company)
-;;   :after org-roam
-;;   :config
-;;   (set-company-backend! 'org-mode '(company-org-roam company-yasnippet company-dabbrev)))
-
-;;   (after! (org-roam)
-;;     (winner-mode +1)
-;;     (map! :map winner-mode-map
-;;       "<M-right>" #'winner-redo
-;;       "<M-left>" #'winner-undo))
 
 (use-package! org-fc
               :commands org-fc-hydra/body
@@ -759,7 +828,7 @@
      (setq
   ;;     ;;org-journal-date-prefix "#+TITLE: "
        org-journal-file-format "%Y-%m-%d.org"
-       org-journal-dir "~/Sync/org/roam"
+       org-journal-dir "~/org/roam"
   ;;     org-journal-skip-carryover-drawers (list "LOGBOOK")
   ;;     ;;org-journal-carryover-items nil
        org-journal-date-format "%A, %d %B %Y")

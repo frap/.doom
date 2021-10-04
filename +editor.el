@@ -14,6 +14,9 @@
              (with-silent-modifications
                (ansi-color-apply-on-region (point-min) (point-max)))))
 
+;; doom turns off auto-save
+(setq auto-save-default t
+      make-backup-files t)
 ;; word-wrap
 ;; disable global word-wrap in emacs-lisp-mode
 ;(add-to-list '+word-wrap-disabled-modes 'emacs-lisp-mode)
@@ -28,3 +31,9 @@
 ;; Disable trailing whitespaces in the minibuffer
 (add-hook! '(minibuffer-setup-hook doom-popup-mode-hook)
   (setq-local show-trailing-whitespace nil))
+
+(use-package! unfill
+  :defer t
+  :bind
+  ("M-q" . unfill-toggle)
+  ("A-q" . unfill-paragraph))

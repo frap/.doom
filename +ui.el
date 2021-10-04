@@ -1,21 +1,29 @@
 ;;; ~/.doom.d/+ui.el -*- lexical-binding: t; -*-
 
-(display-time-mode 1)                             ; Enable time in the mode-line
-(setq display-time-day-and-date t)                ;
-(unless (equal "Battery status not available"
-               (battery))
-  (display-battery-mode 1))                       ; On laptops it's nice to know how much power you have
+;;(display-time-mode 1)                             ; Enable time in the mode-line
+;;(setq display-time-day-and-date t)                ;
+;;(unless (equal "Battery status not available"
+;;               (battery))
+;;  (display-battery-mode 1))                       ; On laptops it's nice to know how much power you have
 
 (tool-bar-mode -1)
 ;; Font ans Screen setup
 (if IS-MAC
+   (let ((alternatives '("doom-emacs-bw-light.svg"
+                         "doom-emacs-flugo-slant_out_purple-small.png"
+                         "doom-emacs-flugo-slant_out_bw-small.png")))
+   (setq fancy-splash-image
+        (concat doom-private-dir "banners/"
+                (nth (random (length alternatives)) alternatives))))
+
+  (setq +doom-dashboard-menu-sections (cl-subseq +doom-dashboard-menu-sections 0 2))
   (setq
    doom-font (font-spec :family "Jetbrains Mono" :size 13)
    doom-variable-pitch-font (font-spec :family "Sathu" :size 13)
     doom-unicode-font (font-spec :family "Fira Code" :size 12)
     doom-big-font (font-spec :family "Hack" :size 24)
     ;;doom-theme 'doom-acario-light
-    doom-theme 'doom-Iosvkem
+    doom-theme 'doom-flatwhite
     ;; splash image
     +doom-dashboard-banner-dir (concat doom-private-dir "banners/")
     +doom-dashboard-banner-file "black-hole.png"
@@ -33,9 +41,9 @@
     (setq
       doom-font (font-spec :family "Fira Code" :size 16)
       doom-big-font (font-spec :family "Input Mono" :size 20)
-      doom-theme 'doom-monokai-pro
+      doom-theme 'doom-ayu-light
 
-      initial-frame-alist '((top . 1) (left . 1) (width . 80) (height . 37))
+      initial-frame-alist '((top . 1) (left . 1) (width . 114) (height . 37))
       )))
 
 
@@ -136,4 +144,21 @@
  ; (map! :map winner-mode-map
  ;      "<M-right>" #'winner-redo
  ;      "<M-left>" #'winner-undo)
-  (winner-mode +1))
+ (winner-mode +1))
+
+;; turn off some ligature
+(plist-put! +ligatures-extra-symbols
+  :and           nil
+  :or            nil
+  :for           nil
+  :not           nil
+  :true          nil
+  :false         nil
+  :int           nil
+  :float         nil
+  :str           nil
+  :bool          nil
+  :list          nil
+)
+
+(setq doom-modeline-enable-word-count t)

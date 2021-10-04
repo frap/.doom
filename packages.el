@@ -16,9 +16,10 @@
 (package! yasnippet-snippets)
 (package! obtt :recipe (:host github :repo "timotheosh/obtt"))
 ;;(package! flycheck-clj-kondo)
-(package! doct
-  :recipe (:host github :repo "progfolio/doct")
-  :pin "dabb30ebea866ef225b81561c8265d740b1e81c3")
+;;(package! doct
+;;  :recipe (:host github :repo "progfolio/doct")
+;;  :pin "dabb30ebea866ef225b81561c8265d740b1e81c3")
+
 (package! switch-buffer-functions)
 (package! pcre2el)
 (package! visual-regexp-steroids)
@@ -28,8 +29,13 @@
 (package! org-gtd)
 (package! org-super-agenda)
 (package! org-download)
-(package! winner)
-(package! windmove)
+(package! nz-holidays)
+(package! org-appear
+  :recipe (:host github
+           :repo "awth13/org-appear"))
+(package! org-auto-tangle)
+;;(package! winner)
+;;(package! windmove)
 (package! kaocha-runner)
 (package! clojure-snippets)
 (package! fennel-mode)
@@ -39,6 +45,11 @@
   :recipe (:host github :repo "velkyel/inf-janet"))
 (package! magit-section)
 
+(package! graphviz-dot-mode)
+
+(package! iedit)
+
+(package! unfill)
 ;; bugs
-(package! cider :pin "8b3dabe")
-(package! map :pin "896384b")
+;;(package! cider :pin "8b3dabe")
+;;(package! map :pin "896384b")

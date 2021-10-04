@@ -36,6 +36,31 @@
 (setq doom-fallback-buffer-name "► Doom"
       +doom-dashboard-name "► Doom")
 
+;; Basic Config
+;;(setq backup-directory-alist `(("." . "~/.emacs-tmp/")))
+;;(setq auto-save-file-name-transforms `((".*" "~/.emacs-tmp/" t)))
+
+;; Spaces over tabs
+(setq c-basic-indent 2)
+(setq c-default-style "linux")
+(setq tab-width 2)
+(setq-default indent-tabs-mode nil)
+
+(setenv "XDG_CONFIG_DIR" "~/.config")
+(setq exec-path
+       (list (concat (getenv "XDG_CONFIG_DIR") "/local/bin")
+             (substitute-in-file-name "${HOMEBREW_PREFIX}/Caskroom/miniforge/base/bin")         ;; conda python
+             (substitute-in-file-name "${HOMEBREW_PREFIX}/bin/")
+             "/usr/local/bin"
+             "/usr/bin/"
+             "/bin/"
+             "/usr/sbin/"
+             "/sbin/"
+             (concat (getenv "XDG_CONFIG_DIR") "/emacs/bin")
+             ))
+
+ (setenv "PATH" (string-join exec-path ":"))
+
 ;; Load Personalised bindings
 (load! "+bindings")
 ;(load! "+functions")
