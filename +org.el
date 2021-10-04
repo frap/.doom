@@ -795,10 +795,8 @@ title."
 (use-package! org-roam
               ;;:commands (org-roam-insert org-roam-find-file org-roam-switch-to-buffer org-roam)
               :init
-              (setq org-roam-directory "~/org/roam"
-                    )
+              (setq org-roam-directory "~/org/roam")
               )
-
 
 (use-package! org-fc
               :commands org-fc-hydra/body

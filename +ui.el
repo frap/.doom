@@ -7,16 +7,16 @@
 ;;  (display-battery-mode 1))                       ; On laptops it's nice to know how much power you have
 
 (tool-bar-mode -1)
-;; Font ans Screen setup
-(if IS-MAC
-   (let ((alternatives '("doom-emacs-bw-light.svg"
+;; Font and Screen setup
+(let ((alternatives '("doom-emacs-bw-light.svg"
                          "doom-emacs-flugo-slant_out_purple-small.png"
                          "doom-emacs-flugo-slant_out_bw-small.png")))
    (setq fancy-splash-image
         (concat doom-private-dir "banners/"
                 (nth (random (length alternatives)) alternatives))))
+(setq +doom-dashboard-menu-sections (cl-subseq +doom-dashboard-menu-sections 0 2))
 
-  (setq +doom-dashboard-menu-sections (cl-subseq +doom-dashboard-menu-sections 0 2))
+(if IS-MAC
   (setq
    doom-font (font-spec :family "Jetbrains Mono" :size 13)
    doom-variable-pitch-font (font-spec :family "Sathu" :size 13)
