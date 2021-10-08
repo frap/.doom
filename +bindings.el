@@ -36,6 +36,8 @@
 ;;clipboard yank
 (global-set-key (kbd "M-v") 'clipboard-yank)
 
+(require 'simpleclip)
+(simpleclip-mode 1)
 
 (map! "C-x b"   #'counsel-buffer-or-recentf
       "C-x C-b" #'counsel-switch-buffer)
