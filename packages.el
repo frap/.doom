@@ -33,6 +33,13 @@
 (package! org-appear
   :recipe (:host github
            :repo "awth13/org-appear"))
+(package! org-ol-tree
+  :recipe (:host github
+           :repo "Townk/org-ol-tree"))
+
+(package! org-ml)
+
+(package! org-ql)
 (package! org-auto-tangle)
 ;;(package! winner)
 ;;(package! windmove)
