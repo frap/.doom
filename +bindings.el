@@ -25,8 +25,8 @@
 (global-set-key (kbd "s-k") 'kill-current-buffer)
 (global-set-key (kbd "s-e") 'eval-region)
 (global-set-key (kbd "s-b") 'eval-buffer)
-(global-set-key (kbd "s-c") 'compile)
-(global-set-key (kbd "s-r") 'recompile)
+(global-set-key (kbd "s-c") 'ns-copy-including-secondary)
+;;(global-set-key (kbd "s-r") 'recompile)
 (global-set-key (kbd "s-,") 'previous-buffer)
 (global-set-key (kbd "s-.") 'next-buffer)
 (global-set-key (kbd "s-j") 'jump-to-register)
@@ -35,9 +35,6 @@
 
 ;;clipboard yank
 (global-set-key (kbd "M-v") 'clipboard-yank)
-
-(require 'simpleclip)
-(simpleclip-mode 1)
 
 (map! "C-x b"   #'counsel-buffer-or-recentf
       "C-x C-b" #'counsel-switch-buffer)
@@ -138,7 +135,7 @@
         :desc "Find function at point"
         "g p" #'find-function-at-point))
 
-(global-set-key (kbd "C-c c") 'org-capture)
+;;(global-set-key (kbd "C-c c") 'org-capture)
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 ;;my-keys-minor-mode (not using)
@@ -164,8 +161,9 @@
 
 (define-key my-mode-map (kbd "C-c t") 'org-todo-list)
 
-(require 'bind-key)
-(bind-key* "C-c t" 'org-todo-list)
+;; C-c t is toggle in doom emacs
+;;(require 'bind-key)
+;;(bind-key* "C-c t" 'org-todo-list)
 
 ;; (fset 'my-shrink (kbd "C-u 43 C-x {"))
 (defun my-shrink ()

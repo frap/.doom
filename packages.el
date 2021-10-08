@@ -55,7 +55,6 @@
 (package! graphviz-dot-mode)
 
 (package! iedit)
-(package! simpleclip)
 
 (package! unfill)
 ;; bugs
