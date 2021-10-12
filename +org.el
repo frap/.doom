@@ -434,19 +434,15 @@ title."
 (after! org
   ;;(require 'find-lisp)
   ;; set org file directory
- ;; (setq gas/org-agenda-directory "~/org/")
-  ;; (defconst gas-org-agenda-file (concat gas/org-agenda-directory "inbox.org"))
-  ;; (setq +org-capture-todo-file gas-org-agenda-file)
-  ;; (defconst gas-org-work-file (concat gas/org-agenda-directory "atea.org"))
-  ;; (defconst gas-org-journal-file (concat org-directory "journal.org"))
-                                        ;  ''(defconst gas-org-refile-file (concat org-directory "refile.org"))
+  (setq gas/org-agenda-directory "~/org/gtd/")
+  (defconst gas-org-agenda-file (concat gas/org-agenda-directory "todo.org"))
   ;; set agenda files
   ;;(setq org-agenda-files (list gas/org-agenda-directory))
  ;; (setq org-agenda-files
   ;;      (find-lisp-find-files gas/org-agenda-directory "\.org$"))
 
   (setf (alist-get 'height +org-capture-frame-parameters) 15)
-  ;; (alist-get 'name +org-capture-frame-parameters) "❖ Capture") ;; ATM hardcoded in other places, so changing breaks stuff
+  (alist-get 'name +org-capture-frame-parameters) "❖ Capture") ;; ATM hardcoded in other places, so changing breaks stuff
   (setq +org-capture-fn
         (lambda ()
           (interactive)
@@ -588,12 +584,12 @@ title."
 ;;                            skipped))
 ;;                  (if (not org-agenda-persistent-marks) "" " (kept marked)")))))
 
-;;(defun gas/org-inbox-capture ()
-;;  (interactive)
-;;  "Capture a task in agenda mode."
-;;  (org-capture nil "i"))
+(defun gas/org-inbox-capture ()
+  (interactive)
+  "Capture a task in agenda mode."
+  (org-capture nil "i"))
 
-;;(setq org-agenda-bulk-custom-functions `((,gas/org-agenda-bulk-process-key gas/org-agenda-process-inbox-item)))
+(setq org-agenda-bulk-custom-functions `((,gas/org-agenda-bulk-process-key gas/org-agenda-process-inbox-item)))
 ;;
 (map! :map org-agenda-mode-map
       "i" #'org-agenda-clock-in
@@ -630,56 +626,56 @@ title."
   (setq org-clock-persist t)
   (org-clock-persistence-insinuate))
 
-(use-package! org-gtd
-  :after org
-  :config
-  ;; where org-gtd will put its files. This value is also the default one.
-  (setq org-gtd-directory "~/org/gtd/")
-  ;; package: https://github.com/Malabarba/org-agenda-property
-  ;; this is so you can see who an item was delegated to in the agenda
-  (setq org-agenda-property-list '("DELEGATED_TO"))
-  ;; I think this makes the agenda easier to read
-  (setq org-agenda-property-position 'next-line)
-  ;; package: https://www.nongnu.org/org-edna-el/
-  ;; org-edna is used to make sure that when a project task gets DONE,
-  ;; the next TODO is automatically changed to NEXT.
-  (setq org-edna-use-inheritance t)
-  (org-edna-load)
-  :bind
-  (("C-c d c" . org-gtd-capture) ;; add item to inbox
-   ("C-c d a" . org-agenda-list) ;; see what's on your plate today
-   ("C-c d p" . org-gtd-process-inbox) ;; process entire inbox
-   ("C-c d n" . org-gtd-show-all-next) ;; see all NEXT items
-   ;; see projects that don't have a NEXT item
-   ("C-c d s" . org-gtd-show-stuck-projects)
-   ;; the keybinding to hit when you're done editing an item in the
-   ;; processing phase
-   ("C-c d f" . org-gtd-clarify-finalize)))
+;; (use-package! org-gtd
+;;   :after org
+;;   :config
+;;   ;; where org-gtd will put its files. This value is also the default one.
+;;   (setq org-gtd-directory "~/org/gtd/")
+;;   ;; package: https://github.com/Malabarba/org-agenda-property
+;;   ;; this is so you can see who an item was delegated to in the agenda
+;;   (setq org-agenda-property-list '("DELEGATED_TO"))
+;;   ;; I think this makes the agenda easier to read
+;;   (setq org-agenda-property-position 'next-line)
+;;   ;; package: https://www.nongnu.org/org-edna-el/
+;;   ;; org-edna is used to make sure that when a project task gets DONE,
+;;   ;; the next TODO is automatically changed to NEXT.
+;;   (setq org-edna-use-inheritance t)
+;;   (org-edna-load)
+;;   :bind
+;;   (("C-c d c" . org-gtd-capture) ;; add item to inbox
+;;    ("C-c d a" . org-agenda-list) ;; see what's on your plate today
+;;    ("C-c d p" . org-gtd-process-inbox) ;; process entire inbox
+;;    ("C-c d n" . org-gtd-show-all-next) ;; see all NEXT items
+;;    ;; see projects that don't have a NEXT item
+;;    ("C-c d s" . org-gtd-show-stuck-projects)
+;;    ;; the keybinding to hit when you're done editing an item in the
+;;    ;; processing phase
+;;    ("C-c d f" . org-gtd-clarify-finalize)))
 
-(after! (org-gtd org-capture)
-  (add-to-list 'org-capture-templates
-               '("i" "GTD item"
-                 entry
-                 (file (lambda () (org-gtd--path org-gtd-inbox-file-basename)))
-                 "* %?\n%U\n\n  %i"
-                 :kill-buffer t))
-  (add-to-list 'org-capture-templates
-               '("l" "GTD item with link to where you are in emacs now"
-                 entry
-                 (file (lambda () (org-gtd--path org-gtd-inbox-file-basename)))
-                 "* %?\n%U\n\n  %i\n  %a"
-                 :kill-buffer t))
-  (add-to-list 'org-capture-templates
-               '("m" "GTD item with link to current Outlook mail message"
-                 entry
-                 (file (lambda () (org-gtd--path org-gtd-inbox-file-basename)))
-                 "* %?\n%U\n\n  %i\n  %(org-mac-outlook-message-get-links)"
-                 :kill-buffer t)))
+;; (after! (org-gtd org-capture)
+;;   (add-to-list 'org-capture-templates
+;;                '("i" "GTD item"
+;;                  entry
+;;                  (file (lambda () (org-gtd--path org-gtd-inbox-file-basename)))
+;;                  "* %?\n%U\n\n  %i"
+;;                  :kill-buffer t))
+;;   (add-to-list 'org-capture-templates
+;;                '("l" "GTD item with link to where you are in emacs now"
+;;                  entry
+;;                  (file (lambda () (org-gtd--path org-gtd-inbox-file-basename)))
+;;                  "* %?\n%U\n\n  %i\n  %a"
+;;                  :kill-buffer t))
+;;   (add-to-list 'org-capture-templates
+;;                '("m" "GTD item with link to current Outlook mail message"
+;;                  entry
+;;                  (file (lambda () (org-gtd--path org-gtd-inbox-file-basename)))
+;;                  "* %?\n%U\n\n  %i\n  %(org-mac-outlook-message-get-links)"
+;;                  :kill-buffer t)))
 
-(defadvice! +zz/load-org-gtd-before-capture (&optional goto keys)
-    :before #'org-capture
-    (require 'org-capture)
-    (require 'org-gtd))
+;; (defadvice! +zz/load-org-gtd-before-capture (&optional goto keys)
+;;     :before #'org-capture
+;;     (require 'org-capture)
+;;     (require 'org-gtd))
 
 ;; (use-package! org-superstar
 ;;    :config
@@ -700,7 +696,28 @@ title."
               :config
                                         ;  (setq org-columns-default-format "%40ITEM(Task) %Effort(EE){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)" )
               (setq org-agenda-custom-commands
-                    (quote (
+                    (quote ((""
+                             (
+                              (org-agenda-skip-scheduled-if-done nil)
+                              (org-agenda-time-leading-zero nil)
+                              (org-agenda-timegrid-use-ampm nil)
+                              (org-agenda-skip-timestamp-if-done t)
+                              (org-agenda-skip-deadline-if-done t)
+                              (org-agenda-start-day "+0d")
+                              (org-agenda-span 2)
+                              (org-agenda-overriding-header "⚡ Calendrier")
+                              (org-agenda-repeating-timestamp-show-all nil)
+                              (org-agenda-remove-tags t)
+                              (org-agenda-prefix-format "   %i %?-2 t%s")
+                              ;; (org-agenda-prefix-format "  %-3i  %-15b%t %s")
+                              ;; (concat "  %-3i  %-15b %t%s" org-agenda-hidden-separator))
+                              ;; (org-agenda-todo-keyword-format " ☐ ")
+                              (org-agenda-todo-keyword-format "")
+                              (org-agenda-time)
+                              (org-agenda-current-time-string "ᐊ┈┈┈┈┈┈┈ Now")
+                              (org-agenda-scheduled-leaders '("" ""))
+                              (org-agenda-deadline-leaders '("Deadline: " "Deadline: "))
+                              (org-agenda-time-grid (quote ((today require-timed remove-match) () "      " "┈┈┈┈┈┈┈┈┈┈┈┈┈")))))
                             ("N" "Notes" tags "NOTE"
                              ((org-agenda-overriding-header "Notes")
                               (org-tags-match-list-sublevels t)))
@@ -793,14 +810,24 @@ title."
 ;;         )))
 ;;
 (use-package! org-roam
-              ;;:commands (org-roam-insert org-roam-find-file org-roam-switch-to-buffer org-roam)
-              :init
-              (setq org-roam-directory "~/org/roam")
-              )
+  :after org
+  :init
+  ;;(setq org-roam-v2-ack t)
+  :custom
+  (setq org-roam-directory "~/org/roam")
+  (org-roam-completion-everywhere t)
+  :bind (:map org-mode-map
+         ("C-M-i" . completion-at-point)
+         :map org-roam-dailies-map
+         ("Y" . org-roam-dailies-capture-templates))
+  :bind-keymap
+  ("C-c n d" . org-roam-dailies-map)
+  )
 
 (use-package! org-fc
-              :commands org-fc-hydra/body
-              :bind ("C-c n r p" . org-fc-hydra/body)
+  :after org
+  :commands org-fc-hydra/body
+         :bind ("C-c n r p" . org-fc-hydra/body)
               :defer t
               :config
               (require 'org-fc-hydra)
@@ -809,6 +836,7 @@ title."
                            '(french-cards . (:filter (tag "french")))))
 
 (use-package! org-journal
+  :after org
    :bind
    ("C-c n j" . org-journal-new-entry)
    ("C-c n t" . org-journal-today)
@@ -826,7 +854,7 @@ title."
      (setq
   ;;     ;;org-journal-date-prefix "#+TITLE: "
        org-journal-file-format "%Y-%m-%d.org"
-       org-journal-dir "~/org/roam"
+       org-journal-dir "~/org/roam/daily"
   ;;     org-journal-skip-carryover-drawers (list "LOGBOOK")
   ;;     ;;org-journal-carryover-items nil
        org-journal-date-format "%A, %d %B %Y")
@@ -834,9 +862,10 @@ title."
      )
 
 
-  (use-package! obtt
-    :init
-    (setq! obtt-templates-dir
+(use-package! obtt
+  :after org
+  :init
+  (setq! obtt-templates-dir
       (concat
         (if (boundp 'doom-private-dir)
           doom-private-dir
@@ -874,6 +903,8 @@ title."
                :end_quote     "❯"
                :begin_export  "⯮"
                :end_export    "⯬"
+               :begin_src     "↦"
+               :end_src       "⇤"
                :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
                :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
                :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
@@ -903,6 +934,8 @@ title."
            :end_quote     "#+end_quote"
            :begin_export  "#+begin_export"
            :end_export    "#+end_export"
+           :begin_src     "#+begin_src"
+           :end_src       "#+end_src"
            :priority_a    "[#A]"
            :priority_b    "[#B]"
            :priority_c    "[#C]"

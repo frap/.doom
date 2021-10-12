@@ -162,3 +162,11 @@
 )
 
 (setq doom-modeline-enable-word-count t)
+
+(cua-mode +1)
+(setq osx-clipboard-mode t)
+;; copy/paste between macOS and Emacs[[https://emacs.stackexchange.com/questions/48607/os-copy-paste-not-working-for-emacs-mac][post]]
+ (setq select-enable-clipboard t)
+ (setq interprogram-paste-function
+ (lambda ()
+   (shell-command-to-string "pbpaste")))

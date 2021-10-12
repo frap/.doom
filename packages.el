@@ -58,5 +58,6 @@
 
 (package! unfill)
 ;; bugs
-;;(package! cider :pin "8b3dabe")
+(package! cider :pin "8b3dabe")
 ;;(package! map :pin "896384b")
+(package! map :pin "bb50dba")
