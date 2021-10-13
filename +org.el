@@ -441,8 +441,7 @@ title."
  ;; (setq org-agenda-files
   ;;      (find-lisp-find-files gas/org-agenda-directory "\.org$"))
 
-  (setf (alist-get 'height +org-capture-frame-parameters) 15)
-  (alist-get 'name +org-capture-frame-parameters) "❖ Capture") ;; ATM hardcoded in other places, so changing breaks stuff
+  ;;((alist-get 'name +org-capture-frame-parameters) "❖ Capture") ;; ATM hardcoded in other places, so changing breaks stuff
   (setq +org-capture-fn
         (lambda ()
           (interactive)
@@ -696,28 +695,7 @@ title."
               :config
                                         ;  (setq org-columns-default-format "%40ITEM(Task) %Effort(EE){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)" )
               (setq org-agenda-custom-commands
-                    (quote (("a"
-                             (
-                              (org-agenda-skip-scheduled-if-done nil)
-                              (org-agenda-time-leading-zero nil)
-                              (org-agenda-timegrid-use-ampm nil)
-                              (org-agenda-skip-timestamp-if-done t)
-                              (org-agenda-skip-deadline-if-done t)
-                              (org-agenda-start-day "+0d")
-                              (org-agenda-span 2)
-                              (org-agenda-overriding-header "⚡ Calendrier")
-                              (org-agenda-repeating-timestamp-show-all nil)
-                              (org-agenda-remove-tags t)
-                              (org-agenda-prefix-format "   %i %?-2 t%s")
-                              ;; (org-agenda-prefix-format "  %-3i  %-15b%t %s")
-                              ;; (concat "  %-3i  %-15b %t%s" org-agenda-hidden-separator))
-                              ;; (org-agenda-todo-keyword-format " ☐ ")
-                              (org-agenda-todo-keyword-format "")
-                              (org-agenda-time)
-                              (org-agenda-current-time-string "ᐊ┈┈┈┈┈┈┈ Now")
-                              (org-agenda-scheduled-leaders '("" ""))
-                              (org-agenda-deadline-leaders '("Deadline: " "Deadline: "))
-                              (org-agenda-time-grid (quote ((today require-timed remove-match) () "      " "┈┈┈┈┈┈┈┈┈┈┈┈┈")))))
+                    (quote (
                             ("N" "Notes" tags "NOTE"
                              ((org-agenda-overriding-header "Notes")
                               (org-tags-match-list-sublevels t)))
@@ -803,7 +781,7 @@ title."
 ;;  :after '(auth-source-pass password-store)
 ;;  :config
 ;;  (setq org-gcal-client-id "887865341451-orrpnv3cu0fnh8hdtge77sv6csqilqtu.apps.googleusercontent.com"
-;;        org-gcal-client-secret "WmOGOCr_aWPJSqmwXHV-29bv"
+;;        org-gcal-client-secret "https://calendar.google.com/calendar/ical/agasson%40red-elvis.net/private-62c6600e3630e19e84be9564abceca94/basic.ics"
 ;;        org-gcal-file-alist
 ;;        '(("agasson@ateasystems.com" . "~/org/gtd/calendars/atea-cal.org")
 ;;          ;;("ateasystems.com_0ie21uc26j0a41g60b8f99mh1k@group.calendar.google.com" . "~/org/gtd/calendars/changecontrol-cal.org")
