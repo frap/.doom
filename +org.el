@@ -816,12 +816,13 @@ title."
   :custom
   (setq org-roam-directory "~/org/roam")
   (org-roam-completion-everywhere t)
-  :bind (:map org-mode-map
-         ("C-M-i" . completion-at-point)
-         :map org-roam-dailies-map
-         ("Y" . org-roam-dailies-capture-templates))
-  :bind-keymap
-  ("C-c n d" . org-roam-dailies-map)
+  ;;:bind (:map org-mode-map
+  ;;       ("C-M-i" . completion-at-point)
+         ;;:map org-roam-dailies-map
+         ;;("Y" . org-roam-dailies-capture-templates)
+   ;;      )
+  ;;:bind-keymap
+  ;;("C-c n d" . org-roam-dailies-map)
   )
 
 (use-package! org-fc

@@ -79,38 +79,39 @@
  ;;          ("level" 20)
  ;;          ("right-margin" 80))
  ;;        cider-save-file-on-load t)
-   (setq cider-ns-refresh-show-log-buffer t
-         cider-show-error-buffer t
-         cider-font-lock-dynamically '(macro core function var deprecated)
-         cider-prompt-for-symbol nil)
+   (setq cider-repl-result-prefix ";; => "
+         cider-ns-refresh-show-log-buffer t
+         ;;cider-font-lock-dynamically '(macro core function var deprecated)
+         ;;cider-prompt-for-symbol nil
+         )
    :config
-;;   (add-hook 'cider-mode-hook #'eldoc-mode)
-;;   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
+   (add-hook 'cider-mode-hook #'eldoc-mode)
+   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
    )
 
-;; (use-package! clj-refactor
-;;   :init
-;;   (setq cljr-favor-prefix-notation nil
-;;         cljr-favor-private-functions nil
-;;         cljr-warn-on-eval nil
-;;         cljr-eagerly-build-asts-on-startup nil
-;;         cljr-clojure-test-declaration "[clojure.test :refer [deftest is testing]]"
-;;         cljr-cljs-clojure-test-declaration cljr-clojure-test-declaration
-;;         cljr-cljc-clojure-test-declaration cljr-clojure-test-declaration
-;;         cljr-magic-require-namespaces
-;;         '(("io" . "clojure.java.io")
-;;           ("cs" . "clojure.set")
-;;           ("string" . "clojure.string")
-;;           ("walk" . "clojure.walk")
-;;           ("zip" . "clojure.zip")
-;;           ("time" . "clj-time.core")
-;;           ("log" . "clojure.tools.logging")
-;;           ("jdbc" . "next.jdbc")
-;;           ("pp" . "clojure.pprint")
-;;           ("json" . "cheshire.json")))
-;;   :config
-;;   ;;(add-hook 'cider-mode-hook 'clj-refactor-mode)
-;;   )
+ (use-package! clj-refactor
+   :init
+   (setq cljr-favor-prefix-notation nil
+         cljr-favor-private-functions nil
+         cljr-warn-on-eval nil
+         cljr-eagerly-build-asts-on-startup nil
+         cljr-clojure-test-declaration "[clojure.test :refer [deftest is testing]]"
+         cljr-cljs-clojure-test-declaration cljr-clojure-test-declaration
+         cljr-cljc-clojure-test-declaration cljr-clojure-test-declaration
+         cljr-magic-require-namespaces
+         '(("io" . "clojure.java.io")
+           ("cs" . "clojure.set")
+           ("string" . "clojure.string")
+           ("walk" . "clojure.walk")
+           ("zip" . "clojure.zip")
+           ("time" . "clj-time.core")
+           ("log" . "clojure.tools.logging")
+           ("jdbc" . "next.jdbc")
+           ("pp" . "clojure.pprint")
+           ("json" . "cheshire.json")))
+   :config
+   ;;(add-hook 'cider-mode-hook 'clj-refactor-mode)
+   )
 
 ;;  (cljr-add-keybindings-with-modifier "C-s-")
 ;;  (cljr-add-keybindings-with-prefix "C-c C-m")

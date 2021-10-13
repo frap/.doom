@@ -72,12 +72,12 @@
        ;word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       (dired ;;+icons
+       (dired +icons
               )      ; making dired pretty [functional]
        electric            ; smarter, keyword-based electric-indent
-       ;;(ibuffer ;;+icons
-       ;;         )         ; interactive buffer management
-       (undo ;;+tree
+       (ibuffer +icons
+                )         ; interactive buffer management
+       (undo +tree
              )                ; persistent, smarter undo for your inevitable mistakes
        vc                  ; version-control and Emacs, sitting in a tree
 
@@ -105,8 +105,9 @@
        ;;  +dictionary       ; dictionary/thesauraus is nice
        ;;  +docsets)                 ; -- or in dash docsets locally
        lsp
-       (magit               ; a git porcelain for Emacs
-        +forge)
+       ;;(
+       magit               ; a git porcelain for Emacs
+       ;; +forge)
        make                ; run make tasks from Emacs
        pass              ; password manager for nerds
        ;;pdf               ; pdf enhancements
@@ -141,7 +142,7 @@
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
        ;;
-       (go  +lsp)         ; the hipster dialect
+       ;; (go  +lsp)         ; the hipster dialect
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ;
