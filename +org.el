@@ -812,10 +812,10 @@ title."
 (use-package! org-roam
   :after org
   :init
-  ;;(setq org-roam-v2-ack t)
-  :custom
   (setq org-roam-directory "~/org/roam")
-  (org-roam-completion-everywhere t)
+  ;;(setq org-roam-v2-ack t)
+  ;;:custom
+  ;;(org-roam-completion-everywhere t)
   ;;:bind (:map org-mode-map
   ;;       ("C-M-i" . completion-at-point)
          ;;:map org-roam-dailies-map
