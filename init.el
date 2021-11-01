@@ -23,10 +23,11 @@
        (company +auto +childframe) ; the ultimate code completion backend
        (company +tng))       ; tng is tab completion
        ;helm              ; the *other* search engine for love and life
-       (:if IS-MAC
-         (ivy +prescient +icons -childframe -fuzzy)
-         (ivy +prescient +icons))               ; a search engine for love and life
-       ido
+       ;;(:if IS-MAC
+       ;;  (ivy +prescient +icons -childframe -fuzzy)
+       ;;  (ivy +prescient +icons))               ; a search engine for love and life
+       ;;ido
+       (vertico +icons)             ; the search engine of the future
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -52,7 +53,7 @@
        ;;unicode           ; extended unicode support for various languages
        ;;vc-gutter         ; vcs diff in the fringe
        ;;vi-tilde-fringe    ; fringe tildes to mark beyond EOB
-       (window-select ;;+numbers
+       (window-select +numbers
                       )      ; visually switch windows
        workspaces         ; tab emulation, persistence & separate workspaces
        zen                ; distraction-free coding or writing
@@ -61,7 +62,7 @@
        ;;(evil +everywhere); come to the dark side, we have cookies
        file-templates      ; auto-snippets for empty files
        ;;fold                ; (nigh) universal code folding
-       ;;(format +onsave)    ; automated prettiness
+       (format)            ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
        ;;multiple-cursors  ; editing in many places at once
@@ -72,11 +73,9 @@
        ;word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       (dired +icons
-              )      ; making dired pretty [functional]
+       (dired +icons )      ; making dired pretty [functional]
        electric            ; smarter, keyword-based electric-indent
-       (ibuffer +icons
-                )         ; interactive buffer management
+       (ibuffer +icons )    ; interactive buffer management
        (undo +tree
              )                ; persistent, smarter undo for your inevitable mistakes
        vc                  ; version-control and Emacs, sitting in a tree
@@ -148,7 +147,7 @@
        ;;idris             ;
        json              ; At least it ain't XML
        (java +lsp) ; the poster child for carpal tunnel syndrome
-       javascript        ; all(hope(abandon(ye(who(enter(here))))))
+       (javascript +lsp)       ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        (:if IS-MAC
@@ -190,7 +189,7 @@
        ;;rest                        ; Emacs as a REST client
        rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (rust +lsp)             ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;scheme            ; a fully conniving family of lisps
        (sh +lsp)               ; she sells {ba,z,fi}sh shells on the C xor

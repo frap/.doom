@@ -1,10 +1,10 @@
 ;;; +bindings.el -*- lexical-binding: t; -*-
 
 (if IS-MAC (setq
-             mac-right-command-modifier 'super
+             mac-right-command-modifier 'nil
              mac-command-modifier 'super
              mac-option-modifier 'meta
-             mac-right-option-modifier 'alt
+             mac-right-option-modifier 'nil
              mac-pass-control-to-system nil ;; what does this do?
              ))
 
@@ -29,15 +29,15 @@
 ;;(global-set-key (kbd "s-r") 'recompile)
 (global-set-key (kbd "s-,") 'previous-buffer)
 (global-set-key (kbd "s-.") 'next-buffer)
-(global-set-key (kbd "s-j") 'jump-to-register)
+;;(global-set-key (kbd "s-j") 'jump-to-register)
 
-(fset 'my/shrink (kbd "C-u 39 C-x {"))
+;;(fset 'my/shrink (kbd "C-u 39 C-x {"))
 
 ;;clipboard yank
 (global-set-key (kbd "M-v") 'clipboard-yank)
 
-(map! "C-x b"   #'counsel-buffer-or-recentf
-      "C-x C-b" #'counsel-switch-buffer)
+;(map! "C-x b"   #'counsel-buffer-or-recentf
+;      "C-x C-b" #'counsel-switch-buffer)
 
 ;;Use +default/search-buffer for searching by default, I like the Swiper interface.
 ;;(map! "C-s" #'counsel-grep-or-swiper)
@@ -136,30 +136,38 @@
         "g p" #'find-function-at-point))
 
 ;;(global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "C-c a") 'org-agenda)
+;;(global-set-key (kbd "C-c a") 'org-agenda)
+(map!  "C-c a" #'org-agenda
+
+       ;;; <leader a --agenda
+       ;;(:prefix-map ("a". "agenda")
+       ;; :map org-mode
+       ;; )
+       )
+
 
 ;;my-keys-minor-mode (not using)
 ;;https://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs/5340797#5340797
 
-(defvar my-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-i") 'some-function)
-    map)
-  "my-keys-minor-mode keymap.")
+;;(defvar my-mode-map
+;;  (let ((map (make-sparse-keymap)))
+;;    (define-key map (kbd "C-i") 'some-function)
+;;    map)
+;;  "my-keys-minor-mode keymap.")
 
-(define-minor-mode my-mode
-  "A minor mode so that my key settings override annoying major modes."
-  :init-value t
-  :lighter " my-keys")
+;;(define-minor-mode my-mode
+;;  "A minor mode so that my key settings override annoying major modes."
+;;  :init-value t
+;;  :lighter " my-keys")
 
-(my-mode 1)
+;;(my-mode 1)
 
-(defun my-minibuffer-setup-hook ()
-  (my-mode 0))
+;;(defun my-minibuffer-setup-hook ()
+;;  (my-mode 0))
 
-(add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
+;;(add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
 
-(define-key my-mode-map (kbd "C-c t") 'org-todo-list)
+;;(define-key my-mode-map (kbd "C-c t") 'org-todo-list)
 
 ;; C-c t is toggle in doom emacs
 ;;(require 'bind-key)
