@@ -18,10 +18,10 @@
 
 (if IS-MAC
   (setq
-   doom-font (font-spec :family "Jetbrains Mono" :size 13)
+   doom-font (font-spec :family "Iosevka ss14" :size 14)
    doom-variable-pitch-font (font-spec :family "Sathu" :size 13)
     doom-unicode-font (font-spec :family "Fira Code" :size 12)
-    doom-big-font (font-spec :family "Hack" :size 24)
+    doom-big-font (font-spec :family "Iosevka SS14" :size 24)
     ;;doom-theme 'doom-acario-light
     doom-theme 'doom-flatwhite
     ;; splash image

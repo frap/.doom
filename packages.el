@@ -61,3 +61,9 @@
 (package! cider :pin "8b3dabe")
 ;;(package! map :pin "896384b")
 (package! map :pin "bb50dba")
+(package! gitconfig-mode
+	  :recipe (:host github :repo "magit/git-modes"
+			 :files ("gitconfig-mode.el")))
+(package! gitignore-mode
+	  :recipe (:host github :repo "magit/git-modes"
+			 :files ("gitignore-mode.el")))
