@@ -123,7 +123,7 @@
       (cond ((looking-at "\\s\(") (sp-forward-sexp) (backward-char 1))
             ((looking-at "\\s\)") (forward-char 1) (sp-backward-sexp))
             (t (self-insert-command (or arg 1))))))
-  (map! "%" 'zz/goto-match-paren))
+  (map! "C-%" 'zz/goto-match-paren))
 
 
 ;; find-function-at-point gets bound to C-c l g p (grouped together with other “go to” functions bound by Doom)
@@ -137,7 +137,9 @@
 
 ;;(global-set-key (kbd "C-c c") 'org-capture)
 ;;(global-set-key (kbd "C-c a") 'org-agenda)
-(map!  "C-c a" #'org-agenda
+(map!  :leader
+       :desc "Org Agenda"
+       "a" #'org-agenda
 
        ;;; <leader a --agenda
        ;;(:prefix-map ("a". "agenda")
