@@ -1,5 +1,10 @@
 ;;; ~/.doom.d/+ui.el -*- lexical-binding: t; -*-
+(add-to-list 'default-frame-alist
+             '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist
+             '(ns-appearance . light))
 
+(setq baby-blue '("#d2ecff" "#d2ecff" "brightblue"))
 ;;(display-time-mode 1)                             ; Enable time in the mode-line
 ;;(setq display-time-day-and-date t)                ;
 ;;(unless (equal "Battery status not available"
@@ -18,10 +23,10 @@
 
 (if IS-MAC
   (setq
-   doom-font (font-spec :family "Iosevka ss14" :size 14)
-   doom-variable-pitch-font (font-spec :family "Sathu" :size 13)
+   doom-font (font-spec :family "Iosevka Term SS04" :size 16 :weight 'light)
+   doom-variable-pitch-font (font-spec :family "SF Pro Text" )
     doom-unicode-font (font-spec :family "Fira Code" :size 12)
-    doom-big-font (font-spec :family "Iosevka SS14" :size 24)
+    doom-big-font (font-spec :family "Iosevka Term SS04" :size 36)
     ;;doom-theme 'doom-acario-light
     doom-theme 'doom-flatwhite
     ;; splash image

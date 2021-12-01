@@ -2,6 +2,8 @@
 
 (global-subword-mode 1)    ; Iterate through CamelCase words
 
+(setq
+   projectile-project-search-path '("~/Dev/"))
 ;; tangle-on-save automatically runs org-babel-tangle upon saving any org-mode buffer, which means the resulting files will be automatically kept up to date.
 (add-hook! org-mode :append
   (add-hook! after-save :append :local #'org-babel-tangle))
@@ -119,6 +121,17 @@
 ;;  (define-key clj-refactor-map (kbd "C-x C-r") 'cljr-rename-file)
 
 ;;  (add-to-list 'cljr-project-clean-functions 'cleanup-buffer))
+;; reformat REPL
+(defun jet ()
+  (interactive)
+  (shell-command-on-region
+   (region-beginning)
+   (region-end)
+   "jet --pretty --edn-reader-opts '{:default tagged-literal}'"
+   (current-buffer)
+   t
+   "*jet error buffer*"
+   t))
 
 (use-package! clojure-snippets
    )

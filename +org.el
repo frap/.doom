@@ -1,5 +1,10 @@
 ;;; ~/DOOMDIR/+org.el -*- lexical-binding: t; -*-
 
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
+
+
+(add-hook! 'org-mode-hook (company-mode -1))
+(add-hook! 'org-capture-mode-hook (company-mode -1))
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq
@@ -9,24 +14,23 @@
 ;;org-export-in-background t                  ; run export processes in external emacs process
 ;;  org-catch-invisible-edits 'smart            ; try not to accidently do weird stuff in invisible regions
 ;;  org-re-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js"
-  org-ellipsis " ▼ "
+  ;;-ellipsis " ▼ "
+  org-ellipsis " ▾ "
+ org-bullets-bullet-list '("·")
+ org-tags-column -80
+ org-agenda-files (ignore-errors (directory-files +org-dir t "\\.org$" t))
+ ;;Enable logging of done tasks, and log stuff into the LOGBOOK drawer by default
+ org-log-done 'time
+ org-log-into-drawer t
 
  )
 
 
-(after! org
-        (require 'ob-clojure)
-        (setq org-babel-clojure-backend 'cider)
-        (require 'cider)
-        )
-;; what is doct?
-;; (use-package! doct
-;;               :commands (doct))
-
-;;Enable logging of done tasks, and log stuff into the LOGBOOK drawer by default
-(after! org
-   (setq org-log-done 'time)
-   (setq org-log-into-drawer t))
+;; (after! org
+;;         (require 'ob-clojure)
+;;         (setq org-babel-clojure-backend 'cider)
+;;         (require 'cider)
+;;         )
 
 ;; Use the special C-a, C-e and C-k definitions for Org, which enable some special behavior in headings.
 (after! org
@@ -40,18 +44,18 @@
           (and (looking-at org-outline-regexp)
             (looking-back "^\**")))))
 
-(add-hook! org-mode (electric-indent-local-mode -1))
+;;(add-hook! org-mode (electric-indent-local-mode -1))
 
-(defun zz/adjust-org-company-backends ()
-  (remove-hook 'after-change-major-mode-hook '+company-init-backends-h)
-  (setq-local company-backends nil))
-(add-hook! org-mode (zz/adjust-org-company-backends))
-;; Enable variable and visual line mode in Org mode by default.
-(add-hook! org-mode :append
-           #'visual-line-mode
-           #'variable-pitch-mode)
+;; (defun zz/adjust-org-company-backends ()
+;;   (remove-hook 'after-change-major-mode-hook '+company-init-backends-h)
+;;   (setq-local company-backends nil))
+;; (add-hook! org-mode (zz/adjust-org-company-backends))
+;; ;; Enable variable and visual line mode in Org mode by default.
+;; (add-hook! org-mode :append
+;;            #'visual-line-mode
+;;            #'variable-pitch-mode)
 
-(add-hook! org-mode :append #'org-appear-mode)
+;;(add-hook! org-mode :append #'org-appear-mode)
 
 ;; (after! org-capture
 ;;   (defun org-capture-select-template-prettier (&optional keys)
@@ -345,6 +349,47 @@
 ;;                     ))))))
 
 (after! org
+  (set-face-attribute 'org-link nil
+                      :weight 'normal
+                      :background nil)
+  (set-face-attribute 'org-code nil
+                      :foreground "#a9a1e1"
+                      :background nil)
+  (set-face-attribute 'org-date nil
+                      :foreground "#5B6268"
+                      :background nil)
+  (set-face-attribute 'org-level-1 nil
+                      :foreground "steelblue2"
+                      :background nil
+                      :height 1.2
+                      :weight 'normal)
+  (set-face-attribute 'org-level-2 nil
+                      :foreground "slategray2"
+                      :background nil
+                      :height 1.0
+                      :weight 'normal)
+  (set-face-attribute 'org-level-3 nil
+                      :foreground "SkyBlue2"
+                      :background nil
+                      :height 1.0
+                      :weight 'normal)
+  (set-face-attribute 'org-level-4 nil
+                      :foreground "DodgerBlue2"
+                      :background nil
+                      :height 1.0
+                      :weight 'normal)
+  (set-face-attribute 'org-level-5 nil
+                      :weight 'normal)
+  (set-face-attribute 'org-level-6 nil
+                      :weight 'normal)
+  (set-face-attribute 'org-document-title nil
+                      :foreground "SlateGray1"
+                      :background nil
+                      :height 1.75
+                      :weight 'bold)
+  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+
+(after! org
   (setq org-agenda-files
         '("~/org/gtd" "~/work/work.org.gpg" "~/org/")))
 
@@ -448,6 +493,15 @@ title."
           (set-window-parameter nil 'mode-line-format 'none)
           (org-capture)))
 
+  ;; HACK Face specs fed directly to `org-todo-keyword-faces' don't respect
+  ;;      underlying faces like the `org-todo' face does, so we define our own
+  ;;      intermediary faces that extend from org-todo.
+  (with-no-warnings
+    (custom-declare-face '+org-todo-active  '((t (:inherit (bold font-lock-constant-face org-todo)))) "")
+    (custom-declare-face '+org-todo-project '((t (:inherit (bold font-lock-doc-face org-todo)))) "")
+    (custom-declare-face '+org-todo-onhold  '((t (:inherit (bold warning org-todo)))) "")
+    (custom-declare-face '+org-todo-cancel  '((t (:inherit (bold error org-todo)))) ""))
+
   (setq org-todo-keywords
     '((sequence
         "TODO(t)"  ; A task that needs doing & is ready to do
@@ -478,6 +532,13 @@ title."
        ("PROJ" . +org-todo-project)
        ("NO"   . +org-todo-cancel)
        ("KILL" . +org-todo-cancel)))
+
+  (setq  org-capture-templates '(("x" "Note" entry
+                             (file+olp+datetree "journal.org")
+                             "**** [ ] %U %?" :prepend t :kill-buffer t)
+                            ("t" "Tâches" entry
+                             (file+headline "todo.org" "Boîte de réception")
+                             "* [ ] %?\n%i" :prepend t :kill-buffer t)))
 ;  (setq org-capture-templates
 ;        `(("i" "inbox" entry (file ,(concat gas/org-agenda-directory "inbox.org"))
  ;          "* TODO %?")
@@ -790,17 +851,22 @@ title."
 (use-package! org-roam
   :after org
   :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-completion-everywhere t)
   (setq org-roam-directory "~/org/roam")
-  ;;(setq org-roam-v2-ack t)
-  ;;:custom
-  ;;(org-roam-completion-everywhere t)
-  ;;:bind (:map org-mode-map
-  ;;       ("C-M-i" . completion-at-point)
+  :bind (;;("C-c n l" . org-roam-buffer-toggle)
+         ;;("C-c n f" . org-roam-node-find)
+         ;;("C-c n i" . org-roam-node-insert)
+         :map org-mode-map
+         ("C-M-i" . completion-at-point)
          ;;:map org-roam-dailies-map
          ;;("Y" . org-roam-dailies-capture-templates)
-   ;;      )
+         )
   ;;:bind-keymap
   ;;("C-c n d" . org-roam-dailies-map)
+  :config
+  (org-roam-setup)
   )
 
 (use-package! org-fc
@@ -816,9 +882,9 @@ title."
 
 (use-package! org-journal
   :after org
-   :bind
-   ("C-c n j" . org-journal-new-entry)
-   ("C-c n t" . org-journal-today)
+  ;; :bind
+  ;; ("C-c n j" . org-journal-new-entry)
+  ;; ("C-c n t" . org-journal-today)
    :config
   ;; (defun org-journal-file-header-func (time)
   ;; "Custom function to create journal header."
@@ -831,13 +897,14 @@ title."
 
   ;;   (setq org-journal-file-header 'org-journal-file-header-func)
      (setq
-  ;;     ;;org-journal-date-prefix "#+TITLE: "
+       org-journal-date-prefix "#+TITLE: "
        org-journal-file-format "%Y-%m-%d.org"
+       org-journal-time-prefix "* "
        org-journal-dir "~/org/roam/daily"
   ;;     org-journal-skip-carryover-drawers (list "LOGBOOK")
   ;;     ;;org-journal-carryover-items nil
-       org-journal-date-format "%A, %d %B %Y")
-     (setq org-journal-enable-agenda-integration t)
+       org-journal-date-format "%a, %Y-%m-%d")
+    ;; (setq org-journal-enable-agenda-integration t)
      )
 
 
@@ -948,11 +1015,14 @@ title."
   (let ((tags (s-split ":" (cl-sixth (org-heading-components)) t)))
     (zz/headings-with-tags file tags)))
 
-(use-package! org-auto-tangle
-  :defer t
-  :hook (org-mode . org-auto-tangle-mode)
-  :config
-  (setq org-auto-tangle-default t))
+;; (use-package! org-auto-tangle
+;;   :defer t
+;;   :hook (org-mode . org-auto-tangle-mode)
+;;   :config
+;;   (setq org-auto-tangle-default t))
 
+(set-popup-rule! "^\\*Org Agenda" :side 'bottom :size 0.90 :select t :ttl nil)
+(set-popup-rule! "^CAPTURE.*\\.org$" :side 'bottom :size 0.90 :select t :ttl nil)
+(set-popup-rule! "^\\*org-brain" :side 'right :size 1.00 :select t :ttl nil)
 (provide '+org)
 ;;; +org ends here
