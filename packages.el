@@ -67,3 +67,9 @@
 (package! gitignore-mode
 	  :recipe (:host github :repo "magit/git-modes"
 			 :files ("gitignore-mode.el")))
+(package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
+                           :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el" "vendor"))
+  :pin "784cf911bc96aac0f47d529e8cee96ebd7cc31c9")
+(package! orgdiff :recipe (:host github :repo "tecosaur/orgdiff"
+                          ))
+(package! org-fragtog :pin "479e0a1c3610dfe918d89a5f5a92c8aec37f131d")

@@ -47,19 +47,19 @@
 (setq-default indent-tabs-mode nil)
 
 (setenv "XDG_CONFIG_DIR" "~/.config")
-(setq exec-path
-       (list (concat (getenv "XDG_CONFIG_DIR") "/local/bin")
-             (substitute-in-file-name "${HOMEBREW_PREFIX}/Caskroom/miniforge/base/bin")         ;; conda python
-             (substitute-in-file-name "${HOMEBREW_PREFIX}/bin/")
-             "/usr/local/bin"
-             "/usr/bin/"
-             "/bin/"
-             "/usr/sbin/"
-             "/sbin/"
-             (concat (getenv "XDG_CONFIG_DIR") "/emacs/bin")
-             ))
+;; (setq exec-path
+;;        (list (concat (getenv "XDG_CONFIG_DIR") "/local/bin")
+;;              (substitute-in-file-name "${HOMEBREW_PREFIX}/Caskroom/miniforge/base/bin")         ;; conda python
+;;              (substitute-in-file-name "${HOMEBREW_PREFIX}/bin/")
+;;              "/usr/local/bin"
+;;              "/usr/bin/"
+;;              "/bin/"
+;;              "/usr/sbin/"
+;;              "/sbin/"
+;;              (concat (getenv "XDG_CONFIG_DIR") "/emacs/bin")
+;;              ))
 
- (setenv "PATH" (string-join exec-path ":"))
+;;  (setenv "PATH" (string-join exec-path ":"))
 
 ;; Load Personalised bindings
 (load! "+bindings")

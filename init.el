@@ -33,10 +33,10 @@
        ;;deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
-       ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
-       ;;(emoji +ascii
+       doom-quit         ; DOOM quit-message prompts when you quit Emacs
+       (emoji ;;+ascii
               ;;+github
-        ;;      +unicode)
+              +unicode)
        ;;fill-column       ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        hydra
@@ -47,21 +47,22 @@
        nav-flash          ; blink cursor line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
-       (popup +defaults)   ; tame sudden yet inevitable temporary windows
+       (popup                       ; tame sudden yet inevitable temporary windows
+        ;;+all                        ; catch all popups that start with an asterix
+        +defaults)                  ; default popup rules
        ;;tabs              ; an tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
-       ;;vc-gutter         ; vcs diff in the fringe
+       vc-gutter         ; vcs diff in the fringe
        ;;vi-tilde-fringe    ; fringe tildes to mark beyond EOB
-       (window-select +numbers
-                      )      ; visually switch windows
+       (window-select +numbers )      ; visually switch windows
        workspaces         ; tab emulation, persistence & separate workspaces
        zen                ; distraction-free coding or writing
 
        :editor
        ;;(evil +everywhere); come to the dark side, we have cookies
        file-templates      ; auto-snippets for empty files
-       ;;fold                ; (nigh) universal code folding
+       fold                ; (nigh) universal code folding
        (format)            ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
@@ -100,9 +101,10 @@
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        gist              ; interacting with github gists
-       lookup              ; navigate your code and its documentation
-       ;;  +dictionary       ; dictionary/thesauraus is nice
-       ;;  +docsets)                 ; -- or in dash docsets locally
+       (lookup              ; navigate your code and its documentation
+         +dictionary       ; dictionary/thesauraus is nice
+         ;;+docsets
+         )                 ; -- or in dash docsets locally
        lsp
        ;;(
        magit               ; a git porcelain for Emacs
@@ -135,7 +137,7 @@
        ;;elm               ; care for a cup of TEA?
        emacs-lisp        ; drown in parentheses
        ;;erlang            ; an elegant language for a more civilized age
-       ;;ess               ; emacs speaks statistics
+       ess               ; emacs speaks statistics
        ;;faust             ; dsp, but you get to keep your soul
        ;;fsharp           ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
@@ -154,7 +156,7 @@
            (latex             ; writing papers in Emacs has never been so fun
              +latexmk
              +cdlatex          ; quick maths symbols
-            ;; +fold
+             +fold
              ))                  ; fold the clutter away
       ;;lean
        ;;factor

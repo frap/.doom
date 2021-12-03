@@ -866,8 +866,45 @@ title."
   ;;:bind-keymap
   ;;("C-c n d" . org-roam-dailies-map)
   :config
-  (org-roam-setup)
+    ;; Let's set up some org-roam capture templates
+  (setq org-roam-capture-templates
+        (quote (("d" "default" plain (function org-roam--capture-get-point)
+                 "%?"
+                 :file-name "%<%Y-%m-%d-%H%M%S>-${slug}"
+                 :head "#+title: ${title}\n"
+                 :unnarrowed t)
+                )))
+
+  ;; And now we set necessary variables for org-roam-dailies
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry
+           #'org-roam-capture--get-point
+           "* %?"
+           :file-name "daily/%<%Y-%m-%d>"
+           :head "#+title: %<%Y-%m-%d>\n\n")))
   )
+
+(after! org-roam
+  (add-hook 'after-init-hook 'org-roam-mode))
+
+(use-package! orgdiff
+  :defer t
+  :config
+  (defun +orgdiff-nicer-change-colours ()
+    (goto-char (point-min))
+    ;; Set red/blue based on whether chameleon is being used
+    (if (search-forward "%% make document follow Emacs theme" nil t)
+        (setq red  (substring (doom-blend 'red 'fg 0.8) 1)
+              blue (substring (doom-blend 'blue 'teal 0.6) 1))
+      (setq red  "c82829"
+            blue "00618a"))
+    (when (and (search-forward "%DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF" nil t)
+               (search-forward "\\RequirePackage{color}" nil t))
+      (when (re-search-forward "definecolor{red}{rgb}{1,0,0}" (cdr (bounds-of-thing-at-point 'line)) t)
+        (replace-match (format "definecolor{red}{HTML}{%s}" red)))
+      (when (re-search-forward "definecolor{blue}{rgb}{0,0,1}" (cdr (bounds-of-thing-at-point 'line)) t)
+        (replace-match (format "definecolor{blue}{HTML}{%s}" blue)))))
+  (add-to-list 'orgdiff-latexdiff-postprocess-hooks #'+orgdiff-nicer-change-colours))
 
 (use-package! org-fc
   :after org
@@ -1020,6 +1057,42 @@ title."
 ;;   :hook (org-mode . org-auto-tangle-mode)
 ;;   :config
 ;;   (setq org-auto-tangle-default t))
+
+(setq org-highlight-latex-and-related '(native script entities))
+(require 'org-src)
+(add-to-list 'org-src-block-faces '("latex" (:inherit default :extend t)))
+
+;; (use-package! org-fragtog
+;;   :hook (org-mode . org-fragtog-mode))
+
+(setq org-format-latex-header "\\documentclass{article}
+\\usepackage[usenames]{xcolor}
+
+\\usepackage[T1]{fontenc}
+
+\\usepackage{booktabs}
+
+\\pagestyle{empty}             % do not remove
+% The settings below are copied from fullpage.sty
+\\setlength{\\textwidth}{\\paperwidth}
+\\addtolength{\\textwidth}{-3cm}
+\\setlength{\\oddsidemargin}{1.5cm}
+\\addtolength{\\oddsidemargin}{-2.54cm}
+\\setlength{\\evensidemargin}{\\oddsidemargin}
+\\setlength{\\textheight}{\\paperheight}
+\\addtolength{\\textheight}{-\\headheight}
+\\addtolength{\\textheight}{-\\headsep}
+\\addtolength{\\textheight}{-\\footskip}
+\\addtolength{\\textheight}{-3cm}
+\\setlength{\\topmargin}{1.5cm}
+\\addtolength{\\topmargin}{-2.54cm}
+% my custom stuff
+\\usepackage[nofont,plaindd]{bmc-maths}
+\\usepackage{arev}
+")
+
+;; (setq org-format-latex-options
+;;       (plist-put org-format-latex-options :background "Transparent"))
 
 (set-popup-rule! "^\\*Org Agenda" :side 'bottom :size 0.90 :select t :ttl nil)
 (set-popup-rule! "^CAPTURE.*\\.org$" :side 'bottom :size 0.90 :select t :ttl nil)

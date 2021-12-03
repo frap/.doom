@@ -2,11 +2,79 @@
 
 (global-subword-mode 1)    ; Iterate through CamelCase words
 
+;; calculator
+;; every sane persion prefers radians and exact mode
+(setq calc-angle-mode 'rad  ; radians are rad
+      calc-symbolic-mode t) ; keeps expressions like \sqrt{2} irrational for as long as possible
+
+
+(use-package! calctex
+  :commands calctex-mode
+  :init
+  (add-hook 'calc-mode-hook #'calctex-mode)
+  :config
+  (setq calctex-additional-latex-packages "
+\\usepackage[usenames]{xcolor}
+\\usepackage{soul}
+\\usepackage{adjustbox}
+\\usepackage{amsmath}
+\\usepackage{amssymb}
+\\usepackage{siunitx}
+\\usepackage{cancel}
+\\usepackage{mathtools}
+\\usepackage{mathalpha}
+\\usepackage{xparse}
+\\usepackage{arevmath}"
+        calctex-additional-latex-macros
+        (concat calctex-additional-latex-macros
+                "\n\\let\\evalto\\Rightarrow"))
+  (defadvice! no-messaging-a (orig-fn &rest args)
+    :around #'calctex-default-dispatching-render-process
+    (let ((inhibit-message t) message-log-max)
+      (apply orig-fn args)))
+  ;; Fix hardcoded dvichop path (whyyyyyyy)
+   (let ((vendor-folder (concat (file-truename doom-local-dir)
+                                "straight/"
+                                (format "build-%s" emacs-version)
+                                "/calctex/vendor/")))
+     (setq calctex-dvichop-sty (concat vendor-folder "texd/dvichop")
+           calctex-dvichop-bin (concat vendor-folder "texd/dvichop")))
+   (unless (file-exists-p calctex-dvichop-bin)
+     (message "CalcTeX: Building dvichop binary")
+     (let ((default-directory (file-name-directory calctex-dvichop-bin)))
+       (call-process "make" nil nil nil)))
+  )
+
+;; R
+(after! ess-r-mode
+  (appendq! +ligatures-extra-symbols
+            '(:assign "⟵"
+              :multiply "×"))
+  (set-ligatures! 'ess-r-mode
+    ;; Functional
+    :def "function"
+    ;; Types
+    :null "NULL"
+    :true "TRUE"
+    :false "FALSE"
+    :int "int"
+    :floar "float"
+    :bool "bool"
+    ;; Flow
+    :not "!"
+    :and "&&" :or "||"
+    :for "for"
+    :in "%in%"
+    :return "return"
+    ;; Other
+    :assign "<-"
+    :multiply "%*%"))
+
 (setq
    projectile-project-search-path '("~/Dev/"))
 ;; tangle-on-save automatically runs org-babel-tangle upon saving any org-mode buffer, which means the resulting files will be automatically kept up to date.
-(add-hook! org-mode :append
-  (add-hook! after-save :append :local #'org-babel-tangle))
+;;(add-hook! org-mode :append
+;;  (add-hook! after-save :append :local #'org-babel-tangle))
 
 ;; lsp-ui-sideline is redundant with eldoc and much more invasive
 ;; (setq lsp-ui-sideline-enable nil
