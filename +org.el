@@ -851,41 +851,38 @@ title."
 (use-package! org-roam
   :after org
   :init
-  (setq org-roam-v2-ack t)
+ ;; (setq org-roam-v2-ack t) ;; acknowledge v2 upgrade
   :custom
   (org-roam-completion-everywhere t)
   (setq org-roam-directory "~/org/roam")
-  :bind (;;("C-c n l" . org-roam-buffer-toggle)
-         ;;("C-c n f" . org-roam-node-find)
-         ;;("C-c n i" . org-roam-node-insert)
-         :map org-mode-map
-         ("C-M-i" . completion-at-point)
-         ;;:map org-roam-dailies-map
-         ;;("Y" . org-roam-dailies-capture-templates)
-         )
+  ;; :bind (;;("C-c n l" . org-roam-buffer-toggle)
+  ;;        ;;("C-c n f" . org-roam-node-find)
+  ;;        ;;("C-c n i" . org-roam-node-insert)
+  ;;        :map org-mode-map
+  ;;        ("C-M-i" . completion-at-point)
+  ;;        ;;:map org-roam-dailies-map
+  ;;        ;;("Y" . org-roam-dailies-capture-templates)
+  ;;        )
   ;;:bind-keymap
   ;;("C-c n d" . org-roam-dailies-map)
   :config
     ;; Let's set up some org-roam capture templates
-  (setq org-roam-capture-templates
-        (quote (("d" "default" plain (function org-roam--capture-get-point)
-                 "%?"
-                 :file-name "%<%Y-%m-%d-%H%M%S>-${slug}"
-                 :head "#+title: ${title}\n"
-                 :unnarrowed t)
-                )))
+   (setq org-roam-capture-templates
+         '(("d" "default" plain  "%?"
+            :target (file+head "${slug}.org"
+                       "#+title: ${title}\n#+date: %u\n#+lastmod: \n\n")
+            :immediate-finish t))
+         time-stamp-start "#\\+lastmod: [\t]*")
 
   ;; And now we set necessary variables for org-roam-dailies
   (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry
-           #'org-roam-capture--get-point
-           "* %?"
-           :file-name "daily/%<%Y-%m-%d>"
-           :head "#+title: %<%Y-%m-%d>\n\n")))
+        '(("d" "default" entry     "* %?"
+           :target (file+head "%<%Y-%m-%d>.org"
+                     "#+title: %<%Y-%m-%d>\n\n"))))
   )
 
-(after! org-roam
-  (add-hook 'after-init-hook 'org-roam-mode))
+;; (after! org-roam
+;;   (add-hook 'after-init-hook 'org-roam-mode))
 
 (use-package! orgdiff
   :defer t
@@ -934,7 +931,7 @@ title."
 
   ;;   (setq org-journal-file-header 'org-journal-file-header-func)
      (setq
-       org-journal-date-prefix "#+TITLE: "
+       org-journal-date-prefix "#+title: "
        org-journal-file-format "%Y-%m-%d.org"
        org-journal-time-prefix "* "
        org-journal-dir "~/org/roam/daily"
@@ -1096,6 +1093,6 @@ title."
 
 (set-popup-rule! "^\\*Org Agenda" :side 'bottom :size 0.90 :select t :ttl nil)
 (set-popup-rule! "^CAPTURE.*\\.org$" :side 'bottom :size 0.90 :select t :ttl nil)
-(set-popup-rule! "^\\*org-brain" :side 'right :size 1.00 :select t :ttl nil)
+;;(set-popup-rule! "^\\*org-brain" :side 'right :size 1.00 :select t :ttl nil)
 (provide '+org)
 ;;; +org ends here
