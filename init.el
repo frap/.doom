@@ -20,14 +20,14 @@
 
        :completion
        (:if IS-MAC
-       (company +auto +childframe) ; the ultimate code completion backend
+       (company +auto) ;; +childframe) ; the ultimate code completion backend
        (company +tng))       ; tng is tab completion
        ;helm              ; the *other* search engine for love and life
-       ;; (:if IS-MAC
-       ;;   (ivy +prescient +icons -childframe -fuzzy)
-       ;;   (ivy +prescient +icons))               ; a search engine for love and life
-       ;;ido
-       (vertico +icons)             ; the search engine of the future
+       (:if IS-MAC
+          (ivy +prescient +icons ) ;;-childframe -fuzzy)
+          (ivy +prescient +icons))               ; a search engine for love and life
+       ido
+       ;;(vertico +icons)             ; the search engine of the future
 
        :ui
        ;;deft              ; notational velocity for Emacs
