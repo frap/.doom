@@ -23,11 +23,11 @@
        (company +auto +childframe) ; the ultimate code completion backend
        (company +tng))       ; tng is tab completion
        ;helm              ; the *other* search engine for love and life
-       (:if IS-MAC
-         (ivy +prescient +icons -childframe -fuzzy)
-         (ivy +prescient +icons))               ; a search engine for love and life
+       ;; (:if IS-MAC
+       ;;   (ivy +prescient +icons -childframe -fuzzy)
+       ;;   (ivy +prescient +icons))               ; a search engine for love and life
        ;;ido
-       ;;(vertico +icons)             ; the search engine of the future
+       (vertico +icons)             ; the search engine of the future
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -54,7 +54,7 @@
        ;;treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
-       ;;vi-tilde-fringe    ; fringe tildes to mark beyond EOB
+       vi-tilde-fringe    ; fringe tildes to mark beyond EOB
        (window-select +numbers )      ; visually switch windows
        workspaces         ; tab emulation, persistence & separate workspaces
        zen                ; distraction-free coding or writing
@@ -106,9 +106,8 @@
          ;;+docsets
          )                 ; -- or in dash docsets locally
        lsp
-       ;;(
-       magit               ; a git porcelain for Emacs
-       ;; +forge)
+       (magit               ; a git porcelain for Emacs
+        +forge)
        make                ; run make tasks from Emacs
        pass              ; password manager for nerds
        ;;pdf               ; pdf enhancements
