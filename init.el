@@ -20,13 +20,13 @@
 
        :completion
        (:if IS-MAC
-       (company +auto) ;; +childframe) ; the ultimate code completion backend
+       (company +auto +childframe) ;; +childframe) ; the ultimate code completion backend
        (company +tng))       ; tng is tab completion
        ;helm              ; the *other* search engine for love and life
        (:if IS-MAC
-          (ivy +prescient +icons ) ;;-childframe -fuzzy)
+          (ivy +prescient +icons -fuzzy ) ;;-childframe -fuzzy)
           (ivy +prescient +icons))               ; a search engine for love and life
-       ido
+       ;;ido
        ;;(vertico +icons)             ; the search engine of the future
 
        :ui
@@ -53,8 +53,8 @@
        ;;tabs              ; an tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
-       vc-gutter         ; vcs diff in the fringe
-       vi-tilde-fringe    ; fringe tildes to mark beyond EOB
+       ;;vc-gutter         ; vcs diff in the fringe
+       ;;vi-tilde-fringe    ; fringe tildes to mark beyond EOB
        (window-select +numbers )      ; visually switch windows
        workspaces         ; tab emulation, persistence & separate workspaces
        zen                ; distraction-free coding or writing
@@ -77,8 +77,7 @@
        (dired +icons )      ; making dired pretty [functional]
        electric            ; smarter, keyword-based electric-indent
        (ibuffer +icons )    ; interactive buffer management
-       (undo +tree
-             )                ; persistent, smarter undo for your inevitable mistakes
+       (undo +tree    )     ; persistent, smarter undo for your inevitable mistakes
        vc                  ; version-control and Emacs, sitting in a tree
 
        :term
@@ -88,33 +87,34 @@
        ;;vterm             ; the best terminal emulation in Emacs
 
        :checkers
-       (syntax +childframe)      ; tasing you for every semicolon you forget
+       syntax      ; tasing you for every semicolon you forget
        (:if (executable-find "aspell") spell) ; tasing you for misspelling mispelling
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
-       ansible
+       ;;ansible
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
-       docker
-       editorconfig      ; let someone else argue about tabs vs spaces
+       ;;docker
+       ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
-       gist              ; interacting with github gists
+       ;;gist              ; interacting with github gists
        (lookup              ; navigate your code and its documentation
          +dictionary       ; dictionary/thesauraus is nice
          ;;+docsets
          )                 ; -- or in dash docsets locally
        lsp
        (magit               ; a git porcelain for Emacs
-        +forge)
+        ;;+forge
+        )
        make                ; run make tasks from Emacs
        pass              ; password manager for nerds
-       ;;pdf               ; pdf enhancements
+       pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
        rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
-       terraform         ; infrastructure as code
+       ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
        ;;upload            ; map local to remote projects via ssh/ftp
 
@@ -171,7 +171,7 @@
         +journal
         ;;+hugo                     ; use Emacs for hugo blogging
         ;;+noter                      ; enhanced PDF notetaking
-        +jupyter                    ; ipython/jupyter support for babel
+        ;;+jupyter                    ; ipython/jupyter support for babel
         +pandoc                     ; export-with-pandoc support
         +gnuplot                    ; who doesn't like pretty pictures
         +pomodoro                 ; be fruitful with the tomato technique
@@ -193,7 +193,7 @@
        (rust +lsp)             ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        scheme            ; a fully conniving family of lisps
-       (sh +lsp)               ; she sells {ba,z,fi}sh shells on the C xor
+       (sh) ;; +lsp)               ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
@@ -209,7 +209,7 @@
        :app
        ;;calendar
        everywhere          ;; emacs in the browser text edit
-       irc               ; how neckbeards socialize
+       ;;irc               ; how neckbeards socialize
        ;;(rss +org)        ; emacs as an RSS reader
        ;;twitter           ; twitter client https://twitter.com/vnought
 

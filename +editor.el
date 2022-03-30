@@ -1,9 +1,9 @@
 ;;; ~/DOOMDIR/+editor.el -*- lexical-binding: t; -*-
 
-(setq ispell-dictionary "en")
+(setq ispell-dictionary "en-AU")
 
 (setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
-      auto-save-default t                         ; Nobody likes to loose work, I certainly don't
+      auto-save-default t                         ; Nobody likes to lose work, I certainly don't
       truncate-string-ellipsis "…")               ; Unicode ellispis are nicer than "...", and also save /precious/ space
 
 
@@ -19,8 +19,8 @@
       make-backup-files t)
 ;; word-wrap
 ;; disable global word-wrap in emacs-lisp-mode
-;(add-to-list '+word-wrap-disabled-modes 'emacs-lisp-mode)
-;(add-to-list '+word-wrap-disabled-modes 'clojure-mode)
+(add-to-list '+word-wrap-disabled-modes 'emacs-lisp-mode)
+(add-to-list '+word-wrap-disabled-modes 'clojure-mode)
 
 (modify-coding-system-alist 'file "" 'utf-8-unix)
 
@@ -33,7 +33,17 @@
   (setq-local show-trailing-whitespace nil))
 
 (use-package! unfill
+  :disabled t
   :defer t
   :bind
   ("M-q" . unfill-toggle)
   ("A-q" . unfill-paragraph))
+
+;; (if IS-MAC)
+;; (cua-mode +1)
+;; (setq osx-clipboard-mode t)
+;; ;; copy/paste between macOS and Emacs[[https://emacs.stackexchange.com/questions/48607/os-copy-paste-not-working-for-emacs-mac][post]]
+;;  (setq select-enable-clipboard t)
+;;  (setq interprogram-paste-function
+;;  (lambda ()
+;;    (shell-command-to-string "pbpaste")))

@@ -137,15 +137,15 @@
 
 ;;(global-set-key (kbd "C-c c") 'org-capture)
 ;;(global-set-key (kbd "C-c a") 'org-agenda)
-(map!  :leader
-       :desc "Org Agenda"
-       "a" #'org-agenda
+;;(map!  :leader
+ ;;      :desc "Org Agenda"
+ ;;      "a" #'org-agenda
 
        ;;; <leader a --agenda
        ;;(:prefix-map ("a". "agenda")
        ;; :map org-mode
        ;; )
-       )
+;;       )
 
 
 ;;my-keys-minor-mode (not using)
@@ -181,7 +181,7 @@
   (shrink-window-horizontally 43))
 (defun my-todo ()
   (interactive)
-  (find-file "~/org/inbox.org")
+  (find-file "~/org/todo.org")
   (delete-other-windows)
   (split-window-right)
   (my-shrink)

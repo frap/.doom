@@ -21,6 +21,12 @@
                 (nth (random (length alternatives)) alternatives))))
 (setq +doom-dashboard-menu-sections (cl-subseq +doom-dashboard-menu-sections 0 2))
 
+(setq
+     ;; splash image
+    +doom-dashboard-banner-dir (concat doom-private-dir "banners/")
+    +doom-dashboard-banner-file "black-hole.png"
+    +doom-dashboard-banner-padding '(0 . 1))
+
 (if IS-MAC
   (setq
    doom-font (font-spec :family "Iosevka Term SS04" :size 16 :weight 'light)
@@ -29,10 +35,6 @@
     doom-big-font (font-spec :family "Iosevka Term SS04" :size 36)
     ;;doom-theme 'doom-acario-light
     doom-theme 'doom-flatwhite
-    ;; splash image
-    +doom-dashboard-banner-dir (concat doom-private-dir "banners/")
-    +doom-dashboard-banner-file "black-hole.png"
-    +doom-dashboard-banner-padding '(0 . 1)
     ;; screen size
     default-frame-alist '((left . 0) (width . 163) (fullscreen . fullheight))
     ;;initial-frame-alist '((fullscreen . maximized))
@@ -95,7 +97,7 @@ Also immediately enables `mixed-pitch-modes' if currently in one of the modes."
 ;(custom-set-faces!
 ;  '(doom-modeline-buffer-modified :foreground "orange"))
 
-;; UTF-8 is default encoding remove it form modeline
+;; UTF-8 is default encoding remove it from modeline
 (defun doom-modeline-conditional-buffer-encoding ()
   "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
   (setq-local doom-modeline-buffer-encoding
@@ -105,6 +107,7 @@ Also immediately enables `mixed-pitch-modes' if currently in one of the modes."
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
 
 
+(setq doom-modeline-enable-word-count t)
 
 ;; counsel-buffer shows duplicated entries
 (defun zz/counsel-buffer-or-recentf-candidates ()
@@ -199,12 +202,5 @@ Also immediately enables `mixed-pitch-modes' if currently in one of the modes."
   :list          nil
 )
 
-(setq doom-modeline-enable-word-count t)
 
-(cua-mode +1)
-(setq osx-clipboard-mode t)
-;; copy/paste between macOS and Emacs[[https://emacs.stackexchange.com/questions/48607/os-copy-paste-not-working-for-emacs-mac][post]]
- (setq select-enable-clipboard t)
- (setq interprogram-paste-function
- (lambda ()
-   (shell-command-to-string "pbpaste")))
+

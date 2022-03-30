@@ -757,6 +757,9 @@ title."
                                         ;  (setq org-columns-default-format "%40ITEM(Task) %Effort(EE){:} %CLOCKSUM(Time Spent) %SCHEDULED(Scheduled) %DEADLINE(Deadline)" )
               (setq org-agenda-custom-commands
                     (quote (
+                            ("d" "Tâches quotidiennes"
+	                     ((agenda "" ((org-agenda-span 1)
+		              (org-agenda-overriding-header "Tâches quotidiennes")))))
                             ("N" "Notes" tags "NOTE"
                              ((org-agenda-overriding-header "Notes")
                               (org-tags-match-list-sublevels t)))

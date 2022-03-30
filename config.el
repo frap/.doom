@@ -1,5 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
- (defconst IS-WORK (string-match "810989" (getenv "USER")))
+ (defconst IS-WORK (string-match "8AG006C" (getenv "USER")))
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 (if IS-MAC
@@ -9,8 +9,8 @@
     github-account-name "frap"))
 (if IS-WORK
   (setq
-    user-full-name "Gas 810989"
-    user-mail-address "gas_gasson@bnz.co.nz"))
+    user-full-name "Gas"
+    user-mail-address "andrew.gasson@customs.govt.nz"))
 
 
 ;(setq-default
@@ -21,8 +21,8 @@
 (setq default-directory "~")
 
 ;; Global settings
-;(setq! show-paren-mode 1
-;       doom-scratch-initial-major-mode t)
+(setq! show-paren-mode 1
+       doom-scratch-initial-major-mode t)
 
 ;; default is in .emacs.d and can be deleted -- used for gpg
 (setq!
@@ -36,10 +36,6 @@
 (setq doom-fallback-buffer-name "► Doom"
       +doom-dashboard-name "► Doom")
 
-;; Basic Config
-;;(setq backup-directory-alist `(("." . "~/.emacs-tmp/")))
-;;(setq auto-save-file-name-transforms `((".*" "~/.emacs-tmp/" t)))
-
 ;; Spaces over tabs
 (setq c-basic-indent 2)
 (setq c-default-style "linux")
@@ -47,19 +43,6 @@
 (setq-default indent-tabs-mode nil)
 
 (setenv "XDG_CONFIG_DIR" "~/.config")
-;; (setq exec-path
-;;        (list (concat (getenv "XDG_CONFIG_DIR") "/local/bin")
-;;              (substitute-in-file-name "${HOMEBREW_PREFIX}/Caskroom/miniforge/base/bin")         ;; conda python
-;;              (substitute-in-file-name "${HOMEBREW_PREFIX}/bin/")
-;;              "/usr/local/bin"
-;;              "/usr/bin/"
-;;              "/bin/"
-;;              "/usr/sbin/"
-;;              "/sbin/"
-;;              (concat (getenv "XDG_CONFIG_DIR") "/emacs/bin")
-;;              ))
-
-;;  (setenv "PATH" (string-join exec-path ":"))
 
 ;; Load Personalised bindings
 (load! "+bindings")
@@ -74,6 +57,9 @@
 
 ;;gas org customisations
 (load! "+org")
+;; placing of windows
+;;(load! "+popup")
+
 ;; disable org-mode's auto wrap
 ;(remove-hook 'org-mode-hook 'auto-fill-mode)
 ;; mu4e setup

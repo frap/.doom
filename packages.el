@@ -7,8 +7,6 @@
 (package! dired-narrow)
 (package! deadgrep)
 ;;(package! org-gcal)
-(package! org-fc :recipe (:host github :repo "l3kn/org-fc"))
-(package! org-clock-convenience :ignore t)
 (package! company-posframe)
 
 (package! doom-snippets :ignore t)
@@ -29,6 +27,8 @@
 (package! org-gtd)
 (package! org-super-agenda)
 (package! org-download)
+(package! org-fc :recipe (:host github :repo "l3kn/org-fc"))
+(package! org-clock-convenience :ignore t)
 (package! nz-holidays)
 (package! org-appear
   :recipe (:host github
@@ -38,9 +38,14 @@
            :repo "Townk/org-ol-tree"))
 
 (package! org-ml)
-
 (package! org-ql)
-(package! org-auto-tangle)
+(package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
+                           :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el" "vendor"))
+  :pin "784cf911bc96aac0f47d529e8cee96ebd7cc31c9")
+(package! orgdiff :recipe (:host github :repo "tecosaur/orgdiff"
+                          ))
+(package! org-fragtog :pin "479e0a1c3610dfe918d89a5f5a92c8aec37f131d")
+;;(package! org-auto-tangle)
 ;;(package! winner)
 ;;(package! windmove)
 (package! kaocha-runner)
@@ -50,26 +55,21 @@
 (package! janet-mode)
 (package! inf-janet
   :recipe (:host github :repo "velkyel/inf-janet"))
+
 (package! magit-section)
+;;(package! gitconfig-mode
+;;	  :recipe (:host github :repo "magit/git-modes"
+;;;			 :files ("gitconfig-mode.el")))
+;;(package! gitignore-mode
+;;	  :recipe (:host github :repo "magit/git-modes"
+;;			 :files ("gitignore-mode.el")))
 
 (package! graphviz-dot-mode)
-
 (package! iedit)
-
 (package! unfill)
-;; bugs
+
+;; Bugs
+
 (package! cider :pin "8b3dabe")
 ;;(package! map :pin "896384b")
 (package! map :pin "bb50dba")
-(package! gitconfig-mode
-	  :recipe (:host github :repo "magit/git-modes"
-			 :files ("gitconfig-mode.el")))
-(package! gitignore-mode
-	  :recipe (:host github :repo "magit/git-modes"
-			 :files ("gitignore-mode.el")))
-(package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
-                           :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el" "vendor"))
-  :pin "784cf911bc96aac0f47d529e8cee96ebd7cc31c9")
-(package! orgdiff :recipe (:host github :repo "tecosaur/orgdiff"
-                          ))
-(package! org-fragtog :pin "479e0a1c3610dfe918d89a5f5a92c8aec37f131d")

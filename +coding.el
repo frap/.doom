@@ -2,6 +2,7 @@
 
 (global-subword-mode 1)    ; Iterate through CamelCase words
 
+(setq forge-database-connector 'sqlite3)
 ;; calculator
 ;; every sane persion prefers radians and exact mode
 (setq calc-angle-mode 'rad  ; radians are rad
@@ -142,46 +143,46 @@
 
 ;;   )
 
- (use-package! cider
-   :init
- ;;  (setq cider-print-options
- ;;        '(("length" 80)
- ;;          ("level" 20)
- ;;          ("right-margin" 80))
- ;;        cider-save-file-on-load t)
-   (setq cider-repl-result-prefix ";; => "
-         cider-ns-refresh-show-log-buffer t
-         ;;cider-font-lock-dynamically '(macro core function var deprecated)
-         ;;cider-prompt-for-symbol nil
-         )
-   :config
-   (add-hook 'cider-mode-hook #'eldoc-mode)
-   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
-   )
+ ;; (use-package! cider
+ ;;   :init
+ ;; ;;  (setq cider-print-options
+ ;; ;;        '(("length" 80)
+ ;; ;;          ("level" 20)
+ ;; ;;          ("right-margin" 80))
+ ;; ;;        cider-save-file-on-load t)
+ ;;   (setq cider-repl-result-prefix ";; => "
+ ;;         cider-ns-refresh-show-log-buffer t
+ ;;         ;;cider-font-lock-dynamically '(macro core function var deprecated)
+ ;;         ;;cider-prompt-for-symbol nil
+ ;;         )
+ ;;   :config
+ ;;   (add-hook 'cider-mode-hook #'eldoc-mode)
+ ;;   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
+ ;;   )
 
- (use-package! clj-refactor
-   :init
-   (setq cljr-favor-prefix-notation nil
-         cljr-favor-private-functions nil
-         cljr-warn-on-eval nil
-         cljr-eagerly-build-asts-on-startup nil
-         cljr-clojure-test-declaration "[clojure.test :refer [deftest is testing]]"
-         cljr-cljs-clojure-test-declaration cljr-clojure-test-declaration
-         cljr-cljc-clojure-test-declaration cljr-clojure-test-declaration
-         cljr-magic-require-namespaces
-         '(("io" . "clojure.java.io")
-           ("cs" . "clojure.set")
-           ("string" . "clojure.string")
-           ("walk" . "clojure.walk")
-           ("zip" . "clojure.zip")
-           ("time" . "clj-time.core")
-           ("log" . "clojure.tools.logging")
-           ("jdbc" . "next.jdbc")
-           ("pp" . "clojure.pprint")
-           ("json" . "cheshire.json")))
-   :config
-   ;;(add-hook 'cider-mode-hook 'clj-refactor-mode)
-   )
+ ;; (use-package! clj-refactor
+ ;;   :init
+ ;;   (setq cljr-favor-prefix-notation nil
+ ;;         cljr-favor-private-functions nil
+ ;;         cljr-warn-on-eval nil
+ ;;         cljr-eagerly-build-asts-on-startup nil
+ ;;         cljr-clojure-test-declaration "[clojure.test :refer [deftest is testing]]"
+ ;;         cljr-cljs-clojure-test-declaration cljr-clojure-test-declaration
+ ;;         cljr-cljc-clojure-test-declaration cljr-clojure-test-declaration
+ ;;         cljr-magic-require-namespaces
+ ;;         '(("io" . "clojure.java.io")
+ ;;           ("cs" . "clojure.set")
+ ;;           ("string" . "clojure.string")
+ ;;           ("walk" . "clojure.walk")
+ ;;           ("zip" . "clojure.zip")
+ ;;           ("time" . "clj-time.core")
+ ;;           ("log" . "clojure.tools.logging")
+ ;;           ("jdbc" . "next.jdbc")
+ ;;           ("pp" . "clojure.pprint")
+ ;;           ("json" . "cheshire.json")))
+ ;;   :config
+ ;;   ;;(add-hook 'cider-mode-hook 'clj-refactor-mode)
+ ;;   )
 
 ;;  (cljr-add-keybindings-with-modifier "C-s-")
 ;;  (cljr-add-keybindings-with-prefix "C-c C-m")
@@ -296,3 +297,42 @@
   `(let ((time (current-time)))
      ,@body
      (float-time (time-since time))))
+
+
+;; fennel-mode
+;; (use-package! fennel-mode
+;;   :straight (:host nil :repo "https://git.sr.ht/~technomancy/fennel-mode")
+;;   :hook ((fennel-mode fennel-repl-mode) . common-lisp-modes-mode)
+;;   :bind ( :map fennel-mode-map
+;;           ("C-c C-k" . eval-each-sexp)
+;;           ("M-." . xref-find-definitions)
+;;           ("M-," . xref-pop-marker-stack))
+;;   :config
+;;   (dolist (sym '(global local var))
+;;     (put sym 'fennel-indent-function 1))
+;;   (defvar org-babel-default-header-args:fennel '((:results . "silent")))
+;;   (defun org-babel-execute:fennel (body _params)
+;;     "Evaluate a block of Fennel code with Babel."
+;;     (save-window-excursion
+;;       (unless (bufferp fennel-repl--buffer)
+;;         (fennel-repl nil))
+;;       (let ((inferior-lisp-buffer fennel-repl--buffer))
+;;         (lisp-eval-string body))))
+;;   :init
+;;   (defun eval-each-sexp ()
+;;     "Evaluate each s-expression in the buffer consequentially.
+;; If prefix ARG specified, call `fennel-reload' function.  If
+;; double prefix ARG specified call `fennel-reload' function and ask
+;; for the module name."
+;;     (interactive)
+;;     (save-excursion
+;;       (save-restriction
+;;         (goto-char (point-min))
+;;         (while (save-excursion
+;;                  (search-forward-regexp "[^[:space:]]." nil t))
+;;           (forward-sexp)
+;;           (when (and (not (nth 4 (syntax-ppss)))
+;;                      (looking-back "." 1))
+;;             (lisp-eval-last-sexp)))))
+;;     (when fennel-mode-switch-to-repl-after-reload
+;;       (switch-to-lisp t))))
