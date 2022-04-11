@@ -1,5 +1,6 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
- (defconst IS-WORK (string-match "8AG006C" (getenv "USER")))
+ (defconst IS-WORK (string-match "AG006C" (getenv "USER")))
+
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 (if IS-MAC
@@ -11,6 +12,7 @@
   (setq
     user-full-name "Gas"
     user-mail-address "andrew.gasson@customs.govt.nz"))
+
 
 
 ;(setq-default
@@ -45,23 +47,19 @@
 (setenv "XDG_CONFIG_DIR" "~/.config")
 
 ;; Load Personalised bindings
-(load! "+bindings")
+;;(load! "+bindings")
 ;(load! "+functions")
 ;; Theme related things
 (load! "+ui")
 
 (load! "+coding")
 
+;
 ;; Editor add aka ANSI codes
 (load! "+editor")
 
 ;;gas org customisations
 (load! "+org")
-;; placing of windows
-;;(load! "+popup")
-
-;; disable org-mode's auto wrap
-;(remove-hook 'org-mode-hook 'auto-fill-mode)
 ;; mu4e setup
 ;;
 ;(if IS-MAC

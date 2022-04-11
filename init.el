@@ -23,11 +23,11 @@
        (company +auto +childframe) ;; +childframe) ; the ultimate code completion backend
        (company +tng))       ; tng is tab completion
        ;helm              ; the *other* search engine for love and life
-       (:if IS-MAC
-          (ivy +prescient +icons -fuzzy ) ;;-childframe -fuzzy)
-          (ivy +prescient +icons))               ; a search engine for love and life
+       ;;(:if IS-MAC
+       ;;  (ivy +prescient +icons -childframe -fuzzy)
+       ;;  (ivy +prescient +icons))               ; a search engine for love and life
        ;;ido
-       ;;(vertico +icons)             ; the search engine of the future
+       (vertico +icons)             ; the search engine of the future
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -53,14 +53,14 @@
        ;;tabs              ; an tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
-       ;;vc-gutter         ; vcs diff in the fringe
+       ;;vc-gutter           ; vcs diff in the fringe
        ;;vi-tilde-fringe    ; fringe tildes to mark beyond EOB
        (window-select +numbers )      ; visually switch windows
        workspaces         ; tab emulation, persistence & separate workspaces
        zen                ; distraction-free coding or writing
 
        :editor
-       ;;(evil +everywhere); come to the dark side, we have cookies
+       ;;(evil +everywhere +commands); come to the dark side, we have cookies
        file-templates      ; auto-snippets for empty files
        fold                ; (nigh) universal code folding
        (format)            ; automated prettiness
@@ -77,18 +77,18 @@
        (dired +icons )      ; making dired pretty [functional]
        electric            ; smarter, keyword-based electric-indent
        (ibuffer +icons )    ; interactive buffer management
-       (undo +tree    )     ; persistent, smarter undo for your inevitable mistakes
+       (undo +tree  )      ; persistent, smarter undo for your inevitable mistakes
        vc                  ; version-control and Emacs, sitting in a tree
 
        :term
-       eshell            ; the elisp shell that works everywhere
+       ;;eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
        ;;vterm             ; the best terminal emulation in Emacs
 
        :checkers
-       syntax      ; tasing you for every semicolon you forget
-       (:if (executable-find "aspell") spell) ; tasing you for misspelling mispelling
+       syntax              ; tasing you for every semicolon you forget
+       (:if (executable-find "hunspell") spell) ; tasing you for misspelling mispelling
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
@@ -96,7 +96,7 @@
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
        ;;docker
-       ;;editorconfig      ; let someone else argue about tabs vs spaces
+       editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
@@ -125,7 +125,7 @@
        :lang
        ;;agda              ; types of types of types of types...
        cc                ; C/C++/Obj-C madness
-       (clojure  +lsp)           ; java with a lisp
+       clojure ;; +lsp)           ; java with a lisp
        common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
        ;;crystal           ; ruby at the speed of c
@@ -148,7 +148,7 @@
        ;;idris             ;
        json              ; At least it ain't XML
        (java +lsp) ; the poster child for carpal tunnel syndrome
-       (javascript +lsp)       ; all(hope(abandon(ye(who(enter(here))))))
+       ;;(javascript +lsp)       ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        (:if IS-MAC
@@ -188,12 +188,12 @@
        racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
        ;;rest                        ; Emacs as a REST client
-       rst               ; ReST in peace
+       ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       (rust +lsp)             ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       ;;(rust +lsp)             ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
-       scheme            ; a fully conniving family of lisps
-       (sh) ;; +lsp)               ; she sells {ba,z,fi}sh shells on the C xor
+       ;; scheme            ; a fully conniving family of lisps
+       (sh +lsp)               ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?

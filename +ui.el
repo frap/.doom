@@ -29,12 +29,17 @@
 
 (if IS-MAC
   (setq
-   doom-font (font-spec :family "Iosevka Term SS04" :size 16 :weight 'light)
-   doom-variable-pitch-font (font-spec :family "SF Pro Text" )
+   doom-font (font-spec :family "Jetbrains Mono" :size 14 :weight 'light)
+   doom-variable-pitch-font (font-spec :family "Iosevka Aile" )
     doom-unicode-font (font-spec :family "Fira Code" :size 12)
-    doom-big-font (font-spec :family "Iosevka Term SS04" :size 36)
+    doom-big-font (font-spec :family "Iosevka Slab" :size 24)
     ;;doom-theme 'doom-acario-light
-    doom-theme 'doom-flatwhite
+    doom-theme 'modus-vivendi ;;'doom-flatwhite
+    ;; splash image
+    +doom-dashboard-banner-dir (concat doom-private-dir "banners/")
+    +doom-dashboard-banner-file "black-hole.png"
+    +doom-dashboard-banner-padding '(0 . 1)
+
     ;; screen size
     default-frame-alist '((left . 0) (width . 163) (fullscreen . fullheight))
     ;;initial-frame-alist '((fullscreen . maximized))

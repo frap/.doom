@@ -17,10 +17,6 @@
 ;; doom turns off auto-save
 (setq auto-save-default t
       make-backup-files t)
-;; word-wrap
-;; disable global word-wrap in emacs-lisp-mode
-(add-to-list '+word-wrap-disabled-modes 'emacs-lisp-mode)
-(add-to-list '+word-wrap-disabled-modes 'clojure-mode)
 
 (modify-coding-system-alist 'file "" 'utf-8-unix)
 
