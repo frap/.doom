@@ -51,7 +51,7 @@
         ;;+all                        ; catch all popups that start with an asterix
         +defaults)                  ; default popup rules
        ;;tabs              ; an tab bar for Emacs
-       ;;treemacs          ; a project drawer, like neotree but cooler
+       treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        ;;vc-gutter           ; vcs diff in the fringe
        ;;vi-tilde-fringe    ; fringe tildes to mark beyond EOB
@@ -60,13 +60,13 @@
        zen                ; distraction-free coding or writing
 
        :editor
-       ;;(evil +everywhere +commands); come to the dark side, we have cookies
+       (evil +everywhere +commands); come to the dark side, we have cookies
        file-templates      ; auto-snippets for empty files
        fold                ; (nigh) universal code folding
        (format)            ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
-       ;;multiple-cursors  ; editing in many places at once
+       multiple-cursors  ; editing in many places at once
        ;;objed             ; text object editing for the innocent
        ;;parinfer          ; turn lisp into python, sort of
        ;;rotate-text       ; cycle region at point between text candidates
@@ -84,7 +84,7 @@
        ;;eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       ;;vterm             ; the best terminal emulation in Emacs
+       vterm             ; the best terminal emulation in Emacs
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
@@ -92,7 +92,7 @@
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
-       ;;ansible
+       ansible
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
        ;;docker
@@ -106,7 +106,7 @@
          )                 ; -- or in dash docsets locally
        lsp
        (magit               ; a git porcelain for Emacs
-        ;;+forge
+        +forge
         )
        make                ; run make tasks from Emacs
        pass              ; password manager for nerds
@@ -114,7 +114,7 @@
        ;;prodigy           ; FIXME managing external services & code builders
        rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
-       ;;terraform         ; infrastructure as code
+       terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
        ;;upload            ; map local to remote projects via ssh/ftp
 
@@ -142,13 +142,13 @@
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
        ;;
-       ;; (go  +lsp)         ; the hipster dialect
+       (go  +lsp)          ; the hipster dialect
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ;
        json              ; At least it ain't XML
-       (java +lsp) ; the poster child for carpal tunnel syndrome
-       ;;(javascript +lsp)       ; all(hope(abandon(ye(who(enter(here))))))
+       ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
+       (javascript +lsp)       ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        (:if IS-MAC
@@ -176,7 +176,8 @@
         +gnuplot                    ; who doesn't like pretty pictures
         +pomodoro                 ; be fruitful with the tomato technique
         +present                    ; using org-mode for presentations
-        +roam2)                      ; wander around notes
+        ;;+roam2                      ; wander around notes
+        )
        ;;php               ; perl's insecure younger brother
        plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
@@ -187,10 +188,10 @@
        ;;qt                ; the 'cutest' gui framework ever
        racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
-       ;;rest                        ; Emacs as a REST client
+       rest                        ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       ;;(rust +lsp)             ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (rust +lsp)             ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;; scheme            ; a fully conniving family of lisps
        (sh +lsp)               ; she sells {ba,z,fi}sh shells on the C xor

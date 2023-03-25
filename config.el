@@ -44,22 +44,22 @@
 (setq tab-width 2)
 (setq-default indent-tabs-mode nil)
 
-(setenv "XDG_CONFIG_DIR" "~/.config")
+;;(setenv "XDG_CONFIG_DIR" "~/.config")
 
 ;; Load Personalised bindings
 ;;(load! "+bindings")
 ;(load! "+functions")
 ;; Theme related things
-(load! "+ui")
+;;(load! "+ui")
 
-(load! "+coding")
+;;(load! "+coding")
 
 ;
 ;; Editor add aka ANSI codes
-(load! "+editor")
+;;(load! "+editor")
 
 ;;gas org customisations
-(load! "+org")
+;;(load! "+org")
 ;; mu4e setup
 ;;
 ;(if IS-MAC

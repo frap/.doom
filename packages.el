@@ -7,11 +7,7 @@
 (package! dired-narrow)
 (package! deadgrep)
 ;;(package! org-gcal)
-<<<<<<< Updated upstream
-=======
-(package! org-fc :recipe (:host github :repo "l3kn/org-fc"))
 ;;(package! org-clock-convenience :ignore t)
->>>>>>> Stashed changes
 (package! company-posframe)
 
 ;;(package! doom-snippets :ignore t)
@@ -25,8 +21,8 @@
 (package! switch-buffer-functions)
 (package! pcre2el)
 (package! visual-regexp-steroids)
-(package! elvish-mode)
-(package! ob-elvish)
+;;(package! elvish-mode)
+;;(package! ob-elvish)
 (package! graphviz-dot-mode)
 
 ;;(package! org-gtd)
@@ -71,10 +67,11 @@
 ;;(package! gitignore-mode
 ;;	  :recipe (:host github :repo "magit/git-modes"
 ;;			 :files ("gitignore-mode.el")))
-(package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
-                           :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el" "vendor"))
-  :pin "784cf911bc96aac0f47d529e8cee96ebd7cc31c9")
+;;(package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
+;;                           :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el" "vendor"))
+;;  :pin "784cf911bc96aac0f47d529e8cee96ebd7cc31c9")
 (package! orgdiff :recipe (:host github :repo "tecosaur/orgdiff" ))
 (package! org-fragtog :pin "479e0a1c3610dfe918d89a5f5a92c8aec37f131d")
 (package! zop-to-char)
 ;;(package! crux)
+(package! rego-mode)
