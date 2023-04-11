@@ -41,7 +41,7 @@
 
 ;;Use +default/search-buffer for searching by default, I like the Swiper interface.
 ;;(map! "C-s" #'counsel-grep-or-swiper)
-(map! "C-s" #'+default/search-buffer)
+;;(map! "C-s" #'+default/search-buffer)
 
 ;; *** deadgrep
 (use-package! deadgrep
@@ -123,7 +123,27 @@
       (cond ((looking-at "\\s\(") (sp-forward-sexp) (backward-char 1))
             ((looking-at "\\s\)") (forward-char 1) (sp-backward-sexp))
             (t (self-insert-command (or arg 1))))))
-  (map! "C-%" 'zz/goto-match-paren))
+
+  (map! (:map smartparens-mode-map
+     [C-M-a]   #'sp-beginning-of-sexp
+     [C-M-e]   #'sp-end-of-sexp
+     [C-M-f]   #'sp-forward-sexp
+     [C-M-b]   #'sp-backward-sexp
+     [C-M-k]   #'sp-kill-sexp
+     [C-M-t]   #'sp-transpose-sexp
+
+     [M-left]    #'sp-beginning-of-sexp
+     [M-right]   #'sp-end-of-sexp
+     [M-up]      #'sp-backward-up-sexp
+     [M-down]    #'sp-backward-down-sexp
+     [s-down]    #'sp-down-sexp
+     [s-up]      #'sp-up-sexp
+     [s-left]    #'sp-backward-sexp
+     [s-right]   #'sp-forward-sexp
+     [M-s-right] #'sp-next-sexp
+     [M-s-left]  #'sp-previous-sexp
+     [C-%]       #'zz/goto-match-paren
+     )))
 
 
 ;; find-function-at-point gets bound to C-c l g p (grouped together with other “go to” functions bound by Doom)
@@ -214,45 +234,6 @@
        ;; )
 ;;       )
 
-
-;;my-keys-minor-mode (not using)
-;;https://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs/5340797#5340797
-
-;;(defvar my-mode-map
-;;  (let ((map (make-sparse-keymap)))
-;;    (define-key map (kbd "C-i") 'some-function)
-;;    map)
-;;  "my-keys-minor-mode keymap.")
-
-;;(define-minor-mode my-mode
-;;  "A minor mode so that my key settings override annoying major modes."
-;;  :init-value t
-;;  :lighter " my-keys")
-
-;;(my-mode 1)
-
-;;(defun my-minibuffer-setup-hook ()
-;;  (my-mode 0))
-
-;;(add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
-
-;;(define-key my-mode-map (kbd "C-c t") 'org-todo-list)
-
-;; C-c t is toggle in doom emacs
-;;(require 'bind-key)
-;;(bind-key* "C-c t" 'org-todo-list)
-
-;; (fset 'my-shrink (kbd "C-u 43 C-x {"))
-(defun my-shrink ()
-  (interactive)
-  (shrink-window-horizontally 43))
-(defun my-todo ()
-  (interactive)
-  (find-file "~/org/todo.org")
-  (delete-other-windows)
-  (split-window-right)
-  (my-shrink)
-  )
 
 (provide '+bindings)
 ;;; +bindings.el ends here

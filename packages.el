@@ -58,6 +58,11 @@
 (package! graphviz-dot-mode)
 (package! iedit)
 (package! unfill)
+(package! selected)
+(package! phi-search)
+(package! phi-search-mc)
+(package! ace-mc)
+(package! mc-extras)
 ;; bugs
 ;;(package! cider :pin "8b3dabe")
 ;;(package! map :pin "bb50dba")

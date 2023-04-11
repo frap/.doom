@@ -47,12 +47,15 @@
 ;;(setenv "XDG_CONFIG_DIR" "~/.config")
 
 ;; Load Personalised bindings
-;;(load! "+bindings")
 ;(load! "+functions")
 ;; Theme related things
 ;;(load! "+ui")
-
-;;(load! "+coding")
+(load! "+projectile")
+(load! "+parens")
+(load! "+bindings")
+(load! "+magit")
+(load! "+coding")
+(load! "+cursors")
 
 ;
 ;; Editor add aka ANSI codes
