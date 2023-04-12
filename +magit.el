@@ -1,5 +1,5 @@
-;;; ../Dev/emacs/doom.d/+magit.el -*- lexical-binding: t; -*-
-
+;;; packge -- my magit config ./Dev/emacs/doom.d/+magit.el -*- lexical-binding: t; -*-
+;;; Commentary
 (after! magit
   (setq
     git-commit-summary-max-length 999
@@ -19,5 +19,4 @@
                'git-commit-check-style-conventions)
   (remove-hook 'server-switch-hook
                'magit-commit-diff)
-  (add-hook 'git-commit-setup-hook 'turn-off-auto-fill t)
-  )
+  (add-hook 'git-commit-setup-hook 'turn-off-auto-fill t))
