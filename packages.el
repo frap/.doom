@@ -1,11 +1,9 @@
 ;; -*- no-byte-compile: t; -*-
 ;; .doom.d/packages.el
 
-;; Examples:
-;; (package! another-package :recipe (:host github :repo "username/repo"))
-;; (package! builtin-package :disable t)
+
 (package! dired-narrow)
-(package! deadgrep)
+
 ;;(package! org-gcal)
 ;;(package! org-clock-convenience :ignore t)
 (package! company-posframe)
@@ -28,32 +26,38 @@
 ;;(package! org-gtd)
 ;;(package! org-super-agenda)
 ;;(package! org-download)
-(package! org-fc :recipe (:host github :repo "l3kn/org-fc"))
+;;(package! org-fc :recipe (:host github :repo "l3kn/org-fc"))
 ;;(package! org-clock-convenience :ignore t)
 
-(package! nz-holidays)
-(package! org-appear
-  :recipe (:host github
-           :repo "awth13/org-appear"))
-(package! org-ol-tree
-  :recipe (:host github
-           :repo "Townk/org-ol-tree"))
+;; (package! nz-holidays)
+;; (package! org-appear
+;;   :recipe (:host github
+;;            :repo "awth13/org-appear"))
+;; (package! org-ol-tree
+;;   :recipe (:host github
+;;            :repo "Townk/org-ol-tree"))
 
-(package! org-ml)
-(package! org-ql)
+;; (package! org-ml)
+;; (package! org-ql)
 
-(package! org-auto-tangle)
+;; (package! org-auto-tangle)
 
 (package! kaocha-runner)
 (package! clojure-snippets)
+(package! clj-ns-name
+  :recipe (:host github :repo "corgi-emacs/clj-ns-name" :files ("clj-ns-name.el")))
+;;(package! walkclj
+;;  :recipe (:host :repo "corgi-emacs/walkclj" :files ("walkclj.el")))
+(package! pprint-to-buffer
+  :recipe (:host github :repo "plexus/plexmacs" :files ("pprint-to-buffer/pprint-to-buffer.el")))
 (package! fennel-mode)
 (package! groovy-mode)
 (package! janet-mode)
 (package! inf-janet
   :recipe (:host github :repo "velkyel/inf-janet"))
+(package! python-black)
 
 ;;(package! magit-section)
-
 
 (package! graphviz-dot-mode)
 (package! iedit)
@@ -63,6 +67,10 @@
 (package! phi-search-mc)
 (package! ace-mc)
 (package! mc-extras)
+
+(package! ripgrep)
+(package! rg)
+(package! deadgrep)
 ;; bugs
 ;;(package! cider :pin "8b3dabe")
 ;;(package! map :pin "bb50dba")
@@ -80,3 +88,6 @@
 (package! zop-to-char)
 ;;(package! crux)
 (package! rego-mode)
+
+(package! format-all)
+(package! which-func)

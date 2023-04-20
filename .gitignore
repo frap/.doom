@@ -1,5 +1,6 @@
 # Compiled
 *.elc
+custom.el
 
 # Packaging
 .cask

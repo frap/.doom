@@ -36,6 +36,9 @@
 ;;clipboard yank
 (global-set-key (kbd "M-v") 'clipboard-yank)
 
+;; Activate occur easily inside isearch
+(define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
+
 ;(map! "C-x b"   #'counsel-buffer-or-recentf
 ;      "C-x C-b" #'counsel-switch-buffer)
 
@@ -67,12 +70,7 @@
 (after! undo-fu
   (map! :map undo-fu-mode-map "C-?" #'undo-fu-only-redo))
 
-;;Replace the default goto-line keybindings with avy-goto-line, which is more flexible
-(map! "M-g g" #'avy-goto-line)
-(map! "M-g M-g" #'avy-goto-line)
 
-;;Map a keybindings for counsel-outline, which allows easily navigating documents
-(map! "M-g o" #'counsel-outline)
 
 ;;vi % key, which jumps to the parenthesis, bracket or brace which matches the one below the cursor.
 (after! smartparens
@@ -207,12 +205,23 @@
 
 (global-set-key (kbd "C-=") 'er/expand-region)
 
+;; Magit creates some global keybindings by default
+;; but it's a nice to complement them with this one
+(global-set-key (kbd "C-c g") 'magit-file-dispatch)
+
 ;; recommended avy keybindings
 (global-set-key (kbd "C-:") 'avy-goto-char)
 (global-set-key (kbd "C-'") 'avy-goto-char-2)
 (global-set-key (kbd "M-g f") 'avy-goto-line)
 (global-set-key (kbd "M-g w") 'avy-goto-word-1)
 (global-set-key (kbd "M-g e") 'avy-goto-word-0)
+
+;;Replace the default goto-line keybindings with avy-goto-line, which is more flexible
+(map! "M-g g" #'avy-goto-line)
+(map! "M-g M-g" #'avy-goto-line)
+
+;;Map a keybindings for counsel-outline, which allows easily navigating documents
+(map! "M-g o" #'counsel-outline)
 
 ;; additional avy keybindings
 (global-set-key (kbd "s-,") 'avy-goto-char)
@@ -224,16 +233,6 @@
 (global-set-key [remap other-window] 'ace-window)
 ;;(global-set-key (kbd "C-c c") 'org-capture)
 ;;(global-set-key (kbd "C-c a") 'org-agenda)
-;;(map!  :leader
- ;;      :desc "Org Agenda"
- ;;      "a" #'org-agenda
-
-       ;;; <leader a --agenda
-       ;;(:prefix-map ("a". "agenda")
-       ;; :map org-mode
-       ;; )
-;;       )
-
 
 (provide '+bindings)
 ;;; +bindings.el ends here

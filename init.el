@@ -106,7 +106,7 @@
          )                 ; -- or in dash docsets locally
        lsp
        (magit               ; a git porcelain for Emacs
-        +forge
+       ;; +forge
         )
        make                ; run make tasks from Emacs
        pass              ; password manager for nerds
@@ -114,7 +114,7 @@
        ;;prodigy           ; FIXME managing external services & code builders
        rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
-       terraform         ; infrastructure as code
+       (terraform +lsp)         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
        ;;tree-sitter       ; syntax and parsing, sitting in a tree...
        upload            ; map local to remote projects via ssh/ftp
@@ -182,7 +182,7 @@
        plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python
-        +poetry
+      ;;  +poetry
         +pyenv
         +pyright
         +lsp)              ; beautiful is better than ugly
@@ -201,7 +201,8 @@
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
        web               ; the tubes
-       (yaml +lsp)              ; JSON, but readable
+       ;;(
+       yaml ;;+lsp)              ; JSON, but readable
 
        :email
        (:if (executable-find "mu") (mu4e +org +gmail))

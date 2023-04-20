@@ -42,7 +42,7 @@ lisp-modes mode.
           (indent-region (point) (mark))))))
   (provide 'common-lisp-modes))
 
-(defvar project-dir "~/dev")
+(defvar project-dir "~/work")
 
 (use-package! clojure-mode
   :magic ("^#![^\n]*/\\(clj\\|clojure\\|bb\\|nbb\\)" . clojure-mode)
@@ -377,7 +377,7 @@ specific project."
                                                 process-query-on-exit-flag nil)
                                     (set-process-query-on-exit-flag
                                      (get-buffer-process (current-buffer)) nil)
-                                    (rename-buffer "*babashka-repl*")))))))
+                                    (rename-buffer "*babashka-repl*"))))))))
 
 (defun corgi/cider-modeline-info ()
   (when (derived-mode-p 'clojure-mode)

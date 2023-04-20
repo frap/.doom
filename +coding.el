@@ -72,8 +72,7 @@
     :assign "<-"
     :multiply "%*%"))
 
-(setq
-   projectile-project-search-path '("~/Dev/"))
+(setq projectile-project-search-path '("~/work/"))
 
 ;; tangle-on-save automatically runs org-babel-tangle upon saving any org-mode buffer, which means the resulting files will be automatically kept up to date.
 ;;(add-hook! org-mode :append
@@ -82,9 +81,6 @@
 ;; lsp-ui-sideline is redundant with eldoc and much more invasive
 (setq lsp-ui-sideline-enable nil
       lsp-enable-symbol-highlighting nil)
-
-
-(setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
 
 (defun zz/sp-enclose-next-sexp (num)
    (interactive "p")
@@ -175,7 +171,7 @@
         :desc "Find function at point"
         "g p" #'find-function-at-point))
 
-(use-package! graphviz-dot-mode)
+;;(use-package! graphviz-dot-mode)
 
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 (put 'dockerfile-image-name 'safe-local-variable #'stringp)

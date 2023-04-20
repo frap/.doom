@@ -11,7 +11,20 @@
   :config
   (selected-global-mode 1))
 
-(after! phi-serach
+(use-package! phi-search
+  :custom
+  (phi-search-limit 100000))
+
+(use-package! phi-search-mc
+  :after (phi-search multiple-cursors)
+  :config
+  (phi-search-mc/setup-keys))
+
+(use-package! ace-mc
+  :bind (("<C-m> h"   . ace-mc-add-multiple-cursors)
+         ("<C-m> M-h" . ace-mc-add-single-cursor)))
+
+(after! phi-search
  (use-package! multiple-cursors
   ;; - Sometimes you end up with cursors outside of your view. You can scroll
   ;;   the screen to center on each cursor with `C-v` and `M-v`.
@@ -66,27 +79,3 @@
   (defun reactivate-mark ()
     (interactive)
     (activate-mark))))
-
-(use-package! phi-search
-  :custom
-  (phi-search-limit 100000))
-
-(use-package! phi-search-mc
-  :after (phi-search multiple-cursors)
-  :config
-  (phi-search-mc/setup-keys))
-
-(use-package! ace-mc
-  :bind (("<C-m> h"   . ace-mc-add-multiple-cursors)
-         ("<C-m> M-h" . ace-mc-add-single-cursor)))
-
-;; (:after phi-search
-;;  (map!
-;;  (:prefix-map ("m" . "multi-cursor")
-;;   :desc "Edit beginning of lines"  "^" #'mc/edit-beginnings-of-lines
-;;   :desc "Edit beginning of lines"  "`" #'mc/edit-beginnings-of-lines
-;;   :desc "Edit ends of lines"       "$" #'mc/edit-ends-of-lines
-;;   :desc "Edit ends of lines"       "'" #'mc/edit-ends-of-lines
-;;   :desc "Reverse Regions"          "R" #'mc/reverse-regions
-;;   :desc "mark all in region regex" "%" #'mc/mark-all-in-region-regexp
-;;               )))

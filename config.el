@@ -6,12 +6,12 @@
 (if IS-MAC
   (setq
     user-full-name "Andrés Gasson"
-    user-mail-address "gas@tuatara.red"
+    user-mail-address "gas@troveplatform.co.nz"
     github-account-name "frap"))
 (if IS-WORK
   (setq
     user-full-name "Gas"
-    user-mail-address "andrew.gasson@customs.govt.nz"))
+    user-mail-address "george.gasson@troveplatform.co.nz"))
 
 
 
@@ -21,30 +21,12 @@
 ; x-stretch-cursor t)                              ; Stretch cursor to the glyph width
 
 (setq default-directory "~")
-
-;; Global settings
-(setq! show-paren-mode 1
-       doom-scratch-initial-major-mode t)
+(setenv "XDG_CONFIG_DIR" "~/.config")
 
 ;; default is in .emacs.d and can be deleted -- used for gpg
 (setq!
   auth-sources '("~/.local/state/authinfo.gpg")
   auth-source-cache-expiry nil) ; default is 7200 (2h)
-
-
-;(setq display-line-numbers-type 'relative)
-
-;; I’d like some slightly nicer default buffer names
-(setq doom-fallback-buffer-name "► Doom"
-      +doom-dashboard-name "► Doom")
-
-;; Spaces over tabs
-(setq c-basic-indent 2)
-(setq c-default-style "linux")
-(setq tab-width 2)
-(setq-default indent-tabs-mode nil)
-
-;;(setenv "XDG_CONFIG_DIR" "~/.config")
 
 ;; Load Personalised bindings
 ;(load! "+functions")
@@ -54,12 +36,13 @@
 (load! "+parens")
 (load! "+bindings")
 (load! "+magit")
-(load! "+coding")
-(load! "+cursors")
+(load! "+prog")
+(load! "+ui")
+;;(load! "+cursors")
 
 ;
 ;; Editor add aka ANSI codes
-;;(load! "+editor")
+(load! "+editor")
 
 ;;gas org customisations
 ;;(load! "+org")
