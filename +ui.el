@@ -12,17 +12,16 @@
 
 (when (display-graphic-p)
 
-  ;; calculate the font size based on display-pixel-height
-  (setq resolution-factor (eval (/ (x-display-pixel-height) 2000.0)))
-  (setq doom-theme 'doom-one-light
-        doom-font (font-spec :family "Iosevka Curly" :size (eval (round (* 13 resolution-factor))))
-        doom-big-font (font-spec :family "JetBrains Mono" :size (eval (round (* 18 resolution-factor))))
-        doom-variable-pitch-font (font-spec :family "Overpass" :size (eval (round (* 13 resolution-factor))))
-        doom-unicode-font (font-spec :family "JuliaMono" :size (eval (round (* 13 resolution-factor))))
-        doom-serif-font (font-spec :family "IBM Plex Mono" :size (eval (round (* 13 resolution-factor))) :weight 'light)
-        doom-modeline-height (eval (round (* 15 resolution-factor)))
-        doom-font-increment 1
-        initial-frame-alist '((left . 0) (width . 160) (height . 65))))
+
+(setq doom-theme 'doom-one-light
+      doom-font (font-spec :family "Iosevka Curly" :size 13)
+      doom-big-font (font-spec :family "JetBrains Mono" :size 18)
+      doom-variable-pitch-font (font-spec :family "Overpass" :size 13)
+      doom-unicode-font (font-spec :family "JuliaMono" :size 13)
+      doom-serif-font (font-spec :family "IBM Plex Mono" :size 13)
+      doom-modeline-height 15
+      doom-font-increment 1
+      initial-frame-alist '((left . 0) (width . 160) (height . 65))))
 
 
 
